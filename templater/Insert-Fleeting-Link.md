@@ -7,21 +7,16 @@
 // Usage : commande "Templater: Insert template" → choisir ce fichier.
 //         Ou raccourci clavier dédié dans Paramètres > Templater > Template Hotkeys.
 
-const folder = "Inbox/Fleetings";          // adapter au vault
+const folder = "fleeting";          // adapter au vault
 const prefix = "FLT-";                      // préfixe de nommage
-const stamp  = tp.date.now("YYYYMMDDHHmmss");
+const stamp  = tp.date.now("YYYY.MM.DDTHH.mm.ss");
 const name   = prefix + stamp;
 const originator = tp.file.title;
 
 const content = `---
 type: fleeting
-created: ${tp.date.now("YYYY-MM-DD HH:mm")}
-source: "[[${originator}]]"
-status: raw
-ttl: 7d
+parent: "[[${originator}]]"
 ---
-
-# ${name}
 
 `;
 
