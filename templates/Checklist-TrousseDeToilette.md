@@ -1,0 +1,8 @@
+- [ ] Brosse à dents
+- [ ] Shampooing, gel douche
+- [ ] Crème pour les main
+- [ ] Crème solaire
+- [ ] Brosse à cheveux / Peigne
+- [ ] Coton tiges
+- [ ] Dacryloserum
+- [ ] Médicaments

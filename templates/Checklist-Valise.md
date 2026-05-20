@@ -1,0 +1,11 @@
+- [ ] Parapluie
+- [ ] Vêtements
+- [ ] Sous-vêtements
+- [ ] Trousse de toillette
+- [ ] Trousse électronique
+- [ ] Serviette de plage
+- [ ] Maillot de bain
+- [ ] Veste Quetchua
+- [ ] Veste HH
+- [ ] Chaussures de rando
+- [ ] Tongs
