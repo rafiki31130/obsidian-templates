@@ -1,0 +1,24 @@
+# === Tout dotfile / dotdir à la racine, sauf .gitignore lui-même ===
+/.*
+!/.gitignore
+
+# === Système de fichiers ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Fichiers temporaires ===
+*.tmp
+*.bak
+*~
+*.swp
+
+# === Dossiers vault perso ===
+/attachments/
+/journals/
+/pages/
+/bases/
+/zettlekasten/
+/documentations/
+/CLAUDE.md
+/README.md

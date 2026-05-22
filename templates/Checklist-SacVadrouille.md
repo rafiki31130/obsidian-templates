@@ -1,0 +1,11 @@
+- [ ] Passeport
+- [ ] Gourdes
+- [ ] Tasse
+- [ ] Mouchoirs
+- [ ] Clés
+- [ ] Tablette
+- [ ] Porte feuilles
+- [ ] Couverts métal
+- [ ] Opinel
+- [ ] Crème olaire
+- [ ] Sac pour les courses
