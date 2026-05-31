@@ -1,0 +1,26 @@
+filters:
+  and:
+    - '!file.folder.containsAny("template", "properties")'
+    - or:
+        - type.containsAny(link("Projets.base", "Projet"), "Projet")
+    - '!file.tags.containsAny("archived")'
+views:
+  - type: table
+    name: Tous les projets
+    groupBy:
+      property: statut
+      direction: ASC
+    order:
+      - file.name
+      - statut
+      - parent
+      - relations
+      - type
+      - tags
+      - Pourrie
+    columnSize:
+      file.name: 402
+      note.statut: 238
+      note.parent: 163
+    imageAspectRatio: 0.95
+    cardSize: 350

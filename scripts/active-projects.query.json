@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "description": "Projets actifs filtrables par statut",
+  "parameters": {
+    "statut": {
+      "type": "string",
+      "required": false,
+      "description": "Filtre sur un statut exact (ex: '3. En cours'). Si absent, retourne tous les statuts actifs."
+    }
+  },
+  "scan": {
+    "folders": ["pages"],
+    "file_pattern": "*.md"
+  },
+  "filter": {
+    "frontmatter": {
+      "type": "Projet"
+    }
+  },
+  "exclude": {
+    "tags": ["archived"],
+    "statut": ["8. Terminé", "9. Abandonné"]
+  },
+  "output_fields": ["name", "path", "statut", "relations"],
+  "group_by": "statut",
+  "sort": { "field": "statut", "order": "asc" }
+}

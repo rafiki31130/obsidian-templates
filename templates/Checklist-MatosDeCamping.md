@@ -1,0 +1,16 @@
+- [ ] Tarp
+- [ ] Drap housse
+- [ ] Sac de couchage 
+- [ ] Oreillers
+- [ ] Matelas
+- [ ] Lit de camp
+- [ ] Popote 
+- [ ] Sacoche cuisine
+- [ ] Chaises
+- [ ] Sac pour les courses
+- [ ] Lampe
+- [ ] Frontales
+- [ ] Kit de secour
+- [ ] Glacière 
+- [ ] Hamac
+- [ ] Rallonge

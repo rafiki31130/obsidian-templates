@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "description": "Tâches en retard ou à échéance atteinte",
+  "parameters": {
+    "types": {
+      "type": "array",
+      "items": { "enum": ["due", "scheduled", "start"] },
+      "default": ["due", "scheduled", "start"],
+      "description": "Types de dates à vérifier"
+    }
+  },
+  "scan": {
+    "folders": ["journals", "pages"],
+    "file_pattern": "*.md"
+  },
+  "filter": {
+    "task_open": true,
+    "date_conditions": {
+      "due":       { "emoji": "📅", "operator": "<=", "value": "today" },
+      "scheduled": { "emoji": "⏳", "operator": "<=", "value": "today" },
+      "start":     { "emoji": "🛫", "operator": "<=", "value": "today" }
+    }
+  },
+  "group_by": "date_type",
+  "sort": { "field": "date", "order": "asc" }
+}

@@ -1,0 +1,55 @@
+{
+  "version": 3,
+  "description": "Pour un projet : tâches distantes (hors hiérarchie) + pages liées (enfants + relations frontmatter)",
+  "parameters": {
+    "project_name": {
+      "type": "string",
+      "required": true,
+      "description": "Nom exact de la note projet (sans extension)"
+    }
+  },
+  "exclude": {
+    "tags": ["archived"],
+    "statut": ["8. Terminé", "9. Abandonné"]
+  },
+  "sections": {
+    "distant_tasks": {
+      "type": "tasks",
+      "description": "Tâches ouvertes dans des journaux ou des pages hors hiérarchie (ni la page projet, ni ses enfants), qui contiennent un wikilink commençant par project_name.",
+      "scan": {
+        "folders": ["journals", "pages"],
+        "file_pattern": "*.md"
+      },
+      "match_file": {
+        "none_of": [
+          { "basename_equals": "{{project_name}}" },
+          { "basename_starts_with": "{{project_name}} @" },
+          { "frontmatter_equals": { "parent": "[[{{project_name}}]]" } }
+        ]
+      },
+      "filter": {
+        "content_link_starts_with": "{{project_name}}"
+      }
+    },
+    "related_pages": {
+      "type": "pages",
+      "description": "Pages liées au projet : enfantes par nommage (basename starts with 'project_name @') OU dont le frontmatter `relations` contient [[project_name]].",
+      "scan": {
+        "folders": ["pages"],
+        "file_pattern": "*.md"
+      },
+      "rules": [
+        {
+          "relation": "child",
+          "match_file": { "basename_starts_with": "{{project_name}} @" }
+        },
+        {
+          "relation": "relations_frontmatter",
+          "match_file": {
+            "frontmatter_list_contains": { "relations": "[[{{project_name}}]]" }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+- [ ] Sac a dos
+	- [ ] PC
+	- [ ] Chargeur PC
+	- [ ] Micro-Casque
+	- [ ] Casque
+	- [ ] Veste HH
+	- [ ] Passeport
+	- [ ] Parapluie
+	- [ ] Crème solaire
+	- [ ] Tasse
+	- [ ] Gourde
+	- [ ] Mouchoirs
+	- [ ] Clés
+	- [ ] Câbles 
+	- [ ] Virer couteau 
+	- [ ] Bouchons avion
+- [ ] Valise
+	- [ ] Chaussures, chaussons
+	- [ ] Chargeurs
+	- [ ] Serviette
+	- [ ] ## Trousse de toilette
+		- [ ] Brosse à dents
+		- [ ] Shampooing, gel douche
+		- [ ] Crème
+		- [ ] Coupe-ongles
+		- [ ] Crème mains
+		- [ ] Sachet vide
+	- [ ] ## Vêtements
+		- [ ] 3 jeux de sous-vêtements
+		- [ ] 1 sweat
+		- [ ] 1 pantalon pyjama 
