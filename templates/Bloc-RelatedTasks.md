@@ -1,6 +1,6 @@
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-tasks")
+dv.view("r_templates/scripts/related-tasks")
 >```
 

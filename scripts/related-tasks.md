@@ -6,12 +6,12 @@ descriptor: "[[related-tasks.query.json]]"
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-projects")
+dv.view("r_templates/scripts/related-projects")
 >```
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-tasks")
+dv.view("r_templates/scripts/related-tasks")
 >```
 
 
@@ -143,7 +143,7 @@ Afficher dans une page Obsidian les **tâches non terminées** qui la concernent
 ````markdown
 > [!success]+ Related tasks
 > ```dataviewjs
-> dv.view("public/scripts/related-tasks")
+> dv.view("r_templates/scripts/related-tasks")
 > ```
 ````
 

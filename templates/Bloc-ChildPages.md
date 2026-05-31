@@ -1,6 +1,6 @@
 > [!info]+ Pages enfant (js)
 > ``` dataviewjs
-dv.view("public/scripts/child-pages")
+dv.view("r_templates/scripts/child-pages")
 >```
 
 

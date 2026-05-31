@@ -1,7 +1,7 @@
 <%*
 const typeFiles = app.vault
   .getMarkdownFiles()
-  .filter(f => f.path.startsWith("public/templater/type_"))
+  .filter(f => f.path.startsWith("r_templates/templater/type_"))
   .sort((a, b) => a.basename.localeCompare(b.basename));
 
 if (typeFiles.length === 0) {

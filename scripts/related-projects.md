@@ -5,12 +5,12 @@ script: "[[related-projects.js]]"
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-projects")
+dv.view("r_templates/scripts/related-projects")
 >```
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-tasks")
+dv.view("r_templates/scripts/related-tasks")
 >```
 
 
@@ -28,12 +28,12 @@ Cas d'usage : depuis une note objet ou MOC (ex: `Maison`), voir tous les projets
 
 Mode standard (Mentions inclus) :
 ```dataviewjs
-dv.view("public/scripts/related-projects")
+dv.view("r_templates/scripts/related-projects")
 ```
 
 Sans la section Mentions :
 ```dataviewjs
-dv.view("public/scripts/related-projects", { showMentions: false })
+dv.view("r_templates/scripts/related-projects", { showMentions: false })
 ```
 
 ## Configuration (en tête du fichier)
@@ -150,7 +150,7 @@ Logique de la dédup stricte : Mentions = `{projets actifs avec outlink vers cou
 
 ## Évolutions possibles
 
-- Paramétrer `STATUTS_INACTIFS` et `TAG_ARCHIVED` via `dv.view("public/scripts/related-projects", { ... })`.
+- Paramétrer `STATUTS_INACTIFS` et `TAG_ARCHIVED` via `dv.view("r_templates/scripts/related-projects", { ... })`.
 - Distinguer visuellement les projets descendants vs reliés via `relations` (ex: icône, classe CSS).
 - Bidirectionnalité du matching `relations` : afficher aussi les projets que la page courante elle-même référence dans ses propres `relations`.
 - Bascule sur résolution `statut` → fichier de référence pour lire l'état dynamiquement (élimine la maintenance de `STATUTS_INACTIFS`).

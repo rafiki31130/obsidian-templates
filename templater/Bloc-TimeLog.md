@@ -1,3 +1,3 @@
-- `<% tp.date.now("HH:mm") %>` - <% tp.file.cursor() %><%* app.workspace.activeLeaf.view.editor?.focus(); %>
+- `22:12` - <% tp.file.cursor() %>
 
 

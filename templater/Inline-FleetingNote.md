@@ -7,7 +7,7 @@ const name   = prefix + stamp;
 const alias = await tp.system.prompt("Alias de la note");
 if (!alias) { return; }
 
-const templateTFile = tp.file.find_tfile("public/templater/Page-FleetingNote.md");
+const templateTFile = tp.file.find_tfile("r_templates/templater/Page-FleetingNote.md");
 let content = await app.vault.read(templateTFile);
 
 content = content.replace(/^aliases:\s*$/m, `aliases:\n  - ${alias}`);

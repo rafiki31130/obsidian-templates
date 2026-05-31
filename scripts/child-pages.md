@@ -5,12 +5,12 @@ script: "[[child-pages.js]]"
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-projects")
+dv.view("r_templates/scripts/related-projects")
 >```
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-tasks")
+dv.view("r_templates/scripts/related-tasks")
 >```
 
 
@@ -25,7 +25,7 @@ Remplace les blocs Dataview "Pages enfantes" embarqués dans plusieurs notes : u
 ## Invocation
 
 ```dataviewjs
-dv.view("public/scripts/child-pages")
+dv.view("r_templates/scripts/child-pages")
 ```
 
 Aucun argument à passer.
@@ -121,7 +121,7 @@ Une section vide n'apparaît pas (pas de titre orphelin).
 
 ## Évolutions possibles
 
-- Paramétrer `STATUTS_CLOS` et `TAG_ARCHIVED` via `dv.view("public/scripts/child-pages", { statutsClos, tagArchived })`.
+- Paramétrer `STATUTS_CLOS` et `TAG_ARCHIVED` via `dv.view("r_templates/scripts/child-pages", { statutsClos, tagArchived })`.
 - Option `maxDepth` pour limiter la profondeur affichée.
 - Option `directOnly: true` pour ne montrer que les enfants directs (1 niveau).
 - Bascule éventuelle sur résolution `statut` → fichier de référence pour lire l'état dynamiquement.

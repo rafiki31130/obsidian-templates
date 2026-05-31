@@ -23,17 +23,17 @@ if (parent) { tR += `${hdFence}
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-projects")
+dv.view("r_templates/scripts/related-projects")
 >```
 
 > [!info]+ Pages enfant (js)
 > ``` dataviewjs
-dv.view("public/scripts/child-pages")
+dv.view("r_templates/scripts/child-pages")
 >```
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
-dv.view("public/scripts/related-tasks")
+dv.view("r_templates/scripts/related-tasks")
 >```
 ## Notes
 
