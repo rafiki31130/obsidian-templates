@@ -1,1 +1,1 @@
-- [ ] #Todo <% tp.file.cursor() %><%* app.workspace.activeLeaf.view.editor.focus(); %>
+- [ ] #Todo <% tp.file.cursor() %>
