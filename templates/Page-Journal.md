@@ -13,7 +13,7 @@
 
 
 ## Tasks
-- [i] [[✅Tasks|All tasks]] / [[🛠️Projets.base|All projects]]
+- > [[✅Tasks|All tasks]] / [[🛠️Projets.base|All projects]]
 `button-quicktask`
 
 ### Overdued
@@ -33,5 +33,3 @@ tag includes BigThree
 not done
 tag includes Next
 ```
-
-- [i] [[✅Tasks|All tasks]]
