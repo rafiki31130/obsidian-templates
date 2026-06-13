@@ -1,3 +1,3 @@
-- `22:12` - <% tp.file.cursor() %>
+- `<% tp.date.now("HH:mm") %>` - <% tp.file.cursor() %>
 
 
