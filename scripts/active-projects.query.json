@@ -1,6 +1,7 @@
 {
   "version": 1,
   "description": "Projets actifs filtrables par statut",
+  "_note_scan": "Enumeration explicite des sous-dossiers de pages/ = repli TRANSITOIRE (dette) : le moteur de requetes du serveur MCP ne scanne qu'un seul niveau, donc tout sous-dossier absent de cette liste reste invisible. La cle \"recursive\" est inerte sur le serveur actuel et prend le relais des le deploiement du support de scan.recursive (PR christian/obsidian-mcp #5) ; l'enumeration pourra alors etre retiree.",
   "parameters": {
     "statut": {
       "type": "string",
@@ -9,7 +10,14 @@
     }
   },
   "scan": {
-    "folders": ["pages"],
+    "folders": [
+      "pages",
+      "pages/1. Projets",
+      "pages/1. Projets/Travaux",
+      "pages/2. Domaines",
+      "pages/3. Ressources"
+    ],
+    "recursive": true,
     "file_pattern": "*.md"
   },
   "filter": {
