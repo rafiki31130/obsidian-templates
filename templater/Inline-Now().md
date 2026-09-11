@@ -1,0 +1,1 @@
+`<% tp.date.now("YYYY-MM-DD HH:mm") %>` - <% tp.file.cursor() %><%* app.workspace.activeLeaf.view.editor.focus(); %>
