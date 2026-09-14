@@ -3,7 +3,7 @@ Date d'export: [[2026-09-06]]
 ```json
 {
   "plugin": "notebook-navigator",
-  "pluginVersion": "3.3.6",
+  "pluginVersion": "3.3.7",
   "settings": {
     "vaultProfiles": [
       {
@@ -26,6 +26,9 @@ Date d'export: [[2026-09-06]]
         ],
         "hiddenFolders": [
           "/attachments"
+        ],
+        "descendantExcludedFolders": [
+          "/pages/4. Archives"
         ],
         "hiddenTags": [],
         "hiddenFileNames": [],
@@ -102,14 +105,12 @@ Date d'export: [[2026-09-06]]
             "transitionStyle": "hue",
             "scope": "child"
           }
-        },
-        "descendantExcludedFolders": [
-          "/pages/4. Archives"
-        ]
+        }
       }
     ],
     "toolbarVisibility": {
       "list": {
+        "reveal": true,
         "groupExpansion": true
       }
     },
@@ -117,6 +118,7 @@ Date d'export: [[2026-09-06]]
     "navItemHeight": 24,
     "excludeVaultRootFromCollapse": true,
     "collapseOtherBranchesOnExpand": true,
+    "autoExpandNavItems": true,
     "enableFolderNotes": true,
     "scopeTagsToCurrentContext": true,
     "tagSortOrder": "frequency-desc",
@@ -151,11 +153,6 @@ Date d'export: [[2026-09-06]]
         "showTags": false
       },
       "pages": {
-        "previewRows": 0,
-        "showTags": false,
-        "groupBy": "property-follow:type"
-      },
-      "projets": {
         "previewRows": 0,
         "showTags": false
       },
@@ -591,26 +588,6 @@ Date d'export: [[2026-09-06]]
         "previewRows": 0,
         "showTags": false
       },
-      "r_wiki/Projets/10-En-cours/splunk-shc-idx-multisite-hyperv": {
-        "previewRows": 0,
-        "showTags": false
-      },
-      "r_wiki/Projets/10-En-cours/splunk-shc-idx-multisite-hyperv/releve-l6b": {
-        "previewRows": 0,
-        "showTags": false
-      },
-      "r_wiki/Projets/10-En-cours/splunk-shc-idx-multisite-hyperv/releve-l6b/exemple-verdict": {
-        "previewRows": 0,
-        "showTags": false
-      },
-      "r_wiki/Projets/10-En-cours/splunk-shc-idx-multisite-hyperv/livrables": {
-        "previewRows": 0,
-        "showTags": false
-      },
-      "r_wiki/Projets/10-En-cours/splunk-shc-idx-multisite-hyperv/cadrage": {
-        "previewRows": 0,
-        "showTags": false
-      },
       "r_wiki/Projets/10-En-cours/splunk-handbook": {
         "previewRows": 0,
         "showTags": false
@@ -740,10 +717,6 @@ Date d'export: [[2026-09-06]]
         "showTags": false
       },
       "r_wiki/Projets/05-Initialisation": {
-        "previewRows": 0,
-        "showTags": false
-      },
-      "r_wiki/Projets/05-Initialisation/migration-ansible-github-forgejo": {
         "previewRows": 0,
         "showTags": false
       },
@@ -1100,6 +1073,26 @@ Date d'export: [[2026-09-06]]
         "showTags": false
       },
       "attachments/Ink/Drawing": {
+        "previewRows": 0,
+        "showTags": false
+      },
+      "r_knowledge_base_pro/cheat-sheets/SPL": {
+        "previewRows": 0,
+        "showTags": false
+      },
+      "Excalidraw": {
+        "previewRows": 0,
+        "showTags": false
+      },
+      "r_wiki/Projets/10-En-cours/decommission-claude-remote": {
+        "previewRows": 0,
+        "showTags": false
+      },
+      "r_wiki/Projets/10-En-cours/mcp-scan-recursif-pages": {
+        "previewRows": 0,
+        "showTags": false
+      },
+      "r_wiki/Projets/50-Termines/audit-usages-claude-remote": {
         "previewRows": 0,
         "showTags": false
       }
