@@ -4,6 +4,7 @@ filters:
     - or:
         - type.containsAny(link("Projets.base", "Projet"), "Projet")
     - '!file.tags.containsAny("archived")'
+    - file.path.startsWith("pages")
 views:
   - type: table
     name: Tous les projets
