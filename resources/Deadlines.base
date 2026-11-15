@@ -1,0 +1,20 @@
+model:
+  version: 1
+  kind: Table
+  columns: []
+pluginVersion: 1.0.0
+filters:
+  and:
+    - type == "Deadline"
+    - file.path.startsWith("pages")
+views:
+  - type: table
+    name: Vue
+    order:
+      - file.name
+      - next_due
+      - action
+      - recurrence
+      - notice_days
+    columnSize:
+      file.name: 177
