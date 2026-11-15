@@ -1,5 +1,7 @@
 ---
 type: Projet
+operonId: uxalgbz
+datetimeModified: 2026-11-15T12:23:04
 ---
 
 ## Définition
