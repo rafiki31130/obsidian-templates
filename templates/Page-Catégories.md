@@ -1,0 +1,4 @@
+---
+type: Catégorie
+---
+![[Relations.base]]
