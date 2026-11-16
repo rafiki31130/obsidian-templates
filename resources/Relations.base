@@ -9,6 +9,7 @@ filters:
         - topic.contains(link(this.file.name))
         - person.contains(link(this.file.name))
         - date.contains(link(this.file.name))
+    - '!type.containsAny("Deadline")'
 views:
   - type: table
     name: All
