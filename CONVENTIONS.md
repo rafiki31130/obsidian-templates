@@ -295,4 +295,4 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 | `templater/Script_GenerateTypeTemplates.md` | Génère les templates `type_Props-*` manquants |
 | `templates/Page-Journal.md` | Template journal quotidien |
 | `properties/statut/` | Fichiers de définition des valeurs de statut |
-| `properties/type/Projet.md` | Définition du type Projet |
+| `properties/type/` | Fiches de définition des valeurs de `type` (une par type) |
