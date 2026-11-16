@@ -16,12 +16,10 @@
 //   - un template `type_*` existant déclare déjà ce `type:` dans son frontmatter
 //     (comparaison insensible à la casse).
 //
-// Contenu par défaut d'un template généré :
+// Contenu par défaut d'un template généré (point de départ minimal, à
+// personnaliser ensuite : propriétés propres au type, sections du corps) :
 //   type:   <valeur relevée>   [text]
 //   topic:                     [links → multitext]
-//   person:                    [links → multitext]
-//   rating:                    [int   → number]
-//   tags:                      [tags]
 //
 // Les types de propriétés Obsidian sont déclarés seulement si la propriété
 // n'a pas encore de type (aucun type existant n'est modifié).
@@ -31,14 +29,10 @@
 
 
 // Propriétés par défaut et leur type Obsidian
-// (Obsidian n'a pas de type « links » ni « int » : liste de liens = multitext,
-//  entier = number)
+// (Obsidian n'a pas de type « links » : liste de liens = multitext)
 const DEFAULT_PROPS = [
   { key: "type",   obsidianType: "text" },
   { key: "topic",  obsidianType: "multitext" },
-  { key: "person", obsidianType: "multitext" },
-  { key: "rating", obsidianType: "number" },
-  { key: "tags",   obsidianType: "tags" },
 ];
 
 // ─── 1. Normalisation d'une valeur de type ───────────────────────────────────

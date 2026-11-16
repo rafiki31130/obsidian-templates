@@ -1,7 +1,11 @@
 ---
 type: Briefing
-topic:
-person:
-rating:
-tags:
+date: "[[{{date:YYYY-MM-DD}}]]"
 ---
+## Agenda
+
+## Emails
+
+## Veille
+
+## Actions

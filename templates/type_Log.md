@@ -1,8 +1,7 @@
 ---
-date: "[[{{date:YYYY-MM-DD}}]]"
 type: Log
+date: "[[{{date:YYYY-MM-DD}}]]"
 topic:
-person:
-rating:
-tags:
 ---
+### {{date:YYYY-MM-DD}}
+- 

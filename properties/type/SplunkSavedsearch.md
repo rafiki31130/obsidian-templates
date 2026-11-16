@@ -12,10 +12,10 @@ Décrit la requête SPL, la planification, les actions déclenchées et les look
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-SplunkSavedsearch.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_SplunkSavedsearch.md`.
 
 - `type: SplunkSavedsearch`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+- `external reference:` nom ou URL de l'objet dans Splunk
+
+Corps : Summary · Search (bloc SPL) · Schedule (cron, actions) · Related `![[Splunk.base#Related]]`.

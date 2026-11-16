@@ -12,13 +12,13 @@ Chaque entrée est datée ; le contenu s'accumule dans le temps.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Log.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Log.md`.
 
 - `type: Log`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`) (début du suivi)
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : une entrée `### YYYY-MM-DD` par jour, la plus récente en bas.
 
 ## Différence avec les autres types
 

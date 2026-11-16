@@ -12,10 +12,10 @@ Indique comment le lookup est alimenté (manuel, recherche planifiée…) et que
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-SplunkLookup.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_SplunkLookup.md`.
 
 - `type: SplunkLookup`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+- `external reference:` nom ou URL de l'objet dans Splunk
+
+Corps : Summary · Fields (tableau) · Populated by · Related `![[Splunk.base#Related]]` (recherches et dashboards qui citent le lookup).

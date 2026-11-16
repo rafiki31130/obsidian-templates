@@ -8,14 +8,13 @@ type: Scratch
 
 ## Caractéristiques
 
-Vocation à être transformée en note typée ou supprimée.
+Vocation à être transformée en note typée (bouton *Définir le type*) ou supprimée.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Scratch.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Scratch.md`.
 
 - `type: Scratch`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`) (repère pour purger les vieux brouillons)
+
+Corps : aucun (page libre, section Notes).

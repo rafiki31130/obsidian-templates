@@ -13,6 +13,16 @@ Une note de type Projet possède :
 - Des **relations** éventuelles vers d'autres pages ou projets (`relations:`)
 - Des **actions suivies** (tâches Tasks avec `#Todo`) qui font progresser le projet vers son objectif
 
+## Propriétés
+
+Template d'application : `templates/type_Props-Projet.md`.
+
+- `type: Projet`
+- `statut:` valeur de `properties/statut/` (`1. A cadrer` à la création)
+- `relations:` lien(s) vers les pages ou projets liés
+
+Corps : aucun (blocs dynamiques de `Page-DynHierarchy` + section Notes).
+
 ## Différence avec une note classique
 
 Une note classique (sans `type: Projet`) représente plutôt :

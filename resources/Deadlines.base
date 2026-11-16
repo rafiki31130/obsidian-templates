@@ -44,3 +44,20 @@ views:
       file.name: 177
       note.action: 306
       note.notice_days: 145
+  - type: table
+    name: Topic
+    filters:
+      and:
+        - topic.contains(link(this.file.name))
+    order:
+      - file.name
+      - next_due
+      - formula.days_left
+      - action
+      - recurrence
+    sort:
+      - property: next_due
+        direction: ASC
+    columnSize:
+      file.name: 220
+      note.action: 306

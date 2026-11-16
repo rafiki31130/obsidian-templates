@@ -2,7 +2,7 @@ Test sync Tell [[2026-05-31]]
 # Conventions du vault Obsidian
 
 > Document de référence. Toute écriture manuelle ou automatisée (MCP, scripts) doit respecter ces conventions.
-> Mis à jour : 2026-05-25.
+> Mis à jour : 2026-11-16.
 
 ---
 ## Structure du vault
@@ -172,9 +172,32 @@ Appliquer le template `Props-Archived` (ajoute `tags: [archived]` en frontmatter
 
 Bouton `button-addjournal` (« Add to journal », présent sur les pages enfant via `Page-DynHierarchy`) : applique le template `Props-AddToJournal`, qui ajoute `date: "[[YYYY-MM-DD]]"` (date du jour) en frontmatter.
 
-### Templates de type (`type_Props-*`)
+### Templates de type (`type_*`)
 
-Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève toutes les valeurs de `type:` et crée `type_Props-<Type>.md` pour chaque type qui n'a pas encore de template (aucun template existant n'est écrasé). Le dossier de destination est détecté automatiquement : c'est le dossier du plugin de base « Modèles » (Templates), d'où les `type_*` sont insérés (`templates/`). `Script_ApplyType` et `Page-DynHierarchy` cherchent les `type_*` dans ce même dossier (sous-dossiers compris). Contenu par défaut : `type` (text), `domain` (liens, multitext), `people` (liens, multitext), `rating` (number), `tags` (tags). Les types de propriétés ne sont déclarés que s'ils ne l'étaient pas déjà.
+Un template `templates/type_<Type>.md` par type ; sa fiche `properties/type/<Type>.md` décrit les mêmes propriétés et le même corps (les deux restent alignés). Principe : **structurer juste assez**. Chaque type ne porte que les propriétés qui servent une vue ou une recherche :
+
+- `topic:` (liens vers des Topics) sur presque tous les types ;
+- `date: "[[YYYY-MM-DD]]"` (lien vers le journal du jour) sur les types datés : Briefing, Changement, EntretienTech, Incident, Journal, Log, Meeting, Pensées, Scratch ;
+- `person:` (liens) seulement là où il y a des interlocuteurs : Meeting, EntretienTech (et Person, qui se référence elle-même) ;
+- propriétés propres : Deadline (`next_due`, `recurrence`, `notice_days`, `action`), Projet (`statut`, `relations`), Recette (`DB_CUI_REC_*`), Splunk* (`external reference`), Learning (`rating` de 1 à 7), Person (`Anniversaire`).
+
+Le corps éventuel du template (sections à remplir, vues intégrées) est placé par `Page-DynHierarchy` en bas de page, avant `## Notes`, curseur sous la première section à remplir ; `Script_ApplyType` l'insère au curseur.
+
+Le script Templater `Script_GenerateTypeTemplates` crée `type_<Type>.md` pour chaque valeur de `type:` du vault qui n'a pas encore de template (aucun template existant n'est écrasé), dans le dossier du plugin de base « Modèles » (`templates/`). Contenu de départ minimal, à personnaliser : `type` (text) et `topic` (liens, multitext).
+
+### Vues intégrées (Bases)
+
+Comme dans le système de Kepano, les pages affichent les notes connexes par des vues Bases intégrées. Une vue précise s'intègre avec `![[Fichier.base#Nom de la vue]]` ; sans `#`, c'est la première vue. Dans ces vues, `this` désigne la page qui intègre la base.
+
+| Base | Vue | Contenu | Intégrée dans |
+|------|-----|---------|---------------|
+| `Relations.base` | *All* (défaut) | notes qui pointent vers la page par `parent`, `author`, `relations`, `topic`, `person` ou `date`, groupées par type | Topic, Hub, Person (Liens), journal du jour (`Page-Journal`) |
+| `Relations.base` | *Meetings* | Meetings et EntretienTech liés, par date | Person (Rencontres) |
+| `Relations.base` | *Projects*, *Ops*, *Knowledge* | projets ; incidents, changements, logs ; notes de connaissance | au choix, via le sélecteur de vue de l'intégration |
+| `Deadlines.base` | *Topic* | échéances dont `topic:` contient la page, avec jours restants | Topic (Échéances) |
+| `Splunk.base` | *Application* | fiches Splunk dont `parent:` est la page | SplunkApplication |
+| `Splunk.base` | *Related* | fiches Splunk liées à la page dans un sens ou dans l'autre | SplunkDashboard, SplunkLookup, SplunkSavedsearch |
+| `Splunk.base` | *All* | toutes les fiches Splunk, par type | — |
 
 ### Pages Topic (`Script_CreateTopicPages`)
 
@@ -300,7 +323,10 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 | `templates/type_Props-Projet.md` | Template frontmatter projet |
 | `templates/Props-Archived.md` | Template archivage |
 | `templates/Props-AddToJournal.md` | Template « Add to journal » (`date:` du jour) |
-| `templater/Script_GenerateTypeTemplates.md` | Génère les templates `type_Props-*` manquants |
+| `templater/Script_GenerateTypeTemplates.md` | Génère les templates `type_*` manquants |
+| `resources/Relations.base` | Notes connexes d'une page (vues *All*, *Projects*, *Meetings*, *Ops*, *Knowledge*) |
+| `resources/Deadlines.base` | Échéances (vues *Upcomming*, *All*, *Topic*) |
+| `resources/Splunk.base` | Fiches Splunk (vues *All*, *Application*, *Related*) |
 | `templater/Script_CreateTopicPages.md` | Crée les pages Topic manquantes et convertit `topic:` en liens |
 | `templates/Page-Journal.md` | Template journal quotidien |
 | `properties/statut/` | Fichiers de définition des valeurs de statut |

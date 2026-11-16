@@ -12,13 +12,12 @@ Contenu durable, réutilisable et relié aux notes qui appliquent le concept.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Concepts.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Concepts.md`.
 
 - `type: Concepts`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : Définition · Exemples · Sources.
 
 ## Différence avec les autres types
 

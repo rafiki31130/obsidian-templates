@@ -5,3 +5,15 @@ person:
 Anniversaire:
 tags:
 ---
+## Contact
+- Téléphone : 
+- Email : 
+
+## Idées cadeaux
+- [ ] 
+
+## Rencontres
+![[Relations.base#Meetings]]
+
+## Liens
+![[Relations.base]]

@@ -12,13 +12,13 @@ Contenu libre et subjectif, sans objectif d'action.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Pensées.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Pensées.md`.
 
 - `type: Pensées`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : aucun (page libre, section Notes).
 
 ## Différence avec les autres types
 

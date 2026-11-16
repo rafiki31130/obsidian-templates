@@ -12,13 +12,12 @@ Format condensé, orienté consultation rapide.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Memento.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Memento.md`.
 
 - `type: Memento`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : Aide-mémoire (tableau Quoi / Comment).
 
 ## Différence avec les autres types
 

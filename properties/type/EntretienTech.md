@@ -8,17 +8,18 @@ type: EntretienTech
 
 ## Caractéristiques
 
-Trace la date, les participants (`people:`), les questions abordées et les conclusions.
+Trace la date, les participants (`person:`), les questions abordées et les conclusions.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-EntretienTech.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_EntretienTech.md`.
 
 - `type: EntretienTech`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
+- `topic:` lien(s) vers le ou les Topics concernés
+- `person:` lien(s) vers le ou les interlocuteurs
+
+Corps : Contexte · Points abordés · Conclusion.
 
 ## Différence avec les autres types
 

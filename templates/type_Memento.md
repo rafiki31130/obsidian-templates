@@ -1,7 +1,9 @@
 ---
 type: Memento
 topic:
-person:
-rating:
-tags:
 ---
+## Aide-mémoire
+
+| Quoi | Comment |
+| ---- | ------- |
+|      |         |

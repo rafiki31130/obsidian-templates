@@ -1,7 +1,13 @@
 ---
 type: Etude
 topic:
-person:
-rating:
-tags:
 ---
+## Question
+
+## Options
+
+| Option | Avantages | Inconvénients |
+| ------ | --------- | ------------- |
+|        |           |               |
+
+## Conclusion

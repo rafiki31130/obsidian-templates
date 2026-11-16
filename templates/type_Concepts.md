@@ -1,7 +1,9 @@
 ---
 type: Concepts
 topic:
-person:
-rating:
-tags:
 ---
+## Définition
+
+## Exemples
+
+## Sources

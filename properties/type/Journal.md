@@ -8,17 +8,16 @@ Note **journalière** : ce qui s'est passé, ce qui a été fait ou décidé ce 
 
 ## Caractéristiques
 
-Nommage `YYYY-MM-DD`, créée via le template `Page-Journal`. Les autres notes s'y rattachent via `date: "[[YYYY-MM-DD]]"` (bouton *Add to journal*).
+Les journaux quotidiens (`journals/YYYY-MM-DD`) sont créés via le template `Page-Journal` et n'ont **pas** de frontmatter. `type_Journal` ne sert qu'à typer une note journalière rangée ailleurs. Les autres notes se rattachent à un jour via `date: "[[YYYY-MM-DD]]"` (bouton *Add to journal*).
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Journal.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Journal.md`.
 
 - `type: Journal`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
+
+Corps : aucun (page libre, section Notes).
 
 ## Différence avec les autres types
 
