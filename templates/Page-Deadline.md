@@ -1,5 +1,5 @@
 ---
-type: deadline
+type: Deadline
 date: "[[{{date}}]]"
 next_due:
 recurrence:
