@@ -1,5 +1,5 @@
 ---
-type: Catégorie
+type: Domaine
 date: "[[{{date}}]]"
 ---
 ![[Relations.base]]
