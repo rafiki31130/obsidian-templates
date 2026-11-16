@@ -10,7 +10,7 @@ type: Log
 
 Chaque entrée est datée ; le contenu s'accumule dans le temps.
 
-Nommage : `YYYY-MM-DD HHhmm - <nom>` (ex. `2026-11-16 14h05 - Upgrade Proxmox` ; `:` est interdit dans un nom de fichier). À l'application du type (création de page ou *Définir le type*), le nom est demandé puis la page est renommée avec la date et l'heure du moment. Un titre `Parent @ …` est conservé en `parent:`. Une page déjà nommée au format n'est pas renommée.
+Nommage automatique, commun avec Meeting : `YYYY-MM-DD HHhmm - ` (ex. `2026-11-16 14h05 - ` ; `:` est interdit dans un nom de fichier). À l'application du type (création de page ou *Définir le type*), la page est renommée avec la date et l'heure du moment, sans prompt de nommage et sans reprendre son ancien titre. Le suffixe après ` - ` reste vide, à compléter manuellement. Un titre `Parent @ …` est conservé en `parent:`. Une page déjà horodatée conserve son titre et son heure, même si le suffixe est encore vide.
 
 ## Propriétés
 
