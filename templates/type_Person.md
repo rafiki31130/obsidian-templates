@@ -1,7 +1,6 @@
 ---
 type: Person
-topic:
 person:
-rating:
+  - "[[{{title}}]]"
 tags:
 ---
