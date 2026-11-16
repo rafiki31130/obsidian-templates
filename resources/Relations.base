@@ -11,14 +11,13 @@ views:
       direction: ASC
     order:
       - file.name
-      - status
       - file.mtime
     sort:
-      - property: file.name
-        direction: ASC
+      - property: file.mtime
+        direction: DESC
     columnSize:
-      file.name: 372
-      file.mtime: 177
+      file.name: 466
+      file.mtime: 169
   - type: table
     name: Projects
     filters:
@@ -27,21 +26,25 @@ views:
     order:
       - file.mtime
       - file.name
+      - status
     sort:
       - property: file.mtime
         direction: DESC
     columnSize:
-      file.name: 465
+      file.mtime: 194
+      file.name: 344
+      note.status: 130
   - type: table
     name: Meetings
     filters:
       and:
         - type.containsAny("Meeting")
     order:
-      - file.mtime
       - file.name
+      - file.ctime
     sort:
-      - property: file.mtime
+      - property: file.ctime
         direction: DESC
     columnSize:
+      file.ctime: 158
       file.name: 465

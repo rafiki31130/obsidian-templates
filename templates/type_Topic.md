@@ -1,5 +1,5 @@
 ---
 type: Topic
-date: "[[{{date}}]]"
+date: "[[{{date:YYYY-MM-DD}}]]"
 ---
 ![[Relations.base]]
