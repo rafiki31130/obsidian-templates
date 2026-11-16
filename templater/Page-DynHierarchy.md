@@ -58,9 +58,30 @@ props.push(...typeProps);
 if (props.length > 0) {
   tR += `${hdFence}\n${props.join("\n")}\n${hdFence}\n`;
 }
-if (typeBody.trim() !== "") {
-  tR += typeBody.replace(/\s*$/, "\n");
+
+// --- Corps du type : placé en bas de page (après les blocs dynamiques, avant « ## Notes »).
+// Curseur sous le premier titre à remplir du corps (en fin de ligne si c'est une amorce
+// de liste comme « - », « 1. » ou « - Email : ») ; les titres suivis d'une intégration
+// (![[Vue.base#…]]) sont sautés. À défaut, curseur sous « ## Notes ».
+const cursor = tp.file.cursor();
+let bodyOut = typeBody.replace(/^(?:[ \t]*\n)+/, "").replace(/(?:\n[ \t]*)+$/, "");
+let cursorPlaced = false;
+if (bodyOut) {
+  const lines = bodyOut.split("\n");
+  const i = lines.findIndex((l, k) => /^#{2,6} /.test(l) && !/^!\[\[/.test(lines[k + 1] ?? ""));
+  if (i !== -1) {
+    const next = lines[i + 1];
+    if (next !== undefined && /^\s*(?:[-*]|\d+\.)(?: \[ \])?(?: [^:]*:)?\s*$/.test(next)) {
+      lines[i + 1] = next.replace(/\s*$/, " ") + cursor;
+    } else {
+      lines.splice(i + 1, 0, cursor);
+    }
+    cursorPlaced = true;
+  }
+  bodyOut = lines.join("\n") + "\n\n";
 }
+const hasNotes = /^## Notes\s*$/m.test(bodyOut);
+const pageTail = bodyOut + (hasNotes ? "" : "## Notes\n\n") + (cursorPlaced ? "" : cursor);
 
 %>
 `button-applytype` `button-archive` `button-addjournal`
@@ -79,6 +100,5 @@ dv.view("r_templates/scripts/child-pages")
 > ``` dataviewjs
 dv.view("r_templates/scripts/related-tasks")
 >```
-## Notes
 
-<% tp.file.cursor() %><%* app.workspace.activeLeaf.view.editor.focus(); %>
+<%* tR += pageTail; %><%* app.workspace.activeLeaf.view.editor.focus(); %>

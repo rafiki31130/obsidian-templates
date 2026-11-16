@@ -12,13 +12,12 @@ Contenu factuel, mis à jour ponctuellement.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Reference.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Reference.md`.
 
 - `type: Reference`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : aucun (page libre, section Notes).
 
 ## Différence avec les autres types
 

@@ -1,8 +1,11 @@
 ---
 type: SplunkDashboard
 topic:
-person:
-rating:
 external reference:
-tags:
 ---
+## Summary
+
+## Data sources
+
+## Related
+![[Splunk.base#Related]]

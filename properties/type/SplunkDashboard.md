@@ -12,10 +12,10 @@ Rattachée à son application via `parent:` ou le nommage `Application @ Dashboa
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-SplunkDashboard.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_SplunkDashboard.md`.
 
 - `type: SplunkDashboard`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+- `external reference:` nom ou URL de l'objet dans Splunk
+
+Corps : Summary · Data sources · Related `![[Splunk.base#Related]]` (objets Splunk liés dans un sens ou dans l'autre).

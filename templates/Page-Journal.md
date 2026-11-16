@@ -33,3 +33,6 @@ tag includes BigThree
 not done
 tag includes Next
 ```
+
+## Notes du jour
+![[Relations.base]]

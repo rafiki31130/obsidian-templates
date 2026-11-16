@@ -1,10 +1,14 @@
 filters:
   and:
-    - '!file.tags.contains("archved")'
+    - '!file.tags.contains("archived")'
+    - file.path != this.file.path
     - or:
         - parent.contains(link(this.file.name))
         - author.contains(link(this.file.name))
         - relations.contains(link(this.file.name))
+        - topic.contains(link(this.file.name))
+        - person.contains(link(this.file.name))
+        - date.contains(link(this.file.name))
 views:
   - type: table
     name: All
@@ -26,27 +30,64 @@ views:
       and:
         - type.containsAny("Projet", "Project")
     order:
-      - file.mtime
       - file.name
-      - status
+      - statut
+      - file.mtime
     sort:
       - property: file.mtime
         direction: DESC
     columnSize:
-      file.mtime: 194
       file.name: 344
-      note.status: 130
+      note.statut: 160
+      file.mtime: 194
   - type: table
     name: Meetings
     filters:
       and:
-        - type.containsAny("Meeting")
+        - type.containsAny("Meeting", "EntretienTech")
     order:
       - file.name
-      - file.ctime
+      - date
+      - person
+      - topic
     sort:
-      - property: file.ctime
+      - property: date
         direction: DESC
     columnSize:
-      file.ctime: 158
-      file.name: 465
+      file.name: 360
+      note.date: 140
+  - type: table
+    name: Ops
+    filters:
+      and:
+        - type.containsAny("Incident", "Changement", "Log")
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - date
+      - topic
+    sort:
+      - property: date
+        direction: DESC
+    columnSize:
+      file.name: 360
+      note.date: 140
+  - type: table
+    name: Knowledge
+    filters:
+      and:
+        - type.containsAny("Concepts", "Documentation", "Procedure", "Reference", "Memento", "Etude", "Learning")
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - topic
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+    columnSize:
+      file.name: 360

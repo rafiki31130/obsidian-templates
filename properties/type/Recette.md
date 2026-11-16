@@ -12,14 +12,13 @@ Rangée dans `bases/Recettes/`, nommage `Recettes @ <Nom>`. Ingrédients, étape
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Recette.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Recette.md`.
 
 - `type: Recette`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `tags:` `cuisine`, `recette`
+- propriétés `DB_CUI_REC_*` : voir *Convention de fiche* ci-dessous (`DB_CUI_REC_note` tient lieu de `rating` ; `DB_CUI_REC_statut` vaut `à-tester` à la création)
 
+Corps : Tableau (HTML) · Notes d'exécution · Journal.
 
 ## Régimes
 
@@ -34,7 +33,7 @@ Template d'application : `templates/type_Props-Recette.md` (généré par `Scrip
 
 ## Convention de fiche
 
-Une fiche = une recette, `type: fiche-recette`, propriétés préfixées `DB_CUI_REC_`.
+Une fiche = une recette, `type: Recette`, propriétés préfixées `DB_CUI_REC_` (toutes présentes dans le template).
 
 | Propriété                | Valeurs                                       |
 | ------------------------ | --------------------------------------------- |
@@ -51,6 +50,7 @@ Une fiche = une recette, `type: fiche-recette`, propriétés préfixées `DB_CUI
 `DB_CUI_REC_prerequis` porte la seule relation métier : elle encode les dépendances entre recettes (levain → boisson, fond → sauce) et répond à « quelles recettes dépendent d'un levain actif ».
 
 Corps de fiche en trois sections fixes : **Tableau** (notation tabulaire, ingrédients entiers en colonne 1, préparations explicites en colonne 2, fusions vers la droite), **Notes d'exécution** (points de contrôle et échecs observés), **Journal** (une ligne datée par fournée). Le tableau exige du HTML brut : le Markdown ne connaît ni `rowspan` ni `colspan`.
+
 ## Différence avec les autres types
 
 À ne pas confondre avec le statut `6. Recette` (phase de validation d'un projet).

@@ -1,7 +1,10 @@
 ---
 type: Procedure
 topic:
-person:
-rating:
-tags:
 ---
+## Prérequis
+
+## Étapes
+1. 
+
+## Vérification

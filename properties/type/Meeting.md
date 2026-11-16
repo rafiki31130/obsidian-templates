@@ -8,17 +8,18 @@ type: Meeting
 
 ## Caractéristiques
 
-Les participants vont dans `people:` ; les actions en tâches `#Todo`.
+Les participants vont dans `person:`. Les actions sont listées dans la section Actions ; ajouter `#Todo` à celles qui doivent remonter dans les vues Tasks.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Meeting.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Meeting.md`.
 
 - `type: Meeting`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
+- `topic:` lien(s) vers le ou les Topics concernés
+- `person:` lien(s) vers les participants
+
+Corps : Ordre du jour · Échanges · Décisions · Actions.
 
 ## Différence avec les autres types
 

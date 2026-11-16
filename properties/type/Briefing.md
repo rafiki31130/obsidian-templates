@@ -8,17 +8,16 @@ Synthèse **quotidienne** préparée pour démarrer la journée : agenda, tâche
 
 ## Caractéristiques
 
-Rangée dans `briefings/`, nommage `YYYY-MM-DD @ Briefing`.
+Rangée dans `briefings/`, nommage `YYYY-MM-DD @ Briefing`, généralement produite par l'agent de briefing quotidien.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Briefing.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Briefing.md`.
 
 - `type: Briefing`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
+
+Corps : Agenda · Emails · Veille · Actions.
 
 ## Différence avec les autres types
 

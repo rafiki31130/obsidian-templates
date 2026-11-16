@@ -12,13 +12,12 @@ Se conclut par une recommandation ou une décision.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Etude.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Etude.md`.
 
 - `type: Etude`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : Question · Options (tableau avantages / inconvénients) · Conclusion.
 
 ## Différence avec les autres types
 

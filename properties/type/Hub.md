@@ -12,13 +12,12 @@ Contient surtout des liens et des vues (Dataview, Bases), peu de contenu propre.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Hub.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Hub.md`.
 
 - `type: Hub`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : vue `![[Relations.base]]` (notes rattachées au Hub, groupées par type ; vues *Projects*, *Meetings*, *Ops*, *Knowledge* accessibles depuis l'intégration).
 
 ## Différence avec les autres types
 

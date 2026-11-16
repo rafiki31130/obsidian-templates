@@ -1,7 +1,4 @@
 ---
 type: Scratch
-topic:
-person:
-rating:
-tags:
+date: "[[{{date:YYYY-MM-DD}}]]"
 ---

@@ -12,13 +12,13 @@ Décrit le périmètre, le plan de mise en œuvre, le plan de retour arrière et
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Changement.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Changement.md`.
 
 - `type: Changement`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`) — à corriger en date de mise en œuvre
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : Objectif et périmètre · Plan (checklist) · Retour arrière · Résultat.
 
 ## Différence avec les autres types
 

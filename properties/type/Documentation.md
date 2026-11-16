@@ -12,13 +12,12 @@ Décrit l'existant : architecture, configuration, fonctionnement.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Documentation.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Documentation.md`.
 
 - `type: Documentation`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : Présentation · Fonctionnement · Configuration · Liens.
 
 ## Différence avec les autres types
 

@@ -1,0 +1,55 @@
+filters:
+  and:
+    - type.containsAny("SplunkApplication", "SplunkDashboard", "SplunkLookup", "SplunkSavedsearch")
+    - '!file.tags.contains("archived")'
+views:
+  - type: table
+    name: All
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - external reference
+      - topic
+      - file.mtime
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 360
+  - type: table
+    name: Application
+    filters:
+      and:
+        - parent.contains(link(this.file.name))
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - external reference
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 360
+  - type: table
+    name: Related
+    filters:
+      and:
+        - file.path != this.file.path
+        - or:
+            - file.hasLink(this.file)
+            - this.file.hasLink(file)
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - external reference
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 360

@@ -8,17 +8,20 @@ type: Deadline
 
 ## Caractéristiques
 
-Créée via le template `Page-Deadline`, qui ajoute aussi `next_due:` (prochaine échéance), `recurrence:`, `notice_days:` (préavis) et `action:`.
+Listée dans `resources/Deadlines.base` (vue *Upcomming* : échéances dans la fenêtre de préavis). À chaque échéance traitée, avancer `next_due` d'une `recurrence`.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Deadline.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Deadline.md`.
 
 - `type: Deadline`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `next_due:` prochaine échéance (date)
+- `recurrence:` périodicité en texte libre (`1 an`, `6 mois`…), vide si unique
+- `notice_days:` préavis en jours (30 par défaut) : l'échéance remonte dans `Deadlines.base` quand `next_due` est à moins de `notice_days` jours
+- `action:` ce qu'il faut faire à l'échéance
+- `topic:` lien(s) vers le ou les Topics concernés
+
+Corps : aucun (page libre, section Notes).
 
 ## Différence avec les autres types
 

@@ -1,8 +1,11 @@
 ---
 type: SplunkApplication
 topic:
-person:
-rating:
 external reference:
-tags:
 ---
+## Summary
+
+## Deployment
+
+## Objects
+![[Splunk.base#Application]]

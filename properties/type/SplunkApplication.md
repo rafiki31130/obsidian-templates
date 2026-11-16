@@ -12,10 +12,10 @@ Parent naturel des fiches SplunkDashboard, SplunkLookup et SplunkSavedsearch qu'
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-SplunkApplication.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_SplunkApplication.md`.
 
 - `type: SplunkApplication`
-- `domain:` liens vers le ou les Topics concernés
-- `people:` liens vers les personnes concernées
-- `rating:` note (entier)
-- `tags:`
+- `topic:` lien(s) vers le ou les Topics concernés
+- `external reference:` nom ou URL de l'objet dans Splunk
+
+Corps : Summary · Deployment · Objects `![[Splunk.base#Application]]` (fiches Splunk dont `parent:` est l'application, groupées par type).

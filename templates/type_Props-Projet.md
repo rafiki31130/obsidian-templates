@@ -1,5 +1,5 @@
 ---
 type: Projet
-statut:
+statut: 1. A cadrer
 relations:
 ---
