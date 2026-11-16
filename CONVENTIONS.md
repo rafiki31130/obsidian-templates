@@ -158,7 +158,7 @@ Champs principaux : `type`, `statut`, `relations`, `tags`. Valeurs autorisées �
 
 ### Note classique (pages libres)
 
-**Pas de frontmatter obligatoire.** Ajouter uniquement ce qui est utile : `tags`, `relations`, titre personnalisé. Le template `Page-DynHierarchy` est appliqué par défaut par Templater à toute nouvelle page classique.
+**Pas de frontmatter obligatoire.** Ajouter uniquement ce qui est utile : `tags`, `relations`, titre personnalisé. Le template `Page-DynHierarchy` est appliqué par défaut par Templater à toute nouvelle page classique. Il propose systématiquement le choix du type (même action que le bouton `button-applytype` / `Script_ApplyType`) : les propriétés du template `type_*` choisi sont fusionnées avec `parent:` dans un frontmatter unique. Échap = page sans type.
 
 ### Journal (`journals/YYYY-MM-DD.md`)
 

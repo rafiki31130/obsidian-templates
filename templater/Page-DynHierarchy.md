@@ -9,14 +9,45 @@ if (title.includes('@')) {
   if (parts.length > 1) parent = parts.slice(0, -1).join('@').trim();
 }
 
-const hdFence = "---";
+// --- Définir le type (même action que le bouton `button-applytype` / Script_ApplyType) ---
+// Proposé systématiquement à la création de la page. Échap = pas de type.
+let typeProps = [];   // lignes de frontmatter issues du template type_*
+let typeBody = "";    // éventuel contenu hors frontmatter du template type_*
 
-if (parent) { tR += `${hdFence}
-`; }
-if (parent) { tR += `parent: "[[${parent}]]"
-`; }
-if (parent) { tR += `${hdFence}
-`; }
+const typeFiles = app.vault
+  .getMarkdownFiles()
+  .filter(f => f.path.startsWith("r_templates/templater/type_"))
+  .sort((a, b) => a.basename.localeCompare(b.basename));
+
+if (typeFiles.length > 0) {
+  const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace(/^type_/, ""));
+  const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
+  if (chosen) {
+    const raw = await app.vault.read(chosen);
+    const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    if (fm) {
+      typeProps = fm[1].split(/\r?\n/).filter(l => l.trim() !== "");
+      typeBody = raw.slice(fm[0].length);
+    } else {
+      typeBody = raw;
+    }
+    // Le parent calculé depuis le titre prime sur un éventuel parent du template type
+    if (parent) typeProps = typeProps.filter(l => !/^parent\s*:/.test(l));
+  }
+}
+
+// --- Frontmatter unique : parent + propriétés du type ---
+const hdFence = "---";
+const props = [];
+if (parent) props.push(`parent: "[[${parent}]]"`);
+props.push(...typeProps);
+
+if (props.length > 0) {
+  tR += `${hdFence}\n${props.join("\n")}\n${hdFence}\n`;
+}
+if (typeBody.trim() !== "") {
+  tR += typeBody.replace(/\s*$/, "\n");
+}
 
 %>
 `button-applytype` `button-archive`
