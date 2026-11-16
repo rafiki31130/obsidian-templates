@@ -2,7 +2,7 @@
 type: Person
 person:
   - "[[{{title}}]]"
-Anniversaire:
+anniversaire:
 tags:
 ---
 ## Contact
