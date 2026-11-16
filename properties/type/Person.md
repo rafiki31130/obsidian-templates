@@ -15,7 +15,7 @@ Les autres notes la référencent via `people: [[Nom]]`.
 Template d'application : `templates/type_Props-Person.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Person`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

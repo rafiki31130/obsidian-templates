@@ -15,7 +15,7 @@ Décrit la requête SPL, la planification, les actions déclenchées et les look
 Template d'application : `templates/type_Props-SplunkSavedsearch.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: SplunkSavedsearch`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

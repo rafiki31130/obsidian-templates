@@ -15,7 +15,7 @@ Nommage `YYYY-MM-DD`, créée via le template `Page-Journal`. Les autres notes s
 Template d'application : `templates/type_Props-Journal.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Journal`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

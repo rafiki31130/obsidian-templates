@@ -15,11 +15,11 @@ Contient surtout des liens et des vues (Dataview, Bases), peu de contenu propre.
 Template d'application : `templates/type_Props-Hub.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Hub`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`
 
 ## Différence avec les autres types
 
-Un **Domain** est une responsabilité ; un Hub est un point d'entrée de navigation.
+Un **Topic** est un sujet suivi ; un Hub est un point d'entrée de navigation.

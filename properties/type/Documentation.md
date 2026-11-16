@@ -15,7 +15,7 @@ Décrit l'existant : architecture, configuration, fonctionnement.
 Template d'application : `templates/type_Props-Documentation.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Documentation`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

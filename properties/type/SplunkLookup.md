@@ -15,7 +15,7 @@ Indique comment le lookup est alimenté (manuel, recherche planifiée…) et que
 Template d'application : `templates/type_Props-SplunkLookup.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: SplunkLookup`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

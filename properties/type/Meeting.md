@@ -15,7 +15,7 @@ Les participants vont dans `people:` ; les actions en tâches `#Todo`.
 Template d'application : `templates/type_Props-Meeting.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Meeting`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

@@ -15,7 +15,7 @@ Décrit le périmètre, le plan de mise en œuvre, le plan de retour arrière et
 Template d'application : `templates/type_Props-Changement.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Changement`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`
