@@ -6,13 +6,18 @@ person:
 rating:
 tags:
 ---
+
 ## Symptômes
+- 
 
 ## Impact
+
 
 ## Chronologie
 - {{time:HH:mm}} : 
 
 ## Cause
 
+
 ## Résolution
+

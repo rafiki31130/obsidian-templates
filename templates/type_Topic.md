@@ -3,6 +3,7 @@ type: Topic
 topic:
   - "[[{{title}}]]"
 ---
+
 ![[Relations.base]]
 
 ## Échéances
