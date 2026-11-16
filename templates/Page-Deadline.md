@@ -1,6 +1,6 @@
 ---
 type: Deadline
-date: "[[{{date}}]]"
+date: "[[{{date:YYYY-MM-DD}}]]"
 next_due:
 recurrence:
 notice_days:
