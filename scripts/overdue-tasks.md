@@ -1,5 +1,5 @@
 ---
-type: doc-script
+type: Documentation
 descriptor: "[[overdue-tasks.query.json]]"
 ---
 

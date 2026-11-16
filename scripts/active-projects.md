@@ -1,5 +1,5 @@
 ---
-type: doc-script
+type: Documentation
 descriptor: "[[active-projects.query.json]]"
 ---
 

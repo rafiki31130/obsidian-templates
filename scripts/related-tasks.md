@@ -1,5 +1,5 @@
 ---
-type: doc-script
+type: Documentation
 script: "[[related-tasks.js]]"
 descriptor: "[[related-tasks.query.json]]"
 ---

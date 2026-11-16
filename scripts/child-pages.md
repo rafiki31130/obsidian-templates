@@ -1,5 +1,5 @@
 ---
-type: doc-script
+type: Documentation
 script: "[[child-pages.js]]"
 ---
 
