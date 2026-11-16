@@ -1,7 +1,7 @@
 <%*
 // ─── Script_GenerateTypeTemplates ─────────────────────────────────────────────
 // Parcourt tout le vault, relève toutes les valeurs de la propriété `type:`
-// et crée un template `type_Props-<Type>.md` pour chaque type qui n'en a pas
+// et crée un template `type_<Type>.md` pour chaque type qui n'en a pas
 // encore. N'écrase JAMAIS un template existant.
 //
 // Dossier de destination : détecté automatiquement, c'est le dossier configuré
@@ -12,14 +12,14 @@
 // template existant pour son `type:`.
 //
 // Un type est considéré comme « déjà couvert » si :
-//   - le fichier cible `type_Props-<Type>.md` existe déjà, ou
+//   - le fichier cible `type_<Type>.md` existe déjà, ou
 //   - un template `type_*` existant déclare déjà ce `type:` dans son frontmatter
 //     (comparaison insensible à la casse).
 //
 // Contenu par défaut d'un template généré :
 //   type:   <valeur relevée>   [text]
-//   domain:                    [links → multitext]
-//   people:                    [links → multitext]
+//   topic:                     [links → multitext]
+//   person:                    [links → multitext]
 //   rating:                    [int   → number]
 //   tags:                      [tags]
 //
@@ -35,8 +35,8 @@
 //  entier = number)
 const DEFAULT_PROPS = [
   { key: "type",   obsidianType: "text" },
-  { key: "domain", obsidianType: "multitext" },
-  { key: "people", obsidianType: "multitext" },
+  { key: "topic",  obsidianType: "multitext" },
+  { key: "person", obsidianType: "multitext" },
   { key: "rating", obsidianType: "number" },
   { key: "tags",   obsidianType: "tags" },
 ];
@@ -121,7 +121,7 @@ function safeFileName(s) {
 const toCreate = [];
 const skipped = [];
 for (const { value, count } of [...usedTypes.values()].sort((a, b) => a.value.localeCompare(b.value))) {
-  const path = `${TEMPLATE_DIR}/type_Props-${safeFileName(value)}.md`;
+  const path = `${TEMPLATE_DIR}/type_${safeFileName(value)}.md`;
   if (coveredTypes.has(value.toLowerCase()) || app.vault.getAbstractFileByPath(path)) {
     skipped.push(value);
   } else {
