@@ -15,7 +15,7 @@ Contenu durable, réutilisable et relié aux notes qui appliquent le concept.
 Template d'application : `templates/type_Props-Concepts.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Concepts`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

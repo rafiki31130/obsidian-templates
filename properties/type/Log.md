@@ -15,7 +15,7 @@ Chaque entrée est datée ; le contenu s'accumule dans le temps.
 Template d'application : `templates/type_Props-Log.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Log`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

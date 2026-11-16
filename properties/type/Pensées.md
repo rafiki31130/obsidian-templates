@@ -15,7 +15,7 @@ Contenu libre et subjectif, sans objectif d'action.
 Template d'application : `templates/type_Props-Pensées.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Pensées`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

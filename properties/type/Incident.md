@@ -15,7 +15,7 @@ Décrit symptômes, impact, chronologie, cause et résolution.
 Template d'application : `templates/type_Props-Incident.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Incident`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

@@ -1,5 +1,5 @@
 ---
-type: Domain
+type: Topic
 date: "[[{{date}}]]"
 ---
 ![[Relations.base]]

@@ -15,7 +15,7 @@ Vocation à être transformée en note typée ou supprimée.
 Template d'application : `templates/type_Props-Scratch.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Scratch`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

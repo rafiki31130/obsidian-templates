@@ -15,7 +15,7 @@ Créée via le template `Page-Deadline`, qui ajoute aussi `next_due:` (prochaine
 Template d'application : `templates/type_Props-Deadline.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: Deadline`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`

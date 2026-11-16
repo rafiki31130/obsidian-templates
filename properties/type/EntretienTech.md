@@ -15,7 +15,7 @@ Trace la date, les participants (`people:`), les questions abordées et les conc
 Template d'application : `templates/type_Props-EntretienTech.md` (généré par `Script_GenerateTypeTemplates`).
 
 - `type: EntretienTech`
-- `domain:` liens vers le ou les domaines concernés
+- `domain:` liens vers le ou les Topics concernés
 - `people:` liens vers les personnes concernées
 - `rating:` note (entier)
 - `tags:`
