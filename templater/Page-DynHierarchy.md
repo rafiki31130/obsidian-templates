@@ -30,7 +30,13 @@ if (typeFiles.length > 0) {
   const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace(/^type_/, ""));
   const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
   if (chosen) {
-    const raw = await app.vault.read(chosen);
+    // Les type_* utilisent la syntaxe du plugin « Modèles » ({{date}}, {{time}}, {{title}}) :
+    // Templater ne l'interprète pas, on la résout ici (idem Script_ApplyType).
+    const now = window.moment();
+    const raw = (await app.vault.read(chosen))
+      .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))
+      .replace(/{{\s*time(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "HH:mm"))
+      .replace(/{{\s*title\s*}}/g, title);
     const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
     if (fm) {
       typeProps = fm[1].split(/\r?\n/).filter(l => l.trim() !== "");
