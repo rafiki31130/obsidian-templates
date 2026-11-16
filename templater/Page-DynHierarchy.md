@@ -26,20 +26,17 @@ const typeFiles = app.vault
   .filter(f => f.basename.startsWith("type_") && (tplRoot === "" || f.path.startsWith(tplRoot + "/")))
   .sort((a, b) => a.basename.localeCompare(b.basename));
 
-// Variables du plugin de base « Modèles » ({{title}}, {{date[:FMT]}}, {{time[:FMT]}}) :
-// remplacées ici, car le contenu du template type_* est inséré par Templater
-const tplOpts = app.internalPlugins?.getPluginById?.("templates")?.instance?.options
-  ?? app.internalPlugins?.plugins?.templates?.instance?.options ?? {};
-const renderCoreVars = (raw, title) => raw
-  .replace(/\{\{\s*title\s*\}\}/gi, title)
-  .replace(/\{\{\s*date(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.dateFormat || "YYYY-MM-DD").trim()))
-  .replace(/\{\{\s*time(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.timeFormat || "HH:mm").trim()));
-
 if (typeFiles.length > 0) {
   const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace(/^type_/, ""));
   const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
   if (chosen) {
-    const raw = renderCoreVars(await app.vault.read(chosen), title);
+    // Les type_* utilisent la syntaxe du plugin « Modèles » ({{date}}, {{time}}, {{title}}) :
+    // Templater ne l'interprète pas, on la résout ici (idem Script_ApplyType).
+    const now = window.moment();
+    const raw = (await app.vault.read(chosen))
+      .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))
+      .replace(/{{\s*time(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "HH:mm"))
+      .replace(/{{\s*title\s*}}/g, title);
     const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
     if (fm) {
       typeProps = fm[1].split(/\r?\n/).filter(l => l.trim() !== "");

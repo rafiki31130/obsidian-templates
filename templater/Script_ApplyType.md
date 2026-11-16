@@ -20,14 +20,13 @@ const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace
 const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
 if (!chosen) return;
 
-// Variables du plugin de base « Modèles » ({{title}}, {{date[:FMT]}}, {{time[:FMT]}}) :
-// remplacées ici, car le contenu du template type_* est inséré par Templater
-const tplOpts = app.internalPlugins?.getPluginById?.("templates")?.instance?.options
-  ?? app.internalPlugins?.plugins?.templates?.instance?.options ?? {};
-const renderCoreVars = (raw, title) => raw
-  .replace(/\{\{\s*title\s*\}\}/gi, title)
-  .replace(/\{\{\s*date(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.dateFormat || "YYYY-MM-DD").trim()))
-  .replace(/\{\{\s*time(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.timeFormat || "HH:mm").trim()));
-
-tR += renderCoreVars(await app.vault.read(chosen), tp.file.title);
+// Les type_* utilisent la syntaxe du plugin « Modèles » ({{date}}, {{time}}, {{title}}) :
+// Templater ne l'interprète pas, on la résout ici.
+let content = await app.vault.read(chosen);
+const now = window.moment();
+content = content
+  .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))
+  .replace(/{{\s*time(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "HH:mm"))
+  .replace(/{{\s*title\s*}}/g, tp.file.title);
+tR += content;
 %>
