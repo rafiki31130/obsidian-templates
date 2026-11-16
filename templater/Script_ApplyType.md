@@ -20,9 +20,10 @@ const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace
 const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
 if (!chosen) return;
 
-// Les type_* utilisent la syntaxe du plugin « Modèles » ({{date}}, {{time}}, {{title}}) :
-// Templater ne l'interprète pas, on la résout ici.
-let content = await app.vault.read(chosen);
+// Le template est rendu par Templater (un type_* peut contenir du code Templater,
+// ex. type_Log qui renomme la page), puis la syntaxe du plugin « Modèles »
+// ({{date}}, {{time}}, {{title}}), que Templater n'interprète pas, est résolue ici.
+let content = await tp.file.include(chosen);
 const now = window.moment();
 content = content
   .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))

@@ -181,6 +181,8 @@ Un template `templates/type_<Type>.md` par type ; sa fiche `properties/type/<Typ
 - `person:` (liens) seulement là où il y a des interlocuteurs : Meeting, EntretienTech (et Person, qui se référence elle-même) ;
 - propriétés propres : Deadline (`next_due`, `recurrence`, `notice_days`, `action`), Projet (`statut`, `relations`), Recette (`DB_CUI_REC_*`), Splunk* (`external reference`), Learning (`rating` de 1 à 7), Person (`Anniversaire`).
 
+Les templates `type_*` sont rendus par Templater (`tp.file.include`) avant fusion : ils peuvent donc contenir du code Templater, comme `type_Log` qui demande un nom et renomme la page en `YYYY-MM-DD HHhmm - <nom>`. Ces templates s'appliquent via *Définir le type* ou à la création de page, pas via l'insertion de modèle du plugin de base.
+
 Le corps éventuel du template (sections à remplir, vues intégrées) est placé par `Page-DynHierarchy` en bas de page, avant `## Notes`, curseur sous la première section à remplir ; `Script_ApplyType` l'insère au curseur.
 
 Le script Templater `Script_GenerateTypeTemplates` crée `type_<Type>.md` pour chaque valeur de `type:` du vault qui n'a pas encore de template (aucun template existant n'est écrasé), dans le dossier du plugin de base « Modèles » (`templates/`). Contenu de départ minimal, à personnaliser : `type` (text) et `topic` (liens, multitext).
