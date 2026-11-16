@@ -4,11 +4,12 @@
 // et crée un template `type_Props-<Type>.md` pour chaque type qui n'en a pas
 // encore. N'écrase JAMAIS un template existant.
 //
-// Dossier de destination, détecté automatiquement :
-//   1. le dossier où se trouvent déjà les templates `type_*` (le plus fréquent),
-//      recherchés dans le dossier de templates configuré dans Templater ;
-//   2. à défaut, le dossier de templates configuré dans Templater ;
-//   3. à défaut, abandon avec un message (pas d'écriture à la racine du vault).
+// Dossier de destination : détecté automatiquement, c'est le dossier configuré
+// dans le plugin de base « Modèles » (Templates), d'où les type_* sont insérés.
+// S'il n'est pas configuré ou introuvable : abandon avec un message.
+//
+// Anti-doublon : tout fichier `type_*` du vault, où qu'il soit, compte comme
+// template existant pour son `type:`.
 //
 // Un type est considéré comme « déjà couvert » si :
 //   - le fichier cible `type_Props-<Type>.md` existe déjà, ou
@@ -64,30 +65,22 @@ function frontmatterOf(file) {
 
 // ─── 2. Localiser le dossier des templates type_* ────────────────────────────
 const files = app.vault.getMarkdownFiles();
-// Dossier des templates : lu dans les réglages de Templater ("" = tout le vault)
-const tplRoot = String(app.plugins?.plugins?.["templater-obsidian"]?.settings?.templates_folder ?? "")
-  .trim().replace(/^\/+|\/+$/g, "");
-const typeFiles = files
-  .filter(f => f.basename.startsWith("type_") && (tplRoot === "" || f.path.startsWith(tplRoot + "/")))
-  .sort((a, b) => a.basename.localeCompare(b.basename));
+// Dossier des templates : celui du plugin de base « Modèles » (Templates),
+// d'où les type_* sont insérés ("" = non configuré → tout le vault)
+const tplRoot = String(
+  app.internalPlugins?.getPluginById?.("templates")?.instance?.options?.folder
+  ?? app.internalPlugins?.plugins?.templates?.instance?.options?.folder
+  ?? ""
+).trim().replace(/^\/+|\/+$/g, "");
+// Tous les type_* du vault (anti-doublon), où qu'ils soient
+const typeFiles = files.filter(f => f.basename.startsWith("type_"));
 const typeFilePaths = new Set(typeFiles.map(f => f.path));
 
-let TEMPLATE_DIR = null;
-if (typeFiles.length > 0) {
-  const byFolder = new Map();
-  for (const f of typeFiles) {
-    const dir = f.parent?.path ?? f.path.split("/").slice(0, -1).join("/");
-    byFolder.set(dir, (byFolder.get(dir) ?? 0) + 1);
-  }
-  TEMPLATE_DIR = [...byFolder.entries()].sort((a, b) => b[1] - a[1])[0][0];
-} else if (tplRoot !== "") {
-  TEMPLATE_DIR = tplRoot;
-}
-if (TEMPLATE_DIR === "/") TEMPLATE_DIR = "";
+const TEMPLATE_DIR = tplRoot;
 if (!TEMPLATE_DIR || !app.vault.getAbstractFileByPath(TEMPLATE_DIR)) {
   new Notice(
-    "Dossier des templates introuvable : aucun template type_* existant et " +
-    "aucun dossier de templates valide dans les réglages de Templater.", 8000);
+    "Dossier des modèles introuvable : configurez-le dans Réglages → Modèles " +
+    "(plugin de base Templates) → Emplacement du dossier des modèles.", 8000);
   return;
 }
 

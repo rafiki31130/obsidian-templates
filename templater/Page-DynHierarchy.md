@@ -14,9 +14,13 @@ if (title.includes('@')) {
 let typeProps = [];   // lignes de frontmatter issues du template type_*
 let typeBody = "";    // éventuel contenu hors frontmatter du template type_*
 
-// Dossier des templates : lu dans les réglages de Templater ("" = tout le vault)
-const tplRoot = String(app.plugins?.plugins?.["templater-obsidian"]?.settings?.templates_folder ?? "")
-  .trim().replace(/^\/+|\/+$/g, "");
+// Dossier des templates : celui du plugin de base « Modèles » (Templates),
+// d'où les type_* sont insérés ("" = non configuré → tout le vault)
+const tplRoot = String(
+  app.internalPlugins?.getPluginById?.("templates")?.instance?.options?.folder
+  ?? app.internalPlugins?.plugins?.templates?.instance?.options?.folder
+  ?? ""
+).trim().replace(/^\/+|\/+$/g, "");
 const typeFiles = app.vault
   .getMarkdownFiles()
   .filter(f => f.basename.startsWith("type_") && (tplRoot === "" || f.path.startsWith(tplRoot + "/")))

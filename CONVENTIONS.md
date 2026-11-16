@@ -174,7 +174,7 @@ Bouton `button-addjournal` (« Add to journal », présent sur les pages enfant 
 
 ### Templates de type (`type_Props-*`)
 
-Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève toutes les valeurs de `type:` et crée `type_Props-<Type>.md` pour chaque type qui n'a pas encore de template (aucun template existant n'est écrasé). Le dossier de destination est détecté automatiquement : dossier des `type_*` existants, sinon dossier de templates configuré dans Templater. `Script_ApplyType` et `Page-DynHierarchy` cherchent les `type_*` dans ce même dossier Templater (sous-dossiers compris). Contenu par défaut : `type` (text), `domain` (liens, multitext), `people` (liens, multitext), `rating` (number), `tags` (tags). Les types de propriétés ne sont déclarés que s'ils ne l'étaient pas déjà.
+Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève toutes les valeurs de `type:` et crée `type_Props-<Type>.md` pour chaque type qui n'a pas encore de template (aucun template existant n'est écrasé). Le dossier de destination est détecté automatiquement : c'est le dossier du plugin de base « Modèles » (Templates), d'où les `type_*` sont insérés (`templates/`). `Script_ApplyType` et `Page-DynHierarchy` cherchent les `type_*` dans ce même dossier (sous-dossiers compris). Contenu par défaut : `type` (text), `domain` (liens, multitext), `people` (liens, multitext), `rating` (number), `tags` (tags). Les types de propriétés ne sont déclarés que s'ils ne l'étaient pas déjà.
 
 ---
 
@@ -276,7 +276,7 @@ Puis déclencher LiveSync (voir ci-dessus).
 
 ### Créer une note projet via MCP
 
-**Ne jamais créer une note projet en écrivant le frontmatter manuellement.** Toujours utiliser le template Templater `type_Props-Projet.md`.
+**Ne jamais créer une note projet en écrivant le frontmatter manuellement.** Toujours utiliser le template `type_Props-Projet.md` (dossier `templates/`).
 
 Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponible sur toute page classique) ou lancer la commande Templater. Si une création via MCP est nécessaire, créer d'abord un fichier vide, puis déclencher l'application du template via `command_execute`.
 
