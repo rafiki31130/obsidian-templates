@@ -10,14 +10,14 @@ Remplace les anciens types `Domain` et `Ressource`.
 
 ## Caractéristiques
 
-- Créé via le template `Page-Domaine`.
+- Créé via le template `templates/type_Topic.md` (`topic:` = lien vers la page elle-même).
 - Rangé dans `pages/2. Domaines/` (responsabilités) ou `pages/3. Ressources/` (thèmes d'intérêt).
 - Sert de parent aux projets et aux notes du sujet (convention `Parent @ Enfant` ou `parent: "[[Topic]]"`).
 - Les autres notes y renvoient via la propriété `domain:`.
 
 ## Propriétés
 
-Template d'application : `templates/type_Props-Topic.md` (généré par `Script_GenerateTypeTemplates`).
+Template d'application : `templates/type_Topic.md`.
 
 - `type: Topic`
 - `domain:` liens vers le ou les Topics parents

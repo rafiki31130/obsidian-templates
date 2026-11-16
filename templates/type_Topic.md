@@ -1,7 +1,7 @@
 ---
 type: Topic
-date: "[[{{date}}]]"
+date: "[[{{date:YYYY-MM-DD}}]]"
 topic:
-  - "{{filename}}"
+  - "[[{{title}}]]"
 ---
 ![[Relations.base]]

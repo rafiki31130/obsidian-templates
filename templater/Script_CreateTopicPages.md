@@ -11,15 +11,17 @@
 // un fichier du vault, où qu'il soit (pas de doublon), ou si `pages/<Topic>.md`
 // existe. Aucune page existante n'est modifiée ni écrasée.
 //
-// Contenu d'une page créée : le template `Page-Domaine` du dossier du plugin de
-// base « Modèles » (variables {{title}}, {{date}}, {{time}} remplacées), avec
-// `type: Topic` garanti. Repli si le template est introuvable : `type: Topic` seul.
+// Contenu d'une page créée : le template `type_Topic` du dossier du plugin de
+// base « Modèles » (variables {{title}}, {{date}}, {{time}} remplacées).
+// Garanti dans tous les cas : `type: Topic` et `topic:` contenant le lien vers
+// la page elle-même ([[Nom de la page]]). Repli si le template est introuvable :
+// ces deux propriétés seules.
 //
 // Les fichiers des dossiers de templates (Modèles et Templater) sont ignorés.
 
 const TOPIC_PROPS    = ["topic"];      // propriétés lues comme références de topic
 const TOPIC_DIR      = "pages";        // dossier de création des pages manquantes
-const TOPIC_TEMPLATE = "Page-Domaine"; // template appliqué aux pages créées
+const TOPIC_TEMPLATE = "type_Topic";   // template appliqué aux pages créées
 const TOPIC_TYPE     = "Topic";
 
 // ─── 1. Dossiers de templates (exclus du scan) ───────────────────────────────
@@ -111,11 +113,22 @@ const tplFile = app.vault.getMarkdownFiles().find(f =>
   f.basename === TOPIC_TEMPLATE && (!tplRoot || f.path.startsWith(tplRoot + "/")));
 const tplRaw = tplFile ? await app.vault.read(tplFile) : null;
 
-function render(raw, name) {
-  return raw
-    .replace(/\{\{\s*title\s*\}\}/gi, name)
-    .replace(/\{\{\s*date(?::([^}]+))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || "YYYY-MM-DD").trim()))
-    .replace(/\{\{\s*time(?::([^}]+))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || "HH:mm").trim()));
+// Variables du plugin de base « Modèles » ({{title}}, {{date[:FMT]}}, {{time[:FMT]}}) :
+// remplacées ici, car la page est créée par script
+const tplOpts = app.internalPlugins?.getPluginById?.("templates")?.instance?.options
+  ?? app.internalPlugins?.plugins?.templates?.instance?.options ?? {};
+const renderCoreVars = (raw, title) => raw
+  .replace(/\{\{\s*title\s*\}\}/gi, title)
+  .replace(/\{\{\s*date(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.dateFormat || "YYYY-MM-DD").trim()))
+  .replace(/\{\{\s*time(?::([^}]*))?\s*\}\}/gi, (_, fmt) => moment().format((fmt || tplOpts.timeFormat || "HH:mm").trim()));
+
+// Le topic d'une page Topic est la page elle-même, au format lien
+function selfTopic(fm, name) {
+  if (!fm.type) fm.type = TOPIC_TYPE;
+  const self = `[[${name}]]`;
+  const list = (fm.topic == null || fm.topic === "") ? [] : asList(fm.topic).map(toLink);
+  const has = list.some(v => parseTopic(v)?.name?.toLowerCase() === name.toLowerCase());
+  fm.topic = has ? list : [self, ...list];
 }
 
 let created = 0;
@@ -124,8 +137,8 @@ for (const t of missing) {
   const path = pathFor(t.name);
   try {
     if (app.vault.getAbstractFileByPath(path)) continue; // jamais d'écrasement
-    const file = await app.vault.create(path, tplRaw ? render(tplRaw, t.name) : `---\ntype: ${TOPIC_TYPE}\n---\n`);
-    await app.fileManager.processFrontMatter(file, fm => { if (!fm.type) fm.type = TOPIC_TYPE; });
+    const file = await app.vault.create(path, tplRaw ? renderCoreVars(tplRaw, t.name) : `---\ntype: ${TOPIC_TYPE}\n---\n`);
+    await app.fileManager.processFrontMatter(file, fm => selfTopic(fm, t.name));
     created++;
   } catch (e) {
     errors.push(`${path}: ${e.message}`);
@@ -154,7 +167,7 @@ for (const f of toFix) {
 
 // ─── 8. Récapitulatif ─────────────────────────────────────────────────────────
 let summary = `${created} page(s) Topic créée(s) dans ${TOPIC_DIR}/, ${fixed} note(s) convertie(s) en liens.`;
-if (!tplRaw && created) summary += `\n(Template ${TOPIC_TEMPLATE} introuvable : pages créées avec type: ${TOPIC_TYPE} seul.)`;
+if (!tplRaw && created) summary += `\n(Template ${TOPIC_TEMPLATE} introuvable : pages créées avec type et topic seuls.)`;
 if (errors.length) {
   console.error("Script_CreateTopicPages — erreurs :", errors);
   new Notice(`${summary}\n${errors.length} erreur(s) — voir console.`, 8000);

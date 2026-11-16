@@ -179,7 +179,7 @@ Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève to
 ### Pages Topic (`Script_CreateTopicPages`)
 
 Le script Templater `Script_CreateTopicPages` relève toutes les valeurs de la propriété `topic:` du vault, puis :
-- crée dans `pages/` une page `type: Topic` (template `Page-Domaine`) pour chaque topic sans page. Un topic dont le lien `[[Topic]]` se résout déjà vers un fichier, où qu'il soit, n'est pas recréé ;
+- crée dans `pages/` une page `type: Topic` (template `type_Topic`) pour chaque topic sans page. Un topic dont le lien `[[Topic]]` se résout déjà vers un fichier, où qu'il soit, n'est pas recréé ;
 - convertit en liens les valeurs écrites en texte brut (`topic: Vehicules` → `topic: "[[Vehicules]]"`).
 
 Aucune page existante n'est écrasée ; les dossiers de templates sont ignorés.
