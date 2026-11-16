@@ -1,8 +1,14 @@
 <%*
 // ─── Script_GenerateTypeTemplates ─────────────────────────────────────────────
 // Parcourt tout le vault, relève toutes les valeurs de la propriété `type:`
-// et crée un template `r_templates/templater/type_Props-<Type>.md` pour chaque
-// type qui n'en a pas encore. N'écrase JAMAIS un template existant.
+// et crée un template `type_Props-<Type>.md` pour chaque type qui n'en a pas
+// encore. N'écrase JAMAIS un template existant.
+//
+// Dossier de destination, détecté automatiquement :
+//   1. le dossier où se trouvent déjà les templates `type_*` (le plus fréquent),
+//      recherchés dans le dossier de templates configuré dans Templater ;
+//   2. à défaut, le dossier de templates configuré dans Templater ;
+//   3. à défaut, abandon avec un message (pas d'écriture à la racine du vault).
 //
 // Un type est considéré comme « déjà couvert » si :
 //   - le fichier cible `type_Props-<Type>.md` existe déjà, ou
@@ -22,8 +28,6 @@
 // Les templates générés apparaissent ensuite dans « Définir le type »
 // (Script_ApplyType) et à la création de page (Page-DynHierarchy).
 
-const TEMPLATE_DIR = "r_templates/templater";
-const TEMPLATE_PREFIX = `${TEMPLATE_DIR}/type_`;
 
 // Propriétés par défaut et leur type Obsidian
 // (Obsidian n'a pas de type « links » ni « int » : liste de liens = multitext,
@@ -58,12 +62,40 @@ function frontmatterOf(file) {
   return app.metadataCache.getFileCache(file)?.frontmatter ?? null;
 }
 
-// ─── 2. Relever tous les types utilisés dans le vault ────────────────────────
+// ─── 2. Localiser le dossier des templates type_* ────────────────────────────
 const files = app.vault.getMarkdownFiles();
+// Dossier des templates : lu dans les réglages de Templater ("" = tout le vault)
+const tplRoot = String(app.plugins?.plugins?.["templater-obsidian"]?.settings?.templates_folder ?? "")
+  .trim().replace(/^\/+|\/+$/g, "");
+const typeFiles = files
+  .filter(f => f.basename.startsWith("type_") && (tplRoot === "" || f.path.startsWith(tplRoot + "/")))
+  .sort((a, b) => a.basename.localeCompare(b.basename));
+const typeFilePaths = new Set(typeFiles.map(f => f.path));
+
+let TEMPLATE_DIR = null;
+if (typeFiles.length > 0) {
+  const byFolder = new Map();
+  for (const f of typeFiles) {
+    const dir = f.parent?.path ?? f.path.split("/").slice(0, -1).join("/");
+    byFolder.set(dir, (byFolder.get(dir) ?? 0) + 1);
+  }
+  TEMPLATE_DIR = [...byFolder.entries()].sort((a, b) => b[1] - a[1])[0][0];
+} else if (tplRoot !== "") {
+  TEMPLATE_DIR = tplRoot;
+}
+if (TEMPLATE_DIR === "/") TEMPLATE_DIR = "";
+if (!TEMPLATE_DIR || !app.vault.getAbstractFileByPath(TEMPLATE_DIR)) {
+  new Notice(
+    "Dossier des templates introuvable : aucun template type_* existant et " +
+    "aucun dossier de templates valide dans les réglages de Templater.", 8000);
+  return;
+}
+
+// ─── 3. Relever tous les types utilisés dans le vault ────────────────────────
 const usedTypes = new Map(); // clé minuscule → { value, count }
 
 for (const f of files) {
-  if (f.path.startsWith(TEMPLATE_PREFIX)) continue; // ne pas compter les templates type_* eux-mêmes
+  if (typeFilePaths.has(f.path)) continue; // ne pas compter les templates type_* eux-mêmes
   const fm = frontmatterOf(f);
   if (!fm || !("type" in fm)) continue;
   for (const t of normalizeTypeValues(fm.type)) {
@@ -79,9 +111,9 @@ if (usedTypes.size === 0) {
   return;
 }
 
-// ─── 3. Types déjà couverts par un template existant ─────────────────────────
+// ─── 4. Types déjà couverts par un template existant ─────────────────────────
 const coveredTypes = new Set();
-for (const f of files.filter(f => f.path.startsWith(TEMPLATE_PREFIX))) {
+for (const f of typeFiles) {
   const fm = frontmatterOf(f);
   if (fm && "type" in fm) {
     for (const t of normalizeTypeValues(fm.type)) coveredTypes.add(t.toLowerCase());
@@ -96,7 +128,7 @@ function safeFileName(s) {
 const toCreate = [];
 const skipped = [];
 for (const { value, count } of [...usedTypes.values()].sort((a, b) => a.value.localeCompare(b.value))) {
-  const path = `${TEMPLATE_PREFIX}Props-${safeFileName(value)}.md`;
+  const path = `${TEMPLATE_DIR}/type_Props-${safeFileName(value)}.md`;
   if (coveredTypes.has(value.toLowerCase()) || app.vault.getAbstractFileByPath(path)) {
     skipped.push(value);
   } else {
@@ -109,17 +141,17 @@ if (toCreate.length === 0) {
   return;
 }
 
-// ─── 4. Confirmer ─────────────────────────────────────────────────────────────
+// ─── 5. Confirmer ─────────────────────────────────────────────────────────────
 const preview = toCreate.map(t => `${t.value} (${t.count})`).join(", ");
 const confirm = await tp.system.suggester(
   [`Oui, créer ${toCreate.length} template(s) : ${preview}`, "Annuler"],
   [true, false],
   false,
-  `${toCreate.length} type(s) sans template — les créer ?`
+  `${toCreate.length} type(s) sans template — les créer dans ${TEMPLATE_DIR}/ ?`
 );
 if (!confirm) return;
 
-// ─── 5. Création des templates ───────────────────────────────────────────────
+// ─── 6. Création des templates ───────────────────────────────────────────────
 // Valeur YAML : entre guillemets seulement si nécessaire
 function yamlScalar(s) {
   return /^[\p{L}\p{N} _.\-()']+$/u.test(s) && !/^\s|\s$/.test(s) && !/^(true|false|null|yes|no|~|-?\d+(\.\d+)?)$/i.test(s)
@@ -145,7 +177,7 @@ for (const t of toCreate) {
   }
 }
 
-// ─── 6. Déclarer les types de propriétés (sans rien écraser) ─────────────────
+// ─── 7. Déclarer les types de propriétés (sans rien écraser) ─────────────────
 const typesDeclared = [];
 const mtm = app.metadataTypeManager;
 if (mtm && typeof mtm.setType === "function") {
@@ -176,8 +208,8 @@ if (mtm && typeof mtm.setType === "function") {
   }
 }
 
-// ─── 7. Notice récapitulative ────────────────────────────────────────────────
-let summary = `${created} template(s) type_* créé(s), ${skipped.length} déjà existant(s).`;
+// ─── 8. Notice récapitulative ────────────────────────────────────────────────
+let summary = `${created} template(s) type_* créé(s) dans ${TEMPLATE_DIR}/, ${skipped.length} déjà existant(s).`;
 if (typesDeclared.length > 0) summary += `\nTypes de propriétés déclarés : ${typesDeclared.join(", ")}`;
 if (errors.length > 0) {
   console.error("Script_GenerateTypeTemplates — erreurs :", errors);
