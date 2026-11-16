@@ -168,6 +168,14 @@ Champs principaux : `type`, `statut`, `relations`, `tags`. Valeurs autorisées �
 
 Appliquer le template `Props-Archived` (ajoute `tags: [archived]` en frontmatter). Cela masque la note des vues actives sans la supprimer.
 
+### Rattachement au journal
+
+Bouton `button-addjournal` (« Add to journal », présent sur les pages enfant via `Page-DynHierarchy`) : applique le template `Props-AddToJournal`, qui ajoute `date: "[[YYYY-MM-DD]]"` (date du jour) en frontmatter.
+
+### Templates de type (`type_Props-*`)
+
+Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève toutes les valeurs de `type:` et crée `templater/type_Props-<Type>.md` pour chaque type qui n'a pas encore de template (aucun template existant n'est écrasé). Contenu par défaut : `type` (text), `domain` (liens, multitext), `people` (liens, multitext), `rating` (number), `tags` (tags). Les types de propriétés ne sont déclarés que s'ils ne l'étaient pas déjà.
+
 ---
 
 ## Conventions MCP / usage LLM
@@ -283,6 +291,8 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 | `resources/📥Inbox.md` | *(non utilisé dans ce workflow)* |
 | `templates/type_Props-Projet.md` | Template frontmatter projet |
 | `templates/Props-Archived.md` | Template archivage |
+| `templates/Props-AddToJournal.md` | Template « Add to journal » (`date:` du jour) |
+| `templater/Script_GenerateTypeTemplates.md` | Génère les templates `type_Props-*` manquants |
 | `templates/Page-Journal.md` | Template journal quotidien |
 | `properties/statut/` | Fichiers de définition des valeurs de statut |
 | `properties/type/Projet.md` | Définition du type Projet |

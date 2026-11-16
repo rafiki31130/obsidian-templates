@@ -50,7 +50,7 @@ if (typeBody.trim() !== "") {
 }
 
 %>
-`button-applytype` `button-archive`
+`button-applytype` `button-archive` `button-addjournal`
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs

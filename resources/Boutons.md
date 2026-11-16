@@ -1,5 +1,5 @@
 
-`button-applytype` `button-archive`
+`button-applytype` `button-archive` `button-addjournal`
 
 
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
@@ -31,6 +31,13 @@ type append template
 action Props-Archived
 ```
 ^button-archive
+
+```button
+name Add to journal
+type append template
+action Props-AddToJournal
+```
+^button-addjournal
 
 ```button
 name Add log
