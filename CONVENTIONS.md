@@ -176,6 +176,14 @@ Bouton `button-addjournal` (« Add to journal », présent sur les pages enfant 
 
 Le script Templater `Script_GenerateTypeTemplates` parcourt le vault, relève toutes les valeurs de `type:` et crée `type_Props-<Type>.md` pour chaque type qui n'a pas encore de template (aucun template existant n'est écrasé). Le dossier de destination est détecté automatiquement : c'est le dossier du plugin de base « Modèles » (Templates), d'où les `type_*` sont insérés (`templates/`). `Script_ApplyType` et `Page-DynHierarchy` cherchent les `type_*` dans ce même dossier (sous-dossiers compris). Contenu par défaut : `type` (text), `domain` (liens, multitext), `people` (liens, multitext), `rating` (number), `tags` (tags). Les types de propriétés ne sont déclarés que s'ils ne l'étaient pas déjà.
 
+### Pages Topic (`Script_CreateTopicPages`)
+
+Le script Templater `Script_CreateTopicPages` relève toutes les valeurs de la propriété `topic:` du vault, puis :
+- crée dans `pages/` une page `type: Topic` (template `Page-Domaine`) pour chaque topic sans page. Un topic dont le lien `[[Topic]]` se résout déjà vers un fichier, où qu'il soit, n'est pas recréé ;
+- convertit en liens les valeurs écrites en texte brut (`topic: Vehicules` → `topic: "[[Vehicules]]"`).
+
+Aucune page existante n'est écrasée ; les dossiers de templates sont ignorés.
+
 ---
 
 ## Conventions MCP / usage LLM
@@ -293,6 +301,7 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 | `templates/Props-Archived.md` | Template archivage |
 | `templates/Props-AddToJournal.md` | Template « Add to journal » (`date:` du jour) |
 | `templater/Script_GenerateTypeTemplates.md` | Génère les templates `type_Props-*` manquants |
+| `templater/Script_CreateTopicPages.md` | Crée les pages Topic manquantes et convertit `topic:` en liens |
 | `templates/Page-Journal.md` | Template journal quotidien |
 | `properties/statut/` | Fichiers de définition des valeurs de statut |
 | `properties/type/` | Fiches de définition des valeurs de `type` (une par type) |
