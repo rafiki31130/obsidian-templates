@@ -7,9 +7,20 @@ filters:
   and:
     - type == "Deadline"
     - file.path.startsWith("pages")
+    - '!file.tags.containsAny("archived")'
 views:
   - type: table
-    name: Vue
+    name: All
+    order:
+      - file.name
+      - next_due
+      - action
+      - recurrence
+      - notice_days
+    columnSize:
+      file.name: 177
+  - type: table
+    name: Upcomming
     order:
       - file.name
       - next_due
