@@ -1,8 +1,6 @@
 ---
 type: Recette
 tags:
-  - cuisine
-  - recette
 DB_CUI_REC_portions:
 DB_CUI_REC_actif_min:
 DB_CUI_REC_total_min:
