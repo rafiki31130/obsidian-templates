@@ -2,6 +2,9 @@
 type: SplunkSavedsearch
 topic:
 external reference:
+person:
+rating:
+tags:
 ---
 ## Summary
 
