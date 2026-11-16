@@ -8,24 +8,39 @@ filters:
     - type == "Deadline"
     - file.path.startsWith("pages")
     - '!file.tags.containsAny("archived")'
+formulas:
+  days_left: next_due-today()
 views:
+  - type: table
+    name: Upcomming
+    filters:
+      and:
+        - formula.days_left <= notice_days
+    order:
+      - file.name
+      - next_due
+      - action
+      - recurrence
+      - notice_days
+      - formula.days_left
+      - topic
+    columnSize:
+      file.name: 177
+      note.notice_days: 145
   - type: table
     name: All
     order:
-      - file.name
       - next_due
+      - formula.days_left
+      - file.name
       - action
       - recurrence
       - notice_days
+      - topic
+    sort:
+      - property: next_due
+        direction: ASC
     columnSize:
       file.name: 177
-  - type: table
-    name: Upcomming
-    order:
-      - file.name
-      - next_due
-      - action
-      - recurrence
-      - notice_days
-    columnSize:
-      file.name: 177
+      note.action: 306
+      note.notice_days: 145
