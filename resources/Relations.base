@@ -1,8 +1,10 @@
 filters:
-  or:
-    - parent.contains(link(this.file.name))
-    - relations.contains(link(this.file.name))
-    - author.contains(link(this.file.name))
+  and:
+    - '!file.tags.contains("archved")'
+    - or:
+        - parent.contains(link(this.file.name))
+        - author.contains(link(this.file.name))
+        - relations.contains(link(this.file.name))
 views:
   - type: table
     name: All
