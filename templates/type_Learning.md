@@ -2,6 +2,7 @@
 type: Learning
 topic:
 rating:
+tags:
 ---
 ## Objectif
 

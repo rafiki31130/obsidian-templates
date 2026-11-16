@@ -1,6 +1,8 @@
 ---
 type: Concepts
 topic:
+rating:
+tags:
 ---
 ## Définition
 

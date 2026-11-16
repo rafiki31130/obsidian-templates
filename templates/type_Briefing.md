@@ -1,6 +1,8 @@
 ---
 type: Briefing
 date: "[[{{date:YYYY-MM-DD}}]]"
+person:
+tags:
 ---
 ## Agenda
 

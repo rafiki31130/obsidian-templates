@@ -1,6 +1,8 @@
 ---
 type: Etude
 topic:
+rating:
+tags:
 ---
 ## Question
 
