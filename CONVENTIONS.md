@@ -60,7 +60,7 @@ Depuis la note parente, en mode édition, lancer **Templater: Open insert templa
 
 1. Saisir le titre de la note enfant. Échap ou un titre vide annule la création.
 2. Choisir le type. Échap crée la note enfant sans type, comme dans le sélecteur habituel.
-3. La note s’ouvre avec la disposition de `Page-DynHierarchy` et un `parent:` pointant vers le chemin de la note de départ. Le titre reste celui saisi ; pour Log et Meeting, il devient par exemple `2026-11-19 14h05 - Point d’équipe`. Un titre déjà horodaté n’est pas préfixé une seconde fois.
+3. La note s’ouvre avec la disposition de `Page-DynHierarchy` et un `parent:` au format `[[Nom de la note parente.md]]`, sans chemin de dossier. Le titre reste celui saisi ; pour Log et Meeting, il devient par exemple `2026-11-19 14h05 - Point d’équipe`. Un titre déjà horodaté n’est pas préfixé une seconde fois.
 
 Le lanceur ne rajoute rien au texte de la note parente. `Bloc-ChildPager` (lien `Parent @ Enfant`) et `Ctrl+N` ne changent pas.
 

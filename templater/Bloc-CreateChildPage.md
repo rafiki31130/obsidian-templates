@@ -31,7 +31,7 @@ if ((type === "type_Log" || type === "type_Meeting") && !/^\d{4}-\d{2}-\d{2} \d{
 }
 
 // Passage de données au moteur du modèle enfant, sans laisser de délimiteur Templater dans le JSON.
-const context = JSON.stringify({ parent: `[[${source.path.slice(0, -3)}]]`, typePath })
+const context = JSON.stringify({ parent: `[[${source.name}]]`, typePath })
   .replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
 const bootstrap = "<" + `%* const childPageContext = ${context}; %` + ">";
 const layoutSource = await app.vault.read(layout);

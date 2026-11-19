@@ -9,7 +9,7 @@ const folder = "r_templates/templater/";
 const launcher = folder + "Bloc-CreateChildPage.md";
 const layout = folder + "Page-DynHierarchy.md";
 const read = filePath => fs.readFileSync(path.join(root, filePath.replace(/^r_templates\//, "")), "utf8");
-const file = filePath => ({ path: filePath, basename: path.posix.basename(filePath, ".md"), extension: "md" });
+const file = filePath => ({ path: filePath, name: path.posix.basename(filePath), basename: path.posix.basename(filePath, ".md"), extension: "md" });
 
 // Les blocs d'un même template partagent leur portée lexicale ; include lance un rendu séparé.
 function render(source, { tp, app, Notice }) {
@@ -110,7 +110,7 @@ for (const [type, name, title] of [
     assert.equal(f.hasSelection(), false, "l'insertion vide ne doit pas effacer le texte sélectionné");
     assert.equal(f.children[0].title, title);
     const { content } = f.children[0];
-    assert.match(content, /^---\nparent: "\[\[pages\/Projet \\"Nord\\" @ Phase 1\]\]"\n/m);
+    assert.equal(content.split("\n")[1], `parent: ${JSON.stringify('[[Projet "Nord" @ Phase 1.md]]')}`);
     assert.equal((content.match(/^parent:/gm) ?? []).length, 1);
     assert.ok(content.includes(`type: ${type}\n`));
     assert.ok(content.includes("## Notes"));
