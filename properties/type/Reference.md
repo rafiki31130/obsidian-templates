@@ -15,6 +15,7 @@ Contenu factuel, mis à jour ponctuellement.
 Template d'application : `templates/type_Reference.md`.
 
 - `type: Reference`
+- `parent:` lien facultatif vers le projet ou dossier auquel se rattache la référence
 - `topic:` lien(s) vers le ou les Topics concernés
 
 Corps : aucun (page libre, section Notes).

@@ -15,6 +15,7 @@ Rattachée à son application via `parent:` ou le nommage `Application @ Dashboa
 Template d'application : `templates/type_SplunkDashboard.md`.
 
 - `type: SplunkDashboard`
+- `parent:` lien facultatif vers l’application ou le projet de rattachement
 - `topic:` lien(s) vers le ou les Topics concernés
 - `external reference:` nom ou URL de l'objet dans Splunk
 

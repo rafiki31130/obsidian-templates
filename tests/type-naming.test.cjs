@@ -101,7 +101,7 @@ for (const type of ["Log", "Meeting"]) {
 
   test(`${type} : préserve les propriétés et le corps du template`, async () => {
     const result = await applyType(type);
-    const frontmatter = `---\ntype: ${type}\ndate: "[[{{date:YYYY-MM-DD}}]]"\ntopic:\nperson:\nrating:\ntags:\n---\n`;
+    const frontmatter = `---\ntype: ${type}\nparent:\ndate: "[[{{date:YYYY-MM-DD}}]]"\ntopic:\nperson:\nrating:\ntags:\n---\n`;
     assert.ok(result.rendered.startsWith(frontmatter));
     const body = result.rendered.slice(frontmatter.length);
     if (type === "Meeting") {

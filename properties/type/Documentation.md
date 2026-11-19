@@ -15,6 +15,7 @@ Décrit l'existant : architecture, configuration, fonctionnement.
 Template d'application : `templates/type_Documentation.md`.
 
 - `type: Documentation`
+- `parent:` lien facultatif vers le projet, outil ou système documenté
 - `topic:` lien(s) vers le ou les Topics concernés
 
 Corps : Présentation · Fonctionnement · Configuration · Liens.

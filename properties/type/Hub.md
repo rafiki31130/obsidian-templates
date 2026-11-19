@@ -15,6 +15,7 @@ Contient surtout des liens et des vues (Dataview, Bases), peu de contenu propre.
 Template d'application : `templates/type_Hub.md`.
 
 - `type: Hub`
+- `parent:` lien facultatif vers le projet dont le hub organise les notes
 - `topic:` lien(s) vers le ou les Topics concernés
 
 Corps : vue `![[Relations.base]]` (notes rattachées au Hub, groupées par type ; vues *Projects*, *Meetings*, *Ops*, *Knowledge* accessibles depuis l'intégration).

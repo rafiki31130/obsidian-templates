@@ -15,6 +15,7 @@ Décrit symptômes, impact, chronologie, cause et résolution.
 Template d'application : `templates/type_Incident.md`.
 
 - `type: Incident`
+- `parent:` lien facultatif vers le projet ou système concerné
 - `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`) (jour de l'incident)
 - `topic:` lien(s) vers le ou les Topics concernés
 

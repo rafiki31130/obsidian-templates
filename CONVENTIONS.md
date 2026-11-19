@@ -54,6 +54,16 @@ parent: "[[Nom du parent]]"
 
 La base `🛠️Projets.base` affiche tous les projets groupés par statut. La vue `pages/` du vault et les scripts `child-pages.js` / `related-projects.js` exploitent cette hiérarchie.
 
+### Créer une page enfant sans `Parent @` dans son titre
+
+Depuis la note parente, en mode édition, lancer **Templater: Open insert template modal**, puis choisir `Bloc-CreateChildPage`. On peut aussi associer un raccourci à la commande d’insertion de ce modèle dans les réglages Templater. Ne pas utiliser la commande de création de note à partir du modèle : le lanceur s’exécute dans la note parente et crée lui-même la note enfant.
+
+1. Saisir le titre de la note enfant. Échap ou un titre vide annule la création.
+2. Choisir le type. Échap crée la note enfant sans type, comme dans le sélecteur habituel.
+3. La note s’ouvre avec la disposition de `Page-DynHierarchy` et un `parent:` pointant vers le chemin de la note de départ. Le titre reste celui saisi ; pour Log et Meeting, il devient par exemple `2026-11-19 14h05 - Point d’équipe`. Un titre déjà horodaté n’est pas préfixé une seconde fois.
+
+Le lanceur ne rajoute rien au texte de la note parente. `Bloc-ChildPager` (lien `Parent @ Enfant`) et `Ctrl+N` ne changent pas.
+
 ---
 
 ## Modèle de tâches
@@ -177,11 +187,12 @@ Bouton `button-addjournal` (« Add to journal », présent sur les pages enfant 
 Un template `templates/type_<Type>.md` par type ; sa fiche `properties/type/<Type>.md` décrit les mêmes propriétés et le même corps (les deux restent alignés). Principe : **structurer juste assez**. Chaque type ne porte que les propriétés qui servent une vue ou une recherche :
 
 - `topic:` (liens vers des Topics) sur presque tous les types ;
+- `parent:` lien facultatif vers le projet, dossier logique, système ou application de rattachement. Proposé sur Changement, Deadline, Documentation, EntretienTech, Etude, Hub, Incident, Learning, Log, Meeting, Memento, Procedure, Projet, Reference, Scratch et les quatre types Splunk. Les types autonomes (Briefing, Concepts, Journal, Pensées, Person, Recette et Topic) ne proposent pas ce champ par défaut ; il peut être renseigné si la note est explicitement créée comme enfant. La création ordinaire ne reprend jamais automatiquement la page active ; elle conserve la convention `Parent @ Enfant`.
 - `date: "[[YYYY-MM-DD]]"` (lien vers le journal du jour) sur les types datés : Briefing, Changement, EntretienTech, Incident, Journal, Log, Meeting, Pensées, Scratch ;
 - `person:` (liens) seulement là où il y a des interlocuteurs : Meeting, EntretienTech (et Person, qui se référence elle-même) ;
 - propriétés propres : Deadline (`next_due`, `recurrence`, `notice_days`, `action`), Projet (`statut`, `relations`), Recette (`DB_CUI_REC_*`), Splunk* (`external reference`), Learning (`rating` de 1 à 7), Person (`Anniversaire`).
 
-Les templates `type_*` sont rendus par Templater (`tp.file.include`) avant fusion : ils peuvent donc contenir du code Templater. `type_Log` et `type_Meeting` renomment automatiquement la page en `YYYY-MM-DD HHhmm - `, sans prompt de nommage ni reprise de l'ancien titre ; le suffixe reste vide, à compléter manuellement. Le parent éventuel du titre est conservé en propriété et une page déjà horodatée n'est pas renommée, même si son suffixe est encore vide. Ces templates s'appliquent via *Définir le type* ou à la création de page, pas via l'insertion de modèle du plugin de base.
+Les templates `type_*` sont rendus par Templater (`tp.file.include`) avant fusion : ils peuvent donc contenir du code Templater. Dans le parcours ordinaire, `type_Log` et `type_Meeting` renomment automatiquement la page en `YYYY-MM-DD HHhmm - `, sans prompt de nommage ni reprise de l'ancien titre ; le suffixe reste vide, à compléter manuellement. Le parent éventuel du titre est conservé en propriété et une page déjà horodatée n'est pas renommée, même si son suffixe est encore vide. `Bloc-CreateChildPage` crée directement la note avec le titre saisi après l’horodatage. Ces templates s'appliquent via *Définir le type* ou à la création de page, pas via l'insertion de modèle du plugin de base.
 
 Le corps éventuel du template (sections à remplir, vues intégrées) est placé par `Page-DynHierarchy` en bas de page, avant `## Notes`, curseur sous la première section à remplir ; `Script_ApplyType` l'insère au curseur.
 

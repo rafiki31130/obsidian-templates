@@ -15,6 +15,7 @@ type: Procedure
 Template d'application : `templates/type_Procedure.md`.
 
 - `type: Procedure`
+- `parent:` lien facultatif vers le projet ou système auquel la procédure s’applique
 - `topic:` lien(s) vers le ou les Topics concernés
 
 Corps : Prérequis · Étapes (liste numérotée) · Vérification.

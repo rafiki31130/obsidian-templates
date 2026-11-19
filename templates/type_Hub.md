@@ -1,5 +1,6 @@
 ---
 type: Hub
+parent:
 topic:
 rating:
 tags:

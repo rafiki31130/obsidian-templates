@@ -1,5 +1,6 @@
 ---
 type: Log
+parent:
 date: "[[{{date:YYYY-MM-DD}}]]"
 topic:
 person:
@@ -16,7 +17,7 @@ const logTitle = logFile.basename;
 const logAt = logTitle.lastIndexOf("@");
 const logParent = logAt > -1 ? logTitle.slice(0, logAt).trim() : "";
 const logBase = (logAt > -1 ? logTitle.slice(logAt + 1) : logTitle).trim();
-if (!/^\d{4}-\d{2}-\d{2} \d{2}h\d{2} -(?: |$)/.test(logBase)) {
+if (![logTitle, logBase].some(title => /^\d{4}-\d{2}-\d{2} \d{2}h\d{2} -(?: |$)/.test(title))) {
   // Le parent porté par le titre (« Parent @ … ») est conservé en propriété
   if (logParent) await app.fileManager.processFrontMatter(logFile, fm => { if (!fm.parent) fm.parent = `[[${logParent}]]`; });
   try { await tp.file.rename(`${tp.date.now("YYYY-MM-DD HH[h]mm")} - `); }

@@ -1,5 +1,6 @@
 ---
 type: Incident
+parent:
 date: "[[{{date:YYYY-MM-DD}}]]"
 topic:
 person:

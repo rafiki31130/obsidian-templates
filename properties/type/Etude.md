@@ -15,6 +15,7 @@ Se conclut par une recommandation ou une décision.
 Template d'application : `templates/type_Etude.md`.
 
 - `type: Etude`
+- `parent:` lien facultatif vers le projet ou dossier auquel l’étude contribue
 - `topic:` lien(s) vers le ou les Topics concernés
 
 Corps : Question · Options (tableau avantages / inconvénients) · Conclusion.
