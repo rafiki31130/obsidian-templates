@@ -15,6 +15,7 @@ Trace la date, les participants (`person:`), les questions abordées et les conc
 Template d'application : `templates/type_EntretienTech.md`.
 
 - `type: EntretienTech`
+- `parent:` lien facultatif vers le projet ou dossier auquel l’entretien se rattache
 - `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
 - `topic:` lien(s) vers le ou les Topics concernés
 - `person:` lien(s) vers le ou les interlocuteurs

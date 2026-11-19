@@ -15,6 +15,7 @@ Listée dans `resources/Deadlines.base` (vue *Upcomming* : échéances dans la f
 Template d'application : `templates/type_Deadline.md`.
 
 - `type: Deadline`
+- `parent:` lien facultatif vers le projet ou le dossier auquel l’échéance se rattache
 - `next_due:` prochaine échéance (date)
 - `recurrence:` périodicité en texte libre (`1 an`, `6 mois`…), vide si unique
 - `notice_days:` préavis en jours (30 par défaut) : l'échéance remonte dans `Deadlines.base` quand `next_due` est à moins de `notice_days` jours

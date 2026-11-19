@@ -15,6 +15,7 @@ Décrit le périmètre, le plan de mise en œuvre, le plan de retour arrière et
 Template d'application : `templates/type_Changement.md`.
 
 - `type: Changement`
+- `parent:` lien facultatif vers le projet ou système concerné
 - `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`) — à corriger en date de mise en œuvre
 - `topic:` lien(s) vers le ou les Topics concernés
 

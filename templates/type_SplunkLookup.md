@@ -1,5 +1,6 @@
 ---
 type: SplunkLookup
+parent:
 topic:
 external reference:
 tags:

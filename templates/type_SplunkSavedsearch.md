@@ -1,5 +1,6 @@
 ---
 type: SplunkSavedsearch
+parent:
 topic:
 external reference:
 person:

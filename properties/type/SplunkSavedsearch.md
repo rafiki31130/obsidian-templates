@@ -15,6 +15,7 @@ Décrit la requête SPL, la planification, les actions déclenchées et les look
 Template d'application : `templates/type_SplunkSavedsearch.md`.
 
 - `type: SplunkSavedsearch`
+- `parent:` lien facultatif vers l’application ou le projet de rattachement
 - `topic:` lien(s) vers le ou les Topics concernés
 - `external reference:` nom ou URL de l'objet dans Splunk
 

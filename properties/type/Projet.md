@@ -18,6 +18,7 @@ Une note de type Projet possède :
 Template d'application : `templates/type_Props-Projet.md`.
 
 - `type: Projet`
+- `parent:` lien facultatif vers le projet ou page de rattachement du sous-projet
 - `statut:` valeur de `properties/statut/` (`1. A cadrer` à la création)
 - `relations:` lien(s) vers les pages ou projets liés
 

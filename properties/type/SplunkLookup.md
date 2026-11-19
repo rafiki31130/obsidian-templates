@@ -15,6 +15,7 @@ Indique comment le lookup est alimenté (manuel, recherche planifiée…) et que
 Template d'application : `templates/type_SplunkLookup.md`.
 
 - `type: SplunkLookup`
+- `parent:` lien facultatif vers l’application ou le projet de rattachement
 - `topic:` lien(s) vers le ou les Topics concernés
 - `external reference:` nom ou URL de l'objet dans Splunk
 

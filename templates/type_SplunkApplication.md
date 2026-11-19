@@ -1,5 +1,6 @@
 ---
 type: SplunkApplication
+parent:
 topic:
 external reference:
 tags:

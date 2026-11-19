@@ -1,5 +1,6 @@
 ---
 type: SplunkDashboard
+parent:
 topic:
 external reference:
 person:

@@ -12,11 +12,14 @@ Les participants vont dans `person:`. Les actions sont listées dans la section 
 
 Nommage automatique, commun avec Log : `YYYY-MM-DD HHhmm - ` (ex. `2026-11-16 14h05 - ` ; `:` est interdit dans un nom de fichier). À l'application du type (création de page ou *Définir le type*), la page est renommée avec la date et l'heure du moment, sans prompt de nommage et sans reprendre son ancien titre. Le suffixe après ` - ` reste vide, à compléter manuellement. Un titre `Parent @ …` est conservé en `parent:`. Une page déjà horodatée conserve son titre et son heure, même si le suffixe est encore vide.
 
+Avec `Bloc-CreateChildPage`, le titre demandé devient le suffixe et `parent:` est rempli avec la page de départ, sans ajouter son nom au titre.
+
 ## Propriétés
 
 Template d'application : `templates/type_Meeting.md` (contient du code Templater : l'appliquer via *Définir le type* ou à la création de page, pas via l'insertion de modèle du plugin de base).
 
 - `type: Meeting`
+- `parent:` lien facultatif vers le projet ou page auxquels la réunion se rattache
 - `date:` lien vers le journal du jour de création (`"[[YYYY-MM-DD]]"`)
 - `topic:` lien(s) vers le ou les Topics concernés
 - `person:` lien(s) vers les participants

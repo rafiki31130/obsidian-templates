@@ -1,5 +1,6 @@
 ---
 type: Meeting
+parent:
 date: "[[{{date:YYYY-MM-DD}}]]"
 topic:
 person:
@@ -14,7 +15,7 @@ const meetingTitle = meetingFile.basename;
 const meetingAt = meetingTitle.lastIndexOf("@");
 const meetingParent = meetingAt > -1 ? meetingTitle.slice(0, meetingAt).trim() : "";
 const meetingBase = (meetingAt > -1 ? meetingTitle.slice(meetingAt + 1) : meetingTitle).trim();
-if (!/^\d{4}-\d{2}-\d{2} \d{2}h\d{2} -(?: |$)/.test(meetingBase)) {
+if (![meetingTitle, meetingBase].some(title => /^\d{4}-\d{2}-\d{2} \d{2}h\d{2} -(?: |$)/.test(title))) {
   // Le parent porté par le titre (« Parent @ … ») est conservé en propriété
   if (meetingParent) await app.fileManager.processFrontMatter(meetingFile, fm => { if (!fm.parent) fm.parent = `[[${meetingParent}]]`; });
   try { await tp.file.rename(`${tp.date.now("YYYY-MM-DD HH[h]mm")} - `); }

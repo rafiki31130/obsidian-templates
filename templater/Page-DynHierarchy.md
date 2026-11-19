@@ -1,59 +1,41 @@
 <%*
 const title = tp.file.title;
-let parent = null;
-let istree = null;
+// Le lanceur enfant passe ce contexte dans le même rendu, sans état global.
+const child = typeof childPageContext === "undefined" ? null : childPageContext;
+const parentTitle = !child && title.includes("@") ? title.slice(0, title.lastIndexOf("@")).trim() : "";
+const parent = child?.parent ?? (parentTitle ? `[[${parentTitle}]]` : null);
 
-if (title.includes('@')) {
-  istree = true;
-  const parts = title.split('@');
-  if (parts.length > 1) parent = parts.slice(0, -1).join('@').trim();
-}
-
-// --- Définir le type (même action que le bouton `button-applytype` / Script_ApplyType) ---
-// Proposé systématiquement à la création de la page. Échap = pas de type.
+// Le lanceur a déjà demandé le type ; le parcours standard conserve le même sélecteur.
 let typeProps = [];   // lignes de frontmatter issues du template type_*
 let typeBody = "";    // éventuel contenu hors frontmatter du template type_*
-
-// Dossier des templates : celui du plugin de base « Modèles » (Templates),
-// d'où les type_* sont insérés ("" = non configuré → tout le vault)
-const tplRoot = String(
-  app.internalPlugins?.getPluginById?.("templates")?.instance?.options?.folder
-  ?? app.internalPlugins?.plugins?.templates?.instance?.options?.folder
-  ?? ""
-).trim().replace(/^\/+|\/+$/g, "");
-const typeFiles = app.vault
-  .getMarkdownFiles()
-  .filter(f => f.basename.startsWith("type_") && (tplRoot === "" || f.path.startsWith(tplRoot + "/")))
-  .sort((a, b) => a.basename.localeCompare(b.basename));
-
-if (typeFiles.length > 0) {
-  const labels = typeFiles.map(f => f.basename.replace(/^type_Props-/, "").replace(/^type_/, ""));
-  const chosen = await tp.system.suggester(labels, typeFiles, false, "Quel type appliquer ?");
-  if (chosen) {
-    // Rendu Templater du type_* (il peut contenir du code, ex. type_Log qui renomme
-    // la page), puis résolution de la syntaxe du plugin « Modèles » ({{date}},
-    // {{time}}, {{title}}), que Templater n'interprète pas (idem Script_ApplyType).
-    const now = window.moment();
-    const raw = (await tp.file.include(chosen))
-      .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))
-      .replace(/{{\s*time(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "HH:mm"))
-      .replace(/{{\s*title\s*}}/g, title);
-    const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
-    if (fm) {
-      typeProps = fm[1].split(/\r?\n/).filter(l => l.trim() !== "");
-      typeBody = raw.slice(fm[0].length);
-    } else {
-      typeBody = raw;
-    }
-    // Le parent calculé depuis le titre prime sur un éventuel parent du template type
-    if (parent) typeProps = typeProps.filter(l => !/^parent\s*:/.test(l));
+let typePath = child?.typePath ?? "";
+if (!child) {
+  const selectorPath = tp.config.template_file.path.replace(/[^/]+$/, "Inline-ChoosePageType.md");
+  const selector = app.vault.getFileByPath(selectorPath);
+  if (selector) typePath = (await tp.file.include(selector)).trim();
+  else new Notice("Modèle manquant : Inline-ChoosePageType.");
+}
+const chosen = typePath ? app.vault.getFileByPath(typePath) : null;
+if (chosen) {
+  // Rendu Templater du type_*, puis résolution de la syntaxe du plugin « Modèles ».
+  const now = window.moment();
+  const raw = (await tp.file.include(chosen))
+    .replace(/{{\s*date(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "YYYY-MM-DD"))
+    .replace(/{{\s*time(?::([^}]+))?\s*}}/g, (_, f) => now.format(f || "HH:mm"))
+    .replace(/{{\s*title\s*}}/g, () => title);
+  const fm = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  if (fm) {
+    typeProps = fm[1].split(/\r?\n/).filter(l => l.trim() !== "" && !(parent && /^parent\s*:/.test(l)));
+    typeBody = raw.slice(fm[0].length);
+  } else {
+    typeBody = raw;
   }
 }
 
 // --- Frontmatter unique : parent + propriétés du type ---
 const hdFence = "---";
 const props = [];
-if (parent) props.push(`parent: "[[${parent}]]"`);
+if (parent) props.push(`parent: ${JSON.stringify(parent)}`);
 props.push(...typeProps);
 
 if (props.length > 0) {
@@ -102,4 +84,4 @@ dv.view("r_templates/scripts/child-pages")
 dv.view("r_templates/scripts/related-tasks")
 >```
 
-<%* tR += pageTail; %><%* app.workspace.activeLeaf.view.editor.focus(); %>
+<%* tR += pageTail; if (!child) app.workspace.activeLeaf.view.editor.focus(); %>
