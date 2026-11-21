@@ -23,13 +23,16 @@ DB_CTE_DCT_tricount_solde:
 DB_CTE_DCT_raz_variables: true
 DB_CTE_DCT_lst_percus: []
 DB_CTE_DCT_lst_imprevus: []
+DB_CTE_DCT_lst_a_verifier: []
 DB_CTE_DCT_affectation:
 DB_CTE_DCT_note:
 ---
+
 > [!info] Saisie — [[Comptes#How to]] · [[Comptes @ Dispositif]]
 > - `report_cc` et `report_variables` : recopier les colonnes « → report… suivant » de la note précédente (vue *Mois*).
 > - `tricount_solde` : solde à l'équilibre, **+ on me doit / − je dois**.
 > - `lst_percus` / `lst_imprevus` : une entrée par ligne, « montant libellé » (`173.5 Urssaf`). La base additionne le premier nombre de chaque entrée.
+> - `lst_a_verifier` : liste de travail pour ce que tu n'as pas encore identifié (`-59.99 PayPal BPOC 25/08`). Montant **signé comme sur le relevé** (− débit, + crédit). Une fois identifié : déplacer vers `lst_imprevus` (montant positif) ou `lst_percus`, ou supprimer si c'est une charge du catalogue. À clore vide.
 > - Règlement Tricount reçu ou versé ce mois-ci : une ligne dans `lst_percus` (`+120 Tricount` / `-80 Tricount`).
 > - `raz_variables` : `true` si Bunq et Perso sont vidés vers BPOC à la clôture, `false` pour les laisser courir.
 
@@ -54,19 +57,19 @@ DB_CTE_DCT_note:
 
 ## Suivis
 ### Remboursement effectué
-
+- 
 
 ### A Annuler
-
+- [ ] 
 
 ### Modifier le compte de prélèvement
-
+- [ ] 
 
 ### A optimiser
-
+- [ ] 
 
 ### A vérifier dans Tricount
-
+- [ ] 
 
 ## Notes
 
