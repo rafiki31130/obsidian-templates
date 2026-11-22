@@ -8,7 +8,7 @@ filters:
         - relations.contains(link(this.file.name))
         - topic.contains(link(this.file.name))
         - person.contains(link(this.file.name))
-        - date.contains(link(this.file.name))
+        - if(date.isType("date"), date.format("YYYY-MM-DD") == this.file.name, date.toString().contains(this.file.name))
     - '!type.containsAny("Deadline")'
 views:
   - type: table
@@ -92,3 +92,17 @@ views:
         direction: DESC
     columnSize:
       file.name: 360
+  - type: kanban
+    name: All 2
+    groupBy:
+      property: type
+      direction: ASC
+    order:
+      - file.name
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC
+    columnSize:
+      file.name: 466
+      file.mtime: 169
