@@ -27,6 +27,10 @@ views:
     cardSize: 350
   - type: kanban
     name: Kanban
+    filters:
+      or:
+        - '!statut.toString().contains("Terminé")'
+        - file.mtime > now() - "1M"
     groupBy:
       property: statut
       direction: ASC
