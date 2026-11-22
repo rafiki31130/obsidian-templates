@@ -25,3 +25,20 @@ views:
       note.parent: 163
     imageAspectRatio: 0.95
     cardSize: 350
+  - type: kanban
+    name: Kanban
+    groupBy:
+      property: statut
+      direction: ASC
+    order:
+      - file.name
+      - statut
+      - parent
+      - relations
+      - tags
+    columnSize:
+      file.name: 402
+      note.statut: 238
+      note.parent: 163
+    imageAspectRatio: 0.95
+    cardSize: 350
