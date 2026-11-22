@@ -11,7 +11,7 @@ filters:
         - if(date.isType("date"), date.format("YYYY-MM-DD") == this.file.name, date.toString().contains(this.file.name))
     - '!type.containsAny("Deadline")'
 views:
-  - type: table
+  - type: list
     name: All
     groupBy:
       property: type
@@ -30,6 +30,9 @@ views:
     filters:
       and:
         - type.containsAny("Projet", "Project")
+    groupBy:
+      property: statut
+      direction: ASC
     order:
       - file.name
       - statut
@@ -92,17 +95,3 @@ views:
         direction: DESC
     columnSize:
       file.name: 360
-  - type: kanban
-    name: All 2
-    groupBy:
-      property: type
-      direction: ASC
-    order:
-      - file.name
-      - file.mtime
-    sort:
-      - property: file.mtime
-        direction: DESC
-    columnSize:
-      file.name: 466
-      file.mtime: 169
