@@ -32,10 +32,8 @@ views:
       direction: ASC
     order:
       - file.name
-      - statut
       - parent
       - relations
-      - tags
     columnSize:
       file.name: 402
       note.statut: 238
