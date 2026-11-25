@@ -13,6 +13,34 @@ topic: null
 ## Critère de fin
 
 
+### Hypothèses initiales
+
+- [ ] 
+
+## État actuel
+
+
 ## Étapes
 
 ![[GTD.Etapes.base#Étapes du projet]]
+
+## Notes
+
+
+### Références
+
+- 
+
+## Plan
+
+- [ ] 
+
+## Journal
+
+
+## Décisions
+
+
+## Livrables
+
+- 
