@@ -448,7 +448,7 @@ Les propriétés de statut modernes suivent `^\d+\.(?<description>[a-z_]+)$` : n
 
 Cette convention s’applique aux statuts GTD, Sources et Recettes, dans les données, modèles, fiches de valeurs, vues, kanbans et contrôles. Les champs historiques `statut` et `status` (ancien workflow/Operon) ainsi que `r_templates/properties/statut/` restent inchangés. Les champs métier privés qui ne sont pas des propriétés de statut, comme l’état d’une charge, ne sont pas recodés par cette migration.
 
-Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 6 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
+Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 7 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
 
 Les définitions et noms des fiches de valeurs suivent le même format, au niveau de leur schéma partagé. Aucun catalogue de valeurs privées n’est créé.
 
@@ -457,7 +457,7 @@ Les définitions et noms des fiches de valeurs suivent le même format, au nivea
 
 Projets : ajout de `0.cadrage_agent` et `4.delegation_agent`. Étapes : ajout de `0.cadrage_agent` et `5.delegation_agent`. Les valeurs sont définies une seule fois dans les propriétés du schéma GTD.
 
-Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent` et `6.delegue` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
+Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent`, `6.delegue` et `7.validation` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
 
 Le dossier de pilotage est `r_templates/resources/Pilotage GTD/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
 
@@ -480,3 +480,8 @@ Les statuts initiaux restent ceux des modèles. Les projets sont des notes de do
 
 La sélection est traitée comme du texte, jamais comme un modèle exécutable. Remplacer la source seulement après création réussie et si son contenu est inchangé. Annulation, doublon ou erreur ne doivent pas supprimer le texte. Conserver les marqueurs de tâche et dates sur une ligne source ; un bloc multiligne est transféré dans la fiche. Mode d’emploi : [[Créer depuis la sélection]].
 
+## Validation des étapes
+
+`7.validation` signifie résultat produit, en attente de validation avant `8.faite`. Cette valeur appartient au schéma partagé `gtd_statut_etape`, y compris pour le volet étape des monolithes ; aucun statut projet n’est ajouté. Elle est placée entre `6.delegue` et `8.faite` dans le Sprint et le kanban des étapes du projet.
+
+Une étape en validation reste ouverte, compte dans le plafond de travail en cours et nécessite au moins un projet parent actif ou délégué. Les prédécesseurs non faits restent signalés ; seule une étape `8.faite` lève les dépendances. Les modèles gardent leurs statuts initiaux et aucune fiche existante ne change automatiquement de statut.

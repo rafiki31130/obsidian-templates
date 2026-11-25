@@ -45,6 +45,7 @@ views:
       - 4.bloquee
       - 5.delegation_agent
       - 6.delegue
+      - 7.validation
       - 8.faite
       - 9.abandonnee
       - none
@@ -139,6 +140,7 @@ views:
       - 4.bloquee
       - 5.delegation_agent
       - 6.delegue
+      - 7.validation
       - 8.faite
       - 9.abandonnee
       - 
@@ -169,7 +171,7 @@ views:
       - topic
       - gtd_predecesseurs
     sort:
-      - property: file.name
+      - property: gtd_statut_etape
         direction: ASC
   - type: table
     name: Dépendances

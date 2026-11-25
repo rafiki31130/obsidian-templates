@@ -21,13 +21,13 @@ await dv.view("r_templates/scripts/gtd-review", { section: "sprint" });
 
 - [ ] Relire les étapes des projets actifs et nommer les résultats manquants.
 - [ ] Pour une étape prête, écrire les prochaines actions et rendre le premier geste évident.
-- [ ] Garder au plus trois étapes en cours ou déléguées, avec un repère de deux à trois.
+- [ ] Garder au plus trois étapes en cours, déléguées ou en validation, avec un repère de deux à trois.
 - [ ] Renseigner dans la page ce qui bloque les étapes bloquées.
 - [ ] Examiner [[Contrôles des étapes]] et [[Contrôles des rattachements]].
 - [ ] Quand un projet passe en pause, remettre ses étapes en cours à « prête », sauf si un autre projet parent reste actif.
 - [ ] Reprendre les prochaines actions dans le suivi quotidien.
 
-Une étape partagée apparaît une seule fois. Les prédécesseurs sont visibles sur les cartes ; `6.delegue` distingue une délégation à une personne de `5.delegation_agent`. Les deux délégations comptent dans la charge en cours. « Faite » sur un monolithe ne clôture pas automatiquement son statut au portefeuille.
+Une étape partagée apparaît une seule fois. Les prédécesseurs sont visibles sur les cartes ; `6.delegue` distingue une délégation à une personne de `5.delegation_agent`. Les deux délégations et `7.validation` comptent dans la charge en cours. Une étape en validation reste ouverte jusqu’à `8.faite`. « Faite » sur un monolithe ne clôture pas automatiquement son statut au portefeuille.
 
 ## Notes de revue
 

@@ -59,7 +59,7 @@ function buildGtdReview(pages, resolvePath) {
         const pending = predecessors.filter(p => p.gtd_statut_etape !== '8.faite');
         const unresolved = edges.some(e => !e.page || !['GTD-Etape','GTD-ProjetMonolithe'].includes(e.page.type) || path(e.page) === path(s));
         if (pending.length) add('predecesseurs_non_termines','etapes','Étapes avec prédécesseurs à terminer',s,pending.map(p => p.file.name + ' (' + (p.gtd_statut_etape || 'sans statut') + ')').join(' · '));
-        if ((pending.length || unresolved) && ['2.prete','3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape)) add('etape_prete_avant_predecesseurs','etapes','Étapes prêtes ou engagées avant leurs prédécesseurs',s,'Terminer les prédécesseurs ou revoir les dépendances et le statut. Un abandon ne lève pas automatiquement la dépendance.');
+        if ((pending.length || unresolved) && ['2.prete','3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape)) add('etape_prete_avant_predecesseurs','etapes','Étapes prêtes ou engagées avant leurs prédécesseurs',s,'Terminer les prédécesseurs ou revoir les dépendances et le statut. Un abandon ne lève pas automatiquement la dépendance.');
     }
     // Strongly connected components detect every member of a cycle, including overlapping cycles.
     const indices = new Map(), low = new Map(), stack = [], onStack = new Set(), cycles = new Set();
@@ -82,7 +82,7 @@ function buildGtdReview(pages, resolvePath) {
         if (!targets(s,'gtd_projet').some(p => p.type === 'GTD-Projet')) add('etape_sans_projet','etapes','Étapes sans projet valide',s,'Renseigner un lien vers un projet existant. Un monolithe porte ses actions lui-même, sans étape enfant.');
     }
     for (const s of [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')]) {
-        if (['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape) && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
+        if (['3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape) && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
     }
     for (const goal of all.filter(p => p.type === 'GTD-Objectif' && !archived(p))) {
         if (goal.gtd_statut_objectif === '2.actif' && !projects.some(p => isActiveProject(p) && targets(p,'gtd_objectif').includes(goal))) add('objectif_sans_projet','horizons','Objectifs actifs sans projet actif',goal,'Lancer un projet contributif ou revoir le statut de l’objectif.');
@@ -94,7 +94,7 @@ function buildGtdReview(pages, resolvePath) {
         if (archived(domain) && active.length) add('domaine_archive_actif','horizons','Domaines archivés avec projets actifs',domain,active.map(p => p.file.name).join(' · '));
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
-    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
+    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','7.validation','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
     for (const p of all.filter(p => !archived(p))) {
         const gtd = String(p.type || '').startsWith('GTD-');
         const filled = Object.keys(fields).filter(k => clean(p[k]).length);
@@ -110,8 +110,8 @@ function buildGtdReview(pages, resolvePath) {
     const activeObjectives = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2.actif');
     const activeProjects = projects.filter(isActiveProject);
     const sprint = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => activeParents(s).length);
-    const running = sprint.filter(s => ['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape));
-    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => ['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape));
+    const running = sprint.filter(s => ['3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape));
+    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => ['3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape));
     return {issues,activeObjectives,activeProjects,sprint,running,runningAll,projectLimit:5,stepLimit:3};
 }
 
@@ -128,7 +128,7 @@ if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     const portfolio = section === 'portefeuille';
     const count = portfolio ? review.activeProjects.length : review.runningAll.length;
     const max = portfolio ? review.projectLimit : review.stepLimit;
-    dv.paragraph((count > max ? '⚠️ ' : '') + '**' + count + (portfolio ? ' projet(s) actif(s)' : ' étape(s) en cours') + '** — plafond de ' + max + '. Repère : ' + (portfolio ? '3 à 5 projets actifs.' : '2 à 3 étapes en cours.') + ' Délégations incluses.');
+    dv.paragraph((count > max ? '⚠️ ' : '') + '**' + count + (portfolio ? ' projet(s) actif(s)' : ' étape(s) en cours') + '** — plafond de ' + max + '. Repère : ' + (portfolio ? '3 à 5 projets actifs.' : '2 à 3 étapes en cours.') + (portfolio ? ' Délégations incluses.' : ' Délégations et validation incluses.'));
     if (!portfolio) dv.paragraph(review.sprint.length + ' étape(s) ou monolithe(s) liés à un projet actif. Une étape partagée compte une seule fois.');
     const relevant = review.issues.filter(i => portfolio ? i.category === 'projets' : i.category === 'etapes');
     if (relevant.length) dv.table(['À revoir','Fiche'], relevant.map(i => [i.title,i.page.file.link]));
