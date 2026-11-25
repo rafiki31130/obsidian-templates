@@ -1,10 +1,10 @@
 ---
 type: GTD-Projet
-gtd_domaine: null
-gtd_objectif: null
+gtd_domaine:
+gtd_objectif:
 gtd_statut_projet: 1.en_attente
-gtd_echeance: null
-topic: null
+gtd_echeance:
+topic:
 ---
 
 ## Pourquoi
@@ -36,6 +36,7 @@ topic: null
 - [ ] 
 
 ## Journal
+![[Relations.base]]
 
 
 ## Décisions
