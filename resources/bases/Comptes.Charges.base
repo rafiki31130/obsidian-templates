@@ -1,0 +1,133 @@
+filters:
+  and:
+  - file.ext == "md"
+  - file.path != "bases/Comptes.Charges/Comptes.Charges.md"
+  - and:
+    - file.folder == "bases/Comptes.Charges"
+formulas:
+  nom: file.name.replace("Comptes @ Charge @ ", "")
+  lisse: (DB_CTE_CHG_tarif / DB_CTE_CHG_recurrence).round(3)
+  ma_part: if(DB_CTE_CHG_partagee, DB_CTE_CHG_tarif / DB_CTE_CHG_recurrence / 2, DB_CTE_CHG_tarif / DB_CTE_CHG_recurrence).round(3)
+properties:
+  formula.nom:
+    displayName: Charge
+  formula.lisse:
+    displayName: Lissé / mois
+  formula.ma_part:
+    displayName: Ma part / mois
+  DB_CTE_CHG_tarif:
+    displayName: Tarif
+  DB_CTE_CHG_recurrence:
+    displayName: Récurrence (mois)
+  DB_CTE_CHG_partagee:
+    displayName: Partagée
+  DB_CTE_CHG_compte:
+    displayName: Compte
+  DB_CTE_CHG_moyen:
+    displayName: Paiement
+  DB_CTE_CHG_categorie:
+    displayName: Catégorie
+  DB_CTE_CHG_labels:
+    displayName: Labels
+  DB_CTE_CHG_echeance:
+    displayName: Échéance
+  DB_CTE_CHG_etat:
+    displayName: État
+views:
+  - type: table
+    name: Mensuelles
+    filters:
+      and:
+        - DB_CTE_CHG_etat == "Actif"
+        - DB_CTE_CHG_recurrence == 1
+    order:
+      - formula.nom
+      - DB_CTE_CHG_tarif
+      - DB_CTE_CHG_partagee
+      - formula.ma_part
+      - DB_CTE_CHG_compte
+      - DB_CTE_CHG_moyen
+      - DB_CTE_CHG_categorie
+      - DB_CTE_CHG_labels
+    sort:
+      - property: formula.ma_part
+        direction: DESC
+    summaries:
+      DB_CTE_CHG_tarif: Sum
+      formula.ma_part: Sum
+  - type: table
+    name: Annuelles
+    filters:
+      and:
+        - DB_CTE_CHG_etat == "Actif"
+        - DB_CTE_CHG_recurrence > 1
+    order:
+      - formula.nom
+      - DB_CTE_CHG_tarif
+      - DB_CTE_CHG_recurrence
+      - DB_CTE_CHG_partagee
+      - formula.lisse
+      - formula.ma_part
+      - DB_CTE_CHG_echeance
+      - DB_CTE_CHG_compte
+      - DB_CTE_CHG_moyen
+    sort:
+      - property: DB_CTE_CHG_echeance
+        direction: ASC
+    summaries:
+      formula.lisse: Sum
+      formula.ma_part: Sum
+  - type: table
+    name: Domiciliations
+    filters:
+      and:
+        - DB_CTE_CHG_etat == "Actif"
+    groupBy:
+      property: DB_CTE_CHG_compte
+      direction: ASC
+    order:
+      - formula.nom
+      - DB_CTE_CHG_tarif
+      - DB_CTE_CHG_recurrence
+      - formula.ma_part
+      - DB_CTE_CHG_moyen
+      - DB_CTE_CHG_echeance
+    sort:
+      - property: formula.ma_part
+        direction: DESC
+    summaries:
+      formula.ma_part: Sum
+  - type: table
+    name: Par catégorie
+    filters:
+      and:
+        - DB_CTE_CHG_etat == "Actif"
+    groupBy:
+      property: DB_CTE_CHG_categorie
+      direction: ASC
+    order:
+      - formula.nom
+      - formula.ma_part
+      - DB_CTE_CHG_partagee
+      - DB_CTE_CHG_labels
+    sort:
+      - property: formula.ma_part
+        direction: DESC
+    summaries:
+      formula.ma_part: Sum
+  - type: table
+    name: Terminées
+    filters:
+      and:
+        - DB_CTE_CHG_etat != "Actif"
+    order:
+      - formula.nom
+      - DB_CTE_CHG_tarif
+      - DB_CTE_CHG_recurrence
+      - DB_CTE_CHG_partagee
+      - DB_CTE_CHG_compte
+      - DB_CTE_CHG_categorie
+      - DB_CTE_CHG_etat
+    sort:
+      - property: formula.nom
+        direction: ASC

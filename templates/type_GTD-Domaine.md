@@ -10,7 +10,7 @@ topic:
 
 ## Objectifs et projets
 
-![[bases/GTD.Objectifs/GTD.Objectifs.base#Objectifs du domaine]]
-![[bases/GTD.Projets/GTD.Projets.base#Projets du domaine]]
+![[GTD.Objectifs.base#Objectifs du domaine]]
+![[GTD.Projets.base#Projets du domaine]]
 
 ![[Relations.base]]

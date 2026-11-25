@@ -9,4 +9,4 @@ topic:
 
 ## Visions
 
-![[bases/GTD.Visions/GTD.Visions.base#Visions de la raison d'être]]
+![[GTD.Visions.base#Visions de la raison d'être]]

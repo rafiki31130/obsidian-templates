@@ -1,0 +1,70 @@
+filters:
+  and:
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (gtd_type == "projet_monolithe")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_statut_projet:
+    displayName: Statut projet
+  gtd_statut_etape:
+    displayName: Statut étape
+  gtd_domaine:
+    displayName: Domaine
+  gtd_objectif:
+    displayName: Objectif
+  gtd_echeance:
+    displayName: Échéance
+  topic:
+    displayName: Sujets
+views:
+- type: table
+  name: Portefeuille
+  filters:
+    and:
+    - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
+  groupBy:
+    property: gtd_statut_projet
+    direction: ASC
+  order:
+  - file.name
+  - gtd_statut_projet
+  - gtd_statut_etape
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - gtd_statut_projet
+  - gtd_statut_etape
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Sans domaine ni objectif
+  filters:
+    and:
+    - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
+  order:
+  - file.name
+  - gtd_statut_projet
+  - gtd_statut_etape
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC

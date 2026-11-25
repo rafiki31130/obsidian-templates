@@ -1,0 +1,77 @@
+filters:
+  and:
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (gtd_type == "objectif")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_statut_objectif:
+    displayName: Statut objectif
+  gtd_vision:
+    displayName: Vision
+  gtd_domaine:
+    displayName: Domaine
+  gtd_echeance:
+    displayName: Échéance
+  topic:
+    displayName: Sujets
+views:
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - gtd_statut_objectif
+  - gtd_vision
+  - gtd_domaine
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Actifs
+  filters:
+    and:
+    - gtd_statut_objectif == "2_actif"
+  order:
+  - file.name
+  - gtd_statut_objectif
+  - gtd_vision
+  - gtd_domaine
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Objectifs de la vision
+  filters:
+    and:
+    - list(gtd_vision).contains(this.file.asLink())
+  order:
+  - file.name
+  - gtd_statut_objectif
+  - gtd_vision
+  - gtd_domaine
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Objectifs du domaine
+  filters:
+    and:
+    - list(gtd_domaine).contains(this.file.asLink())
+  order:
+  - file.name
+  - gtd_statut_objectif
+  - gtd_vision
+  - gtd_domaine
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC

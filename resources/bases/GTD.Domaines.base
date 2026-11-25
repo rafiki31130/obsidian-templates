@@ -1,0 +1,35 @@
+filters:
+  and:
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (gtd_type == "domaine")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_vision:
+    displayName: Vision
+  topic:
+    displayName: Sujets
+views:
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - gtd_vision
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Domaines de la vision
+  filters:
+    and:
+    - list(gtd_vision).contains(this.file.asLink())
+  order:
+  - file.name
+  - gtd_vision
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC

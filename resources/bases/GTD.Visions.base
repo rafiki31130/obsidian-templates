@@ -1,0 +1,39 @@
+filters:
+  and:
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (gtd_type == "vision")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_raison_detre:
+    displayName: Raison d'être
+  gtd_horizon:
+    displayName: Horizon
+  topic:
+    displayName: Sujets
+views:
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - gtd_raison_detre
+  - gtd_horizon
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Visions de la raison d'être
+  filters:
+    and:
+    - list(gtd_raison_detre).contains(this.file.asLink())
+  order:
+  - file.name
+  - gtd_raison_detre
+  - gtd_horizon
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC

@@ -1,0 +1,95 @@
+filters:
+  and:
+    - file.ext == "md"
+    - '!file.inFolder("r_templates")'
+    - '!file.inFolder(".trash")'
+    - (gtd_type == "etape" || gtd_type == "projet_monolithe")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_type:
+    displayName: Objet GTD
+  gtd_statut_etape:
+    displayName: Statut étape
+  gtd_projet:
+    displayName: Projet
+  gtd_echeance:
+    displayName: Échéance
+  topic:
+    displayName: Sujets
+views:
+  - type: table
+    name: Sprint
+    filters:
+      and:
+        - gtd_statut_etape != "8_faite" && gtd_statut_etape != "9_abandonnee"
+    groupBy:
+      property: gtd_statut_etape
+      direction: ASC
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_etape
+      - gtd_projet
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Tous
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_etape
+      - gtd_projet
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Bloquées
+    filters:
+      and:
+        - gtd_statut_etape == "4_bloquee"
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_etape
+      - gtd_projet
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Sans projet
+    filters:
+      and:
+        - gtd_type == "etape" && gtd_projet.isEmpty()
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_etape
+      - gtd_projet
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Étapes du projet
+    filters:
+      and:
+        - list(gtd_projet).contains(this.file.asLink())
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_etape
+      - gtd_projet
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC

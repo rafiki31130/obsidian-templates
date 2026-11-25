@@ -1,0 +1,79 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.path != "bases/Sources/Sources.md"
+    - and:
+        - file.hasProperty("DB_SRC_type")
+        - '!file.inFolder("r_templates")'
+views:
+  - type: table
+    name: Toutes
+    groupBy:
+      property: DB_SRC_type
+      direction: ASC
+    order:
+      - file.name
+      - DB_SRC_createurs
+      - DB_SRC_date
+      - DB_SRC_statut
+      - DB_SRC_note
+      - topic
+  - type: table
+    name: En cours
+    filters:
+      and:
+        - DB_SRC_statut == "en-cours"
+    order:
+      - file.name
+      - DB_SRC_type
+      - DB_SRC_createurs
+      - DB_SRC_debut
+      - topic
+  - type: table
+    name: À consulter
+    filters:
+      and:
+        - DB_SRC_statut == "à-consulter"
+    order:
+      - file.name
+      - DB_SRC_type
+      - DB_SRC_createurs
+      - DB_SRC_support
+      - topic
+  - type: table
+    name: Livres
+    filters:
+      and:
+        - DB_SRC_type == "livre"
+    order:
+      - file.name
+      - DB_SRC_createurs
+      - DB_SRC_editeur
+      - DB_SRC_date
+      - DB_SRC_statut
+      - DB_SRC_note
+  - type: table
+    name: Formations
+    filters:
+      or:
+        - DB_SRC_type == "formation"
+        - DB_SRC_type == "cours"
+        - DB_SRC_type == "conference"
+    order:
+      - file.name
+      - DB_SRC_createurs
+      - DB_SRC_editeur
+      - DB_SRC_date
+      - DB_SRC_statut
+      - DB_SRC_note
+  - type: table
+    name: Terminées
+    filters:
+      and:
+        - DB_SRC_statut == "terminé"
+    order:
+      - file.name
+      - DB_SRC_type
+      - DB_SRC_createurs
+      - DB_SRC_fin
+      - DB_SRC_note

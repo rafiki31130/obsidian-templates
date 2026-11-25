@@ -1,0 +1,79 @@
+filters:
+  and:
+  - file.ext == "md"
+  - file.path != "bases/Comptes.Budgets/Comptes.Budgets.md"
+  - or:
+    - file.folder == "bases/Comptes.Budgets"
+    - file.folder == "bases/Comptes.Budgets"
+formulas:
+  nom: file.name.replace("Comptes @ Budget @ ", "").replace("Comptes @ BA @ ", "").replace("Comptes @ Frais M @ ", "")
+  mensualite: if(DB_CTE_BDG_periodicite.isEmpty(), DB_CTE_BDG_montant, DB_CTE_BDG_montant / DB_CTE_BDG_periodicite).round(2)
+properties:
+  formula.nom:
+    displayName: Poste
+  formula.mensualite:
+    displayName: Mensualité
+  DB_CTE_BDG_categorie:
+    displayName: Catégorie
+  DB_CTE_BDG_montant:
+    displayName: Montant
+  DB_CTE_BDG_virement:
+    displayName: Virement en place
+  DB_CTE_BDG_maj:
+    displayName: Mise à jour
+  DB_CTE_BDG_solde:
+    displayName: Solde
+  DB_CTE_BDG_solde_date:
+    displayName: Solde au
+  DB_CTE_BDG_tag:
+    displayName: Tag
+views:
+  - type: table
+    name: Budgets Mensuel
+    filters:
+      and:
+        - DB_CTE_BDG_type == "Poste"
+    order:
+      - formula.nom
+      - DB_CTE_BDG_categorie
+      - DB_CTE_BDG_montant
+      - DB_CTE_BDG_virement
+      - DB_CTE_BDG_maj
+    sort:
+      - property: DB_CTE_BDG_categorie
+        direction: ASC
+      - property: DB_CTE_BDG_montant
+        direction: DESC
+    summaries:
+      DB_CTE_BDG_montant: Sum
+  - type: table
+    name: Budgets Annuels
+    filters:
+      and:
+        - DB_CTE_BDG_type == "BA"
+    order:
+      - formula.nom
+      - DB_CTE_BDG_montant
+      - formula.mensualite
+      - DB_CTE_BDG_solde
+      - DB_CTE_BDG_solde_date
+      - DB_CTE_BDG_tag
+    sort:
+      - property: DB_CTE_BDG_montant
+        direction: DESC
+    summaries:
+      formula.mensualite: Sum
+      DB_CTE_BDG_solde: Sum
+  - type: table
+    name: Frais Mensuels
+    filters:
+      and:
+        - DB_CTE_BDG_type == "Frais M"
+    order:
+      - formula.nom
+      - DB_CTE_BDG_montant
+    sort:
+      - property: DB_CTE_BDG_montant
+        direction: DESC
+    summaries:
+      DB_CTE_BDG_montant: Sum
