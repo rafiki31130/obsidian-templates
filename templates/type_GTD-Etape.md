@@ -20,6 +20,10 @@ topic: null
 ## To-dos
 - [ ] 
 
+## Journal
+
+![[Relations.base]]
+
 ## Scratch
 - 
 
