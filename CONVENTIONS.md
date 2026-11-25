@@ -420,7 +420,7 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 
 ## Pages de pilotage GTD
 
-Les pages sont regroupées dans `r_templates/resources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
+Les pages sont regroupées dans `r_templates/resources/GTD - Pilotage/` ; la note `GTD - Pilotage.md` sert de note de dossier. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
 
 Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
 
@@ -459,7 +459,7 @@ Projets : ajout de `0.cadrage_agent` et `4.delegation_agent`. Étapes : ajout de
 
 Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent`, `6.delegue` et `7.validation` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
 
-Le dossier de pilotage est `r_templates/resources/Pilotage GTD/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
+Le dossier de pilotage est `r_templates/resources/GTD - Pilotage/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
 
 
 ## Dépendances et délégation des étapes

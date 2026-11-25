@@ -135,7 +135,8 @@ if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     else dv.paragraph('Aucune anomalie détectée pour ce tableau.');
 } else if (section === 'summary') {
     dv.paragraph('**' + review.issues.length + ' signalement(s)** à examiner. Les contrôles sont en lecture seule.');
-    dv.table(['Contrôles','Signalements'],Object.entries(categories).map(([key,title]) => [dv.fileLink('r_templates/resources/Pilotage GTD/' + links[key] + '.md',false,title),review.issues.filter(i => i.category === key).length]));
+    // Lien par nom de page, résolu par Obsidian : il survit au déplacement ou au renommage du dossier de pilotage.
+    dv.table(['Contrôles','Signalements'],Object.entries(categories).map(([key,title]) => [dv.fileLink(links[key],false,title),review.issues.filter(i => i.category === key).length]));
     if (review.activeProjects.length > review.projectLimit || review.runningAll.length > review.stepLimit) dv.paragraph('⚠️ Capacité dépassée : ' + review.activeProjects.length + ' projets actifs / 5 ; ' + review.runningAll.length + ' étapes en cours / 3.');
 } else {
     const rows = review.issues.filter(i => i.category === section);
