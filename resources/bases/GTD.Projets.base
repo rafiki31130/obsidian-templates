@@ -1,9 +1,9 @@
 filters:
   and:
-  - file.ext == "md"
-  - '!file.inFolder("r_templates")'
-  - '!file.inFolder(".trash")'
-  - (gtd_type == "projet" || gtd_type == "projet_monolithe")
+    - file.ext == "md"
+    - '!file.inFolder("r_templates")'
+    - '!file.inFolder(".trash")'
+    - (gtd_type == "projet" || gtd_type == "projet_monolithe")
 properties:
   file.name:
     displayName: Nom
@@ -20,83 +20,83 @@ properties:
   topic:
     displayName: Sujets
 views:
-- type: table
-  name: Portefeuille
-  filters:
-    and:
-    - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
-  groupBy:
-    property: gtd_statut_projet
-    direction: ASC
-  order:
-  - file.name
-  - gtd_type
-  - gtd_statut_projet
-  - gtd_domaine
-  - gtd_objectif
-  - gtd_echeance
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
-- type: table
-  name: Tous
-  order:
-  - file.name
-  - gtd_type
-  - gtd_statut_projet
-  - gtd_domaine
-  - gtd_objectif
-  - gtd_echeance
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
-- type: table
-  name: Sans domaine ni objectif
-  filters:
-    and:
-    - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
-  order:
-  - file.name
-  - gtd_type
-  - gtd_statut_projet
-  - gtd_domaine
-  - gtd_objectif
-  - gtd_echeance
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
-- type: table
-  name: Projets du domaine
-  filters:
-    and:
-    - list(gtd_domaine).contains(this.file.asLink())
-  order:
-  - file.name
-  - gtd_type
-  - gtd_statut_projet
-  - gtd_domaine
-  - gtd_objectif
-  - gtd_echeance
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
-- type: table
-  name: Projets de l'objectif
-  filters:
-    and:
-    - list(gtd_objectif).contains(this.file.asLink())
-  order:
-  - file.name
-  - gtd_type
-  - gtd_statut_projet
-  - gtd_domaine
-  - gtd_objectif
-  - gtd_echeance
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
+  - type: table
+    name: Portefeuille
+    filters:
+      and:
+        - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
+    groupBy:
+      property: gtd_statut_projet
+      direction: ASC
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_projet
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Tous
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_projet
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Sans domaine ni objectif
+    filters:
+      and:
+        - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_projet
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Projets du domaine
+    filters:
+      and:
+        - list(gtd_domaine).contains(this.file.asLink())
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_projet
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Projets de l'objectif
+    filters:
+      and:
+        - list(gtd_objectif).contains(this.file.asLink())
+    order:
+      - file.name
+      - gtd_type
+      - gtd_statut_projet
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
