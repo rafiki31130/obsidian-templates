@@ -11,4 +11,4 @@ topic:
 
 ## Objectifs
 
-![[GTD.base#Objectifs de la vision]]
+![[bases/GTD.Objectifs/GTD.Objectifs.base#Objectifs de la vision]]

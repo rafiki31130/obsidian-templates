@@ -16,4 +16,4 @@ topic: null
 
 ## Étapes
 
-![[GTD.base#Étapes du projet]]
+![[bases/GTD.Etapes/GTD.Etapes.base#Étapes du projet]]

@@ -13,4 +13,4 @@ topic:
 
 ## Projets
 
-![[GTD.base#Projets de l'objectif]]
+![[bases/GTD.Projets/GTD.Projets.base#Projets de l'objectif]]
