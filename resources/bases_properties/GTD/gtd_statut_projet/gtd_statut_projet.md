@@ -11,8 +11,8 @@ Utilisée par : `GTD.Etapes`, `GTD.Projets`, `GTD.ProjetsMonolithes`.
 
 ## Valeurs prévues par le schéma
 
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/1_en_attente|1]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/2_actif|2_actif]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/3_en_pause|3_en_pause]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/8_termine|8_termine]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/9_abandonne|9_abandonne]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/1.en_attente|1.en_attente]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/2.actif|2.actif]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/3.en_pause|3.en_pause]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/8.termine|8.termine]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_projet/9.abandonne|9.abandonne]]

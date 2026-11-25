@@ -12,7 +12,7 @@ DB_SRC_url: null
 DB_SRC_langue: null
 DB_SRC_support: null
 DB_SRC_etendue: null
-DB_SRC_statut: à-consulter
+DB_SRC_statut: 1.a_consulter
 DB_SRC_debut: null
 DB_SRC_fin: null
 DB_SRC_note: null
@@ -35,7 +35,7 @@ DB_SRC_contenant  : ce qui contient la source (revue, ouvrage collectif, série,
 DB_SRC_identifiant: ISBN, DOI, ISSN, référence de session…
 DB_SRC_support    : papier · ebook · audio · vidéo · en-ligne · présentiel
 DB_SRC_etendue    : pages, durée, nombre de jours
-DB_SRC_statut     : à-consulter · en-cours · terminé · abandonné · référence
+DB_SRC_statut     : 1.a_consulter · 2.en_cours · 8.termine · 9.abandonne · 3.reference
 DB_SRC_debut/fin  : période de consultation (lecture, visionnage, suivi)
 DB_SRC_note       : 1 à 7 (échelle Kepano : 7 exceptionnel … 1 à fuir)
 topic             : liens vers les Topics

@@ -34,7 +34,7 @@ views:
   name: Actifs
   filters:
     and:
-    - gtd_statut_objectif == "2_actif"
+    - gtd_statut_objectif == "2.actif"
   order:
   - file.name
   - gtd_statut_objectif

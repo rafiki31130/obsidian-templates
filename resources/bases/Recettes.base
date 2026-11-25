@@ -20,7 +20,7 @@ views:
     name: À tester
     filters:
       and:
-        - DB_CUI_REC_statut == "à-tester"
+        - DB_CUI_REC_statut == "1.a_tester"
     order:
       - file.name
       - DB_CUI_REC_technique

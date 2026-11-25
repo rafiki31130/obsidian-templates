@@ -2,7 +2,7 @@
 type: GTD-Projet
 gtd_domaine: null
 gtd_objectif: null
-gtd_statut_projet: 1_en_attente
+gtd_statut_projet: 1.en_attente
 gtd_echeance: null
 topic: null
 ---

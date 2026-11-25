@@ -41,18 +41,18 @@ views:
   - property: file.name
     direction: ASC
   groupOrder:
-  - 1_a_preparer
-  - 2_prete
-  - 3_en_cours
-  - 4_bloquee
-  - 8_faite
-  - 9_abandonnee
+  - 1.a_preparer
+  - 2.prete
+  - 3.en_cours
+  - 4.bloquee
+  - 8.faite
+  - 9.abandonnee
   - null
 - type: table
   name: Sprint — tableau
   filters:
     and:
-    - gtd_statut_etape != "8_faite" && gtd_statut_etape != "9_abandonnee"
+    - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
   groupBy:
     property: gtd_statut_etape
     direction: ASC
@@ -74,7 +74,7 @@ views:
   name: Bloquées
   filters:
     and:
-    - gtd_statut_etape == "4_bloquee"
+    - gtd_statut_etape == "4.bloquee"
   order:
   - file.name
   - type
@@ -116,7 +116,7 @@ views:
   - property: file.name
     direction: ASC
 formulas:
-  projet_actif: if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2_actif",
+  projet_actif: if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2.actif",
     list(gtd_projet).filter(file(value) && file(value).properties.type == "GTD-Projet"
-    && file(value).properties.gtd_statut_projet == "2_actif" && !file(value).inFolder("pages/4.
+    && file(value).properties.gtd_statut_projet == "2.actif" && !file(value).inFolder("pages/4.
     Archives") && !file(value).hasTag("archived")).length > 0)

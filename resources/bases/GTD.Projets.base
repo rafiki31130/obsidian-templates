@@ -41,17 +41,17 @@ views:
   - property: file.name
     direction: ASC
   groupOrder:
-  - 1_en_attente
-  - 2_actif
-  - 3_en_pause
-  - 8_termine
-  - 9_abandonne
+  - 1.en_attente
+  - 2.actif
+  - 3.en_pause
+  - 8.termine
+  - 9.abandonne
   - null
 - type: table
   name: Portefeuille — tableau
   filters:
     and:
-    - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
+    - gtd_statut_projet != "8.termine" && gtd_statut_projet != "9.abandonne"
   groupBy:
     property: gtd_statut_projet
     direction: ASC

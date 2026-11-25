@@ -11,8 +11,8 @@ Utilisée par : `GTD.Objectifs`.
 
 ## Valeurs prévues par le schéma
 
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/1_propose|1_propose]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/2_actif|2_actif]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/3_en_pause|3_en_pause]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/8_atteint|8_atteint]]
-- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/9_abandonne|9_abandonne]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/1.propose|1.propose]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/2.actif|2.actif]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/3.en_pause|3.en_pause]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/8.atteint|8.atteint]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_objectif/9.abandonne|9.abandonne]]

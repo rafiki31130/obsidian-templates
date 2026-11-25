@@ -221,7 +221,7 @@ Chaque dossier de données possède une note Markdown du même nom, qui intègre
 - Un projet ou projet monolithe doit avoir au moins un domaine **ou** un objectif ; les deux sont autorisés. La revue signale l’absence des deux.
 - Une étape peut être partagée entre plusieurs projets ; le lien `gtd_projet` accepte une liste.
 - La règle du rattachement GTD unique vise les notes ordinaires, pas les liens propres aux objets GTD.
-- Les statuts numérotés, critères de fin en texte et dates restent inchangés par le changement de type.
+- Les critères de fin restent en texte et les dates ne changent pas. Les statuts modernes suivent le format numéro.description_snake_case défini ci-dessous.
 - Le type natif Obsidian de la propriété `type` est Texte, configuré une seule fois pour le vault.
 - Le corps d’une page commence par une ligne vide, après le frontmatter s’il existe. Chaque titre garde une ligne vide avant lui et une ligne prête à saisir après lui (vide, liste ou case à cocher suivant le cas).
 
@@ -440,4 +440,15 @@ Un sous-dossier propre à une base ne doit être créé qu’en présence d’un
 **Confidentialité : ne jamais créer de pages de valeurs propres à l’utilisateur.** Cela couvre notamment les comptes, catégories personnelles, moyens de paiement, personnes, libellés et autres valeurs relevées dans les données. Ne pas les collecter pour produire des exemples, listes observées ou suggestions dans les ressources. Les définitions structurelles des champs sont conservées ; leurs valeurs privées restent uniquement dans les données et réglages concernés.
 
 Les pages de valeurs autorisées reproduisent le modèle existant : propriété et valeur fixe dans le frontmatter, puis définition. Les formules et propriétés de fichier sont en lecture seule. Le typage natif Obsidian reste un réglage global du vault ; la documentation ne le modifie pas.
+
+
+## Format des statuts modernes
+
+Les propriétés de statut modernes suivent `^\d+\.(?<description>[a-z_]+)$` : numéro, point littéral, description en minuscules sans accent avec underscores entre les mots. Exemples : `2.actif`, `3.en_cours`, `1.a_consulter`. Les clés de propriété restent inchangées.
+
+Cette convention s’applique aux statuts GTD, Sources et Recettes, dans les données, modèles, fiches de valeurs, vues, kanbans et contrôles. Les champs historiques `statut` et `status` (ancien workflow/Operon) ainsi que `r_templates/properties/statut/` restent inchangés. Les champs métier privés qui ne sont pas des propriétés de statut, comme l’état d’une charge, ne sont pas recodés par cette migration.
+
+Les numéros 1 à 4 indiquent des états vivants, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
+
+Les définitions et noms des fiches de valeurs suivent le même format, au niveau de leur schéma partagé. Aucun catalogue de valeurs privées n’est créé.
 

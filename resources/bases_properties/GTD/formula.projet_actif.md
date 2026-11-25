@@ -14,6 +14,6 @@ Utilisée par : `GTD.Etapes`.
 ### GTD.Etapes
 
 ```text
-if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2_actif", list(gtd_projet).filter(file(value) && file(value).properties.type == "GTD-Projet" && file(value).properties.gtd_statut_projet == "2_actif" && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length > 0)
+if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2.actif", list(gtd_projet).filter(file(value) && file(value).properties.type == "GTD-Projet" && file(value).properties.gtd_statut_projet == "2.actif" && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length > 0)
 ```
 

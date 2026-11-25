@@ -15,9 +15,9 @@ function buildGtdReview(pages, resolvePath) {
     const targets = (p, field) => links(p, field).map(l => l.page).filter(Boolean);
     const isProject = p => ['GTD-Projet', 'GTD-ProjetMonolithe'].includes(p.type);
     const isStep = p => p.type === 'GTD-Etape';
-    const isActiveProject = p => isProject(p) && !archived(p) && p.gtd_statut_projet === '2_actif';
-    const isOpen = p => !['8_termine', '9_abandonne'].includes(p.gtd_statut_projet);
-    const stepOpen = p => !['8_faite', '9_abandonnee'].includes(p.gtd_statut_etape);
+    const isActiveProject = p => isProject(p) && !archived(p) && p.gtd_statut_projet === '2.actif';
+    const isOpen = p => !['8.termine', '9.abandonne'].includes(p.gtd_statut_projet);
+    const stepOpen = p => !['8.faite', '9.abandonnee'].includes(p.gtd_statut_etape);
     const projects = all.filter(isProject);
     const steps = all.filter(isStep);
     const liveProjects = projects.filter(p => !archived(p));
@@ -30,11 +30,11 @@ function buildGtdReview(pages, resolvePath) {
     for (const p of liveProjects) {
         if (!clean(p.gtd_domaine).length && !clean(p.gtd_objectif).length) add('projet_sans_rattachement','projets','Projets sans domaine ni objectif',p,'Renseigner au moins un domaine ou un objectif. Les deux sont possibles.');
         if (p.type === 'GTD-Projet' && isOpen(p) && !children.get(path(p)).length) add('projet_sans_etape','projets','Projets sans étape',p,'Créer une étape ou utiliser le type GTD-ProjetMonolithe.');
-        if (p.type === 'GTD-Projet' && p.gtd_statut_projet === '8_termine') {
+        if (p.type === 'GTD-Projet' && p.gtd_statut_projet === '8.termine') {
             const pending = children.get(path(p)).filter(stepOpen);
             if (pending.length) add('projet_termine_etapes_ouvertes','projets','Projets terminés avec étapes ouvertes',p,pending.map(s => s.file.name).join(' · '));
         }
-        if (p.type === 'GTD-ProjetMonolithe' && p.gtd_statut_etape === '8_faite' && p.gtd_statut_projet !== '8_termine') add('monolithe_cloture','projets','Monolithes à clôturer au portefeuille',p,'L’étape est faite ; revoir le statut projet.');
+        if (p.type === 'GTD-ProjetMonolithe' && p.gtd_statut_etape === '8.faite' && p.gtd_statut_projet !== '8.termine') add('monolithe_cloture','projets','Monolithes à clôturer au portefeuille',p,'L’étape est faite ; revoir le statut projet.');
         for (const field of ['gtd_domaine', 'gtd_objectif']) for (const link of links(p, field)) {
             if (link.page && /(^|\/)3\. Ressources\//.test(path(link.page)) && !['GTD-Domaine','GTD-Objectif'].includes(link.page.type)) add('projet_ressource','projets','Projets rattachés à une ressource',p,field + ' → ' + link.page.file.name + '. Un lien topic vers une ressource reste autorisé.');
         }
@@ -43,19 +43,19 @@ function buildGtdReview(pages, resolvePath) {
         if (!targets(s,'gtd_projet').some(p => p.type === 'GTD-Projet')) add('etape_sans_projet','etapes','Étapes sans projet valide',s,'Renseigner un lien vers un projet existant. Un monolithe porte ses actions lui-même, sans étape enfant.');
     }
     for (const s of [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')]) {
-        if (s.gtd_statut_etape === '3_en_cours' && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
+        if (s.gtd_statut_etape === '3.en_cours' && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
     }
     for (const goal of all.filter(p => p.type === 'GTD-Objectif' && !archived(p))) {
-        if (goal.gtd_statut_objectif === '2_actif' && !projects.some(p => isActiveProject(p) && targets(p,'gtd_objectif').includes(goal))) add('objectif_sans_projet','horizons','Objectifs actifs sans projet actif',goal,'Lancer un projet contributif ou revoir le statut de l’objectif.');
+        if (goal.gtd_statut_objectif === '2.actif' && !projects.some(p => isActiveProject(p) && targets(p,'gtd_objectif').includes(goal))) add('objectif_sans_projet','horizons','Objectifs actifs sans projet actif',goal,'Lancer un projet contributif ou revoir le statut de l’objectif.');
     }
     for (const domain of all.filter(p => p.type === 'GTD-Domaine')) {
         const active = projects.filter(p => isActiveProject(p) && targets(p,'gtd_domaine').includes(domain));
-        const goals = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2_actif' && targets(p,'gtd_domaine').includes(domain));
+        const goals = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2.actif' && targets(p,'gtd_domaine').includes(domain));
         if (!archived(domain) && !active.length && !goals.length) add('domaine_sans_engagement','horizons','Domaines sans objectif ni projet actif',domain,'Vérifier pendant la revue si la responsabilité est suffisamment entretenue.');
         if (archived(domain) && active.length) add('domaine_archive_actif','horizons','Domaines archivés avec projets actifs',domain,active.map(p => p.file.name).join(' · '));
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
-    const statusValues = {gtd_statut_projet:['1_en_attente','2_actif','3_en_pause','8_termine','9_abandonne'],gtd_statut_etape:['1_a_preparer','2_prete','3_en_cours','4_bloquee','8_faite','9_abandonnee'],gtd_statut_objectif:['1_propose','2_actif','3_en_pause','8_atteint','9_abandonne']};
+    const statusValues = {gtd_statut_projet:['1.en_attente','2.actif','3.en_pause','8.termine','9.abandonne'],gtd_statut_etape:['1.a_preparer','2.prete','3.en_cours','4.bloquee','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
     for (const p of all.filter(p => !archived(p))) {
         const gtd = String(p.type || '').startsWith('GTD-');
         const filled = Object.keys(fields).filter(k => clean(p[k]).length);
@@ -70,8 +70,8 @@ function buildGtdReview(pages, resolvePath) {
     }
     const activeProjects = projects.filter(isActiveProject);
     const sprint = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => activeParents(s).length);
-    const running = sprint.filter(s => s.gtd_statut_etape === '3_en_cours');
-    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => s.gtd_statut_etape === '3_en_cours');
+    const running = sprint.filter(s => s.gtd_statut_etape === '3.en_cours');
+    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => s.gtd_statut_etape === '3.en_cours');
     return {issues,activeProjects,sprint,running,runningAll,projectLimit:5,stepLimit:3};
 }
 

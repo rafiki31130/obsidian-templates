@@ -11,7 +11,8 @@ Utilisée par : `Recettes`.
 
 ## Valeurs prévues par le schéma
 
-- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/abandonné|abandonné]]
-- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/testé|testé]]
-- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/validé|validé]]
-- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/à-tester|à-tester]]
+- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/1.a_tester|1.a_tester]]
+- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/2.en_test|2.en_test]]
+- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/3.teste|3.teste]]
+- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/8.valide|8.valide]]
+- [[r_templates/resources/bases_properties/RCT/DB_CUI_REC_statut/9.abandonne|9.abandonne]]

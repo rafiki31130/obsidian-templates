@@ -16,7 +16,7 @@ Template d'application : `templates/type_RCT-Recette.md`.
 
 - `type: RCT-Recette`
 - `tags:` `cuisine`, `recette`
-- propriétés `DB_CUI_REC_*` : voir *Convention de fiche* ci-dessous (`DB_CUI_REC_note` tient lieu de `rating` ; `DB_CUI_REC_statut` vaut `à-tester` à la création)
+- propriétés `DB_CUI_REC_*` : voir *Convention de fiche* ci-dessous (`DB_CUI_REC_note` tient lieu de `rating` ; `DB_CUI_REC_statut` vaut `1.a_tester` à la création)
 
 Corps : Tableau (HTML) · Notes d'exécution · Journal.
 
@@ -41,7 +41,7 @@ Une fiche = une recette, `type: RCT-Recette`, propriétés préfixées `DB_CUI_R
 | `DB_CUI_REC_actif_min`   | minutes de présence effective                 |
 | `DB_CUI_REC_total_min`   | minutes du début à la consommation            |
 | `DB_CUI_REC_technique`   | fermentation, rôtissage, émulsion…            |
-| `DB_CUI_REC_statut`      | à-tester, testé, validé, abandonné            |
+| `DB_CUI_REC_statut`      | 1.a_tester, 3.teste, 8.valide, 9.abandonne            |
 | `DB_CUI_REC_note`        | 1 à 5                                         |
 | `DB_CUI_REC_saison`      | liste                                         |
 | `DB_CUI_REC_prerequis`   | wikilink vers une autre fiche                 |

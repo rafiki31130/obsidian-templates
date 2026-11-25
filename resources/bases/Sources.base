@@ -24,7 +24,7 @@ views:
     name: En cours
     filters:
       and:
-        - DB_SRC_statut == "en-cours"
+        - DB_SRC_statut == "2.en_cours"
     order:
       - file.name
       - type
@@ -35,7 +35,7 @@ views:
     name: À consulter
     filters:
       and:
-        - DB_SRC_statut == "à-consulter"
+        - DB_SRC_statut == "1.a_consulter"
     order:
       - file.name
       - type
@@ -72,7 +72,7 @@ views:
     name: Terminées
     filters:
       and:
-        - DB_SRC_statut == "terminé"
+        - DB_SRC_statut == "8.termine"
     order:
       - file.name
       - type

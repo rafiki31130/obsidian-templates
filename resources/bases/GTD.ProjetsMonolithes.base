@@ -24,7 +24,7 @@ views:
   name: Portefeuille
   filters:
     and:
-    - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
+    - gtd_statut_projet != "8.termine" && gtd_statut_projet != "9.abandonne"
   groupBy:
     property: gtd_statut_projet
     direction: ASC
