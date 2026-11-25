@@ -1,6 +1,5 @@
 ---
-type: BDD
-gtd_type: etape
+type: GTD-Etape
 gtd_projet: null
 gtd_statut_etape: 1_a_preparer
 gtd_echeance: null

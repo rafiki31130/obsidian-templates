@@ -1,6 +1,5 @@
 ---
-type: BDD
-gtd_type: vision
+type: GTD-Vision
 gtd_raison_detre:
 gtd_horizon:
 topic:

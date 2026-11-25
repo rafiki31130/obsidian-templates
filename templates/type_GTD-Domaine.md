@@ -1,6 +1,5 @@
 ---
-type: BDD
-gtd_type: domaine
+type: GTD-Domaine
 gtd_vision:
 topic:
 ---

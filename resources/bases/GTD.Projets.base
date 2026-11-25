@@ -3,11 +3,11 @@ filters:
     - file.ext == "md"
     - '!file.inFolder("r_templates")'
     - '!file.inFolder(".trash")'
-    - (gtd_type == "projet" || gtd_type == "projet_monolithe")
+    - (type == "GTD-Projet" || type == "GTD-ProjetMonolithe")
 properties:
   file.name:
     displayName: Nom
-  gtd_type:
+  type:
     displayName: Objet GTD
   gtd_statut_projet:
     displayName: Statut projet
@@ -30,7 +30,7 @@ views:
       direction: ASC
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_projet
       - gtd_domaine
       - gtd_objectif
@@ -43,7 +43,7 @@ views:
     name: Tous
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_projet
       - gtd_domaine
       - gtd_objectif
@@ -59,7 +59,7 @@ views:
         - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_projet
       - gtd_domaine
       - gtd_objectif
@@ -75,7 +75,7 @@ views:
         - list(gtd_domaine).contains(this.file.asLink())
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_projet
       - gtd_domaine
       - gtd_objectif
@@ -91,7 +91,7 @@ views:
         - list(gtd_objectif).contains(this.file.asLink())
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_projet
       - gtd_domaine
       - gtd_objectif

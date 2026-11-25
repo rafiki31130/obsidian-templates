@@ -154,13 +154,84 @@ Rechercher `#list/LeroyMerlin` dans le vault affiche toutes les listes de ce con
 
 ---
 
+## Typage des BDD
+
+Décision du 25/11/2026 — projet [[Nouvelle structure Projets]]. Cette section fait référence pour les objets migrés et remplace les anciens exemples de classification `BDD`, `gtd_type`, `DB_SRC_type` et `Recette` décrits dans les sections historiques ci-dessous. Les projets historiques `type: Projet` ne sont pas convertis implicitement ; leur reprise reste progressive.
+
+### Identifiant unique
+
+Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lettres majuscules**, tiret, sous-type en PascalCase sans accent. Il identifie à la fois la famille de BDD et l’objet. Exemples : `GTD-Projet`, `GTD-Etape`, `RCT-Recette`, `CPT-Budgets`, `SRC-Livre`.
+
+`type: BDD` n’est plus utilisé pour les objets migrés. `gtd_type` et `DB_SRC_type` sont supprimés des fiches, des modèles et des requêtes actives. Le type est une valeur unique ; un domaine `GTD-Domaine` peut aussi jouer le rôle de topic sans ajouter `type: Topic`.
+
+| Type | Objet |
+|---|---|
+| `GTD-RaisonDetre` | raison detre |
+| `GTD-Vision` | vision |
+| `GTD-Objectif` | objectif |
+| `GTD-Domaine` | domaine |
+| `GTD-Projet` | projet |
+| `GTD-Etape` | etape |
+| `GTD-ProjetMonolithe` | projet monolithe |
+| `RCT-Recette` | recette |
+| `CPT-Budgets` | Comptes.Budgets |
+| `CPT-Charges` | Comptes.Charges |
+| `CPT-Decomptes` | Comptes.Decomptes |
+| `SRC-Livre` | livre |
+| `SRC-Chapitre` | chapitre |
+| `SRC-Article` | article |
+| `SRC-ArticlePresse` | article-presse |
+| `SRC-These` | these |
+| `SRC-Rapport` | rapport |
+| `SRC-Norme` | norme |
+| `SRC-Document` | document |
+| `SRC-SiteWeb` | site-web |
+| `SRC-Billet` | billet |
+| `SRC-Forum` | forum |
+| `SRC-Film` | film |
+| `SRC-Serie` | serie |
+| `SRC-Documentaire` | documentaire |
+| `SRC-Emission` | emission |
+| `SRC-Video` | video |
+| `SRC-Podcast` | podcast |
+| `SRC-Audio` | audio |
+| `SRC-Formation` | formation |
+| `SRC-Cours` | cours |
+| `SRC-Conference` | conference |
+| `SRC-Entretien` | entretien |
+| `SRC-Logiciel` | logiciel |
+| `SRC-OeuvreArt` | oeuvre-art |
+| `SRC-Autre` | autre |
+
+Les propriétés métier sont conservées : liens `gtd_domaine`, `gtd_objectif`, `gtd_projet`, statuts `gtd_statut_*`, dates, auteurs, etc. En particulier `DB_CTE_BDG_type` reste une catégorie budgétaire (Poste, BA, Frais M) utilisée par les calculs et les vues ; elle ne fait pas doublon avec le type de BDD.
+
+### Modèles et bases
+
+Les modèles sont la source du frontmatter. Chaque sous-type de source possède un modèle complet `r_templates/templates/type_SRC-<SousType>.md` ; le choix d’un livre, article, cours, etc. se fait par le modèle sélectionné. `Fiche-Source.md` reste un modèle générique de compatibilité, classé `SRC-Autre`.
+
+Les bases sont centralisées sous `r_templates/resources/bases/` et filtrent la classification sur `type`, indépendamment de l’emplacement physique des fiches. La base Sources sélectionne le préfixe `SRC-`, puis ses vues filtrent les types précis. Les projets monolithes restent inclus dans le portefeuille des projets et le sprint des étapes.
+
+Chaque dossier de données possède une note Markdown du même nom, qui intègre la base correspondante. Cette note de dossier ne porte pas le type des données et n’apparaît pas dans les tableaux. Les chemins actuels choisis par l’utilisateur sont conservés ; un projet et ses étapes peuvent être rangés ensemble dans un dossier de projet sous `pages/`.
+
+### Règles GTD et saisie
+
+- Domaines et objectifs sont des liens fonctionnels, sans hiérarchie parent-enfant obligatoire.
+- Un projet ou projet monolithe doit avoir au moins un domaine **ou** un objectif ; les deux sont autorisés. La revue signale l’absence des deux.
+- Une étape peut être partagée entre plusieurs projets ; le lien `gtd_projet` accepte une liste.
+- La règle du rattachement GTD unique vise les notes ordinaires, pas les liens propres aux objets GTD.
+- Les statuts numérotés, critères de fin en texte et dates restent inchangés par le changement de type.
+- Le type natif Obsidian de la propriété `type` est Texte, configuré une seule fois pour le vault.
+- Le corps d’une page commence par une ligne vide, après le frontmatter s’il existe. Chaque titre garde une ligne vide avant lui et une ligne prête à saisir après lui (vide, liste ou case à cocher suivant le cas).
+
+La compatibilité des outils MCP avec ce schéma reste à adapter ; leur ancien contrat ne doit pas recréer les champs de classification supprimés.
+
 ## Frontmatter
 
 **Principe** : tout type de page est créé à partir d'un template (via le bouton de sélection de type disponible dans toute page classique, ou directement via Templater). Les templates sont la source de vérité pour le frontmatter — ne pas créer de frontmatter manuellement.
 
 Les **valeurs autorisées** par propriété sont documentées dans `properties/`. Ne pas dupliquer ces valeurs ici : consulter les fichiers sous `properties/` pour connaître les valeurs valides par champ.
 
-### Note projet (`type: Projet`)
+### Note projet historique (`type: Projet`)
 
 Toujours créer via le template `type_Props-Projet.md` (bouton de sélection de type ou commande Templater). Le frontmatter est pré-rempli par le template.
 

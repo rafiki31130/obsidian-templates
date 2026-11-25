@@ -1,26 +1,45 @@
 filters:
   and:
   - file.ext == "md"
-  - file.path != "bases/Comptes.Decomptes/Comptes.Decomptes.md"
-  - and:
-    - file.folder == "bases/Comptes.Decomptes"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - type == "CPT-Decomptes"
 formulas:
-  percus: if(DB_CTE_DCT_lst_percus.isEmpty(), 0, DB_CTE_DCT_lst_percus.map(number(value.toString().trim().replace(",", ".").split(" ").slice(0, 1).join(""))).reduce(acc + value, 0)).round(2)
-  imprevus: if(DB_CTE_DCT_lst_imprevus.isEmpty(), 0, DB_CTE_DCT_lst_imprevus.map(number(value.toString().trim().replace(",", ".").split(" ").slice(0, 1).join(""))).reduce(acc + value, 0)).round(2)
+  percus: if(DB_CTE_DCT_lst_percus.isEmpty(), 0, DB_CTE_DCT_lst_percus.map(number(value.toString().trim().replace(",",
+    ".").split(" ").slice(0, 1).join(""))).reduce(acc + value, 0)).round(2)
+  imprevus: if(DB_CTE_DCT_lst_imprevus.isEmpty(), 0, DB_CTE_DCT_lst_imprevus.map(number(value.toString().trim().replace(",",
+    ".").split(" ").slice(0, 1).join(""))).reduce(acc + value, 0)).round(2)
   attendu: (formula.percus - formula.imprevus).round(2)
-  a_venir: if(DB_CTE_DCT_av_budget.isEmpty(), null, (if(DB_CTE_DCT_av_budget.isEmpty(), 0, DB_CTE_DCT_av_budget) + if(DB_CTE_DCT_av_cartes.isEmpty(), 0, DB_CTE_DCT_av_cartes) + if(DB_CTE_DCT_av_virements.isEmpty(), 0, DB_CTE_DCT_av_virements)).round(2))
-  dispo_brut: if(DB_CTE_DCT_av_budget.isEmpty(), null, (DB_CTE_SLD_bpoc_cc - formula.a_venir - if(DB_CTE_DCT_reserve.isEmpty(), 1000, DB_CTE_DCT_reserve)).round(2))
-  dispo_cc: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_brut - if(DB_CTE_DCT_report_cc.isEmpty(), 0, DB_CTE_DCT_report_cc)).round(2))
-  soldes_variables: (if(DB_CTE_SLD_bunq_cc.isEmpty(), 0, DB_CTE_SLD_bunq_cc) + if(DB_CTE_SLD_sum_cc.isEmpty(), 0, DB_CTE_SLD_sum_cc)).round(2)
-  variables: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.soldes_variables + if(DB_CTE_DCT_tricount_solde.isEmpty(), 0, DB_CTE_DCT_tricount_solde) - if(DB_CTE_DCT_report_variables.isEmpty(), 0, DB_CTE_DCT_report_variables)).round(2))
+  a_venir: if(DB_CTE_DCT_av_budget.isEmpty(), null, (if(DB_CTE_DCT_av_budget.isEmpty(),
+    0, DB_CTE_DCT_av_budget) + if(DB_CTE_DCT_av_cartes.isEmpty(), 0, DB_CTE_DCT_av_cartes)
+    + if(DB_CTE_DCT_av_virements.isEmpty(), 0, DB_CTE_DCT_av_virements)).round(2))
+  dispo_brut: if(DB_CTE_DCT_av_budget.isEmpty(), null, (DB_CTE_SLD_bpoc_cc - formula.a_venir
+    - if(DB_CTE_DCT_reserve.isEmpty(), 1000, DB_CTE_DCT_reserve)).round(2))
+  dispo_cc: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_brut - if(DB_CTE_DCT_report_cc.isEmpty(),
+    0, DB_CTE_DCT_report_cc)).round(2))
+  soldes_variables: (if(DB_CTE_SLD_bunq_cc.isEmpty(), 0, DB_CTE_SLD_bunq_cc) + if(DB_CTE_SLD_sum_cc.isEmpty(),
+    0, DB_CTE_SLD_sum_cc)).round(2)
+  variables: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.soldes_variables +
+    if(DB_CTE_DCT_tricount_solde.isEmpty(), 0, DB_CTE_DCT_tricount_solde) - if(DB_CTE_DCT_report_variables.isEmpty(),
+    0, DB_CTE_DCT_report_variables)).round(2))
   resultat: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_cc + formula.variables).round(2))
   non_explique: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_cc - formula.attendu).round(2))
-  a_reporter_cc: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_brut + if(DB_CTE_DCT_raz_variables, formula.soldes_variables, 0) - if(DB_CTE_DCT_affectation.isEmpty(), 0, DB_CTE_DCT_affectation)).round(2))
-  a_reporter_variables: if(DB_CTE_DCT_av_budget.isEmpty(), null, (if(DB_CTE_DCT_tricount_solde.isEmpty(), 0, DB_CTE_DCT_tricount_solde) + if(DB_CTE_DCT_raz_variables, 0, formula.soldes_variables)).round(2))
-  patrimoine: "[DB_CTE_SLD_bpoc_cc, DB_CTE_SLD_bpoc_cj, DB_CTE_SLD_bpoc_ldd, DB_CTE_SLD_bpoc_parts, DB_CTE_SLD_ftno_cc, DB_CTE_SLD_ftno_la, DB_CTE_SLD_sum_cc, DB_CTE_SLD_sum_chg_ann, DB_CTE_SLD_sum_frs_ann, DB_CTE_SLD_sum_epargne, DB_CTE_SLD_sum_budgets, DB_CTE_SLD_bunq_cc, DB_CTE_SLD_ntx_pee, DB_CTE_SLD_ntx_per, DB_CTE_SLD_ftno_lx, DB_CTE_SLD_revolut_cc, DB_CTE_SLD_compte_courant, DB_CTE_SLD_livret_dd, DB_CTE_SLD_livret_a, DB_CTE_SLD_revolut_bunq, DB_CTE_SLD_perso, DB_CTE_SLD_charge_an, DB_CTE_SLD_frais_an, DB_CTE_SLD_natixis].filter(value.isTruthy()).reduce(acc + value, 0).round(0)"
-  bloque: "[DB_CTE_SLD_bpoc_parts, DB_CTE_SLD_ntx_pee, DB_CTE_SLD_ntx_per, DB_CTE_SLD_natixis].filter(value.isTruthy()).reduce(acc + value, 0).round(0)"
+  a_reporter_cc: if(DB_CTE_DCT_av_budget.isEmpty(), null, (formula.dispo_brut + if(DB_CTE_DCT_raz_variables,
+    formula.soldes_variables, 0) - if(DB_CTE_DCT_affectation.isEmpty(), 0, DB_CTE_DCT_affectation)).round(2))
+  a_reporter_variables: if(DB_CTE_DCT_av_budget.isEmpty(), null, (if(DB_CTE_DCT_tricount_solde.isEmpty(),
+    0, DB_CTE_DCT_tricount_solde) + if(DB_CTE_DCT_raz_variables, 0, formula.soldes_variables)).round(2))
+  patrimoine: '[DB_CTE_SLD_bpoc_cc, DB_CTE_SLD_bpoc_cj, DB_CTE_SLD_bpoc_ldd, DB_CTE_SLD_bpoc_parts,
+    DB_CTE_SLD_ftno_cc, DB_CTE_SLD_ftno_la, DB_CTE_SLD_sum_cc, DB_CTE_SLD_sum_chg_ann,
+    DB_CTE_SLD_sum_frs_ann, DB_CTE_SLD_sum_epargne, DB_CTE_SLD_sum_budgets, DB_CTE_SLD_bunq_cc,
+    DB_CTE_SLD_ntx_pee, DB_CTE_SLD_ntx_per, DB_CTE_SLD_ftno_lx, DB_CTE_SLD_revolut_cc,
+    DB_CTE_SLD_compte_courant, DB_CTE_SLD_livret_dd, DB_CTE_SLD_livret_a, DB_CTE_SLD_revolut_bunq,
+    DB_CTE_SLD_perso, DB_CTE_SLD_charge_an, DB_CTE_SLD_frais_an, DB_CTE_SLD_natixis].filter(value.isTruthy()).reduce(acc
+    + value, 0).round(0)'
+  bloque: '[DB_CTE_SLD_bpoc_parts, DB_CTE_SLD_ntx_pee, DB_CTE_SLD_ntx_per, DB_CTE_SLD_natixis].filter(value.isTruthy()).reduce(acc
+    + value, 0).round(0)'
   disponible: (formula.patrimoine - formula.bloque).round(0)
-  controle_total: if(DB_CTE_HST_total_soldes.isEmpty(), null, formula.patrimoine - DB_CTE_HST_total_soldes)
+  controle_total: if(DB_CTE_HST_total_soldes.isEmpty(), null, formula.patrimoine -
+    DB_CTE_HST_total_soldes)
 properties:
   file.name:
     displayName: Relevé
@@ -65,76 +84,76 @@ properties:
   DB_CTE_DCT_note:
     displayName: Note
 views:
-  - type: table
-    name: Mois
-    filters:
-      or:
-        - "!DB_CTE_DCT_av_budget.isEmpty()"
-        - "!DB_CTE_DCT_lst_imprevus.isEmpty()"
-        - "!DB_CTE_DCT_lst_percus.isEmpty()"
-    order:
-      - file.name
-      - formula.attendu
-      - formula.dispo_cc
-      - formula.non_explique
-      - formula.variables
-      - formula.resultat
-      - DB_CTE_DCT_affectation
-      - DB_CTE_DCT_raz_variables
-      - formula.a_reporter_cc
-      - formula.a_reporter_variables
-      - formula.percus
-      - formula.imprevus
-    sort:
-      - property: file.name
-        direction: DESC
-  - type: table
-    name: Patrimoine
-    order:
-      - file.name
-      - formula.disponible
-      - formula.bloque
-      - formula.patrimoine
-    sort:
-      - property: file.name
-        direction: DESC
-  - type: table
-    name: Soldes
-    order:
-      - file.name
-      - DB_CTE_SLD_bpoc_cc
-      - DB_CTE_SLD_bpoc_cj
-      - DB_CTE_SLD_bpoc_ldd
-      - DB_CTE_SLD_bpoc_parts
-      - DB_CTE_SLD_ftno_cc
-      - DB_CTE_SLD_ftno_la
-      - DB_CTE_SLD_sum_cc
-      - DB_CTE_SLD_sum_chg_ann
-      - DB_CTE_SLD_sum_frs_ann
-      - DB_CTE_SLD_sum_epargne
-      - DB_CTE_SLD_sum_budgets
-      - DB_CTE_SLD_bunq_cc
-      - DB_CTE_SLD_ntx_pee
-      - DB_CTE_SLD_ntx_per
-    sort:
-      - property: file.name
-        direction: DESC
-  - type: table
-    name: Historique
-    order:
-      - file.name
-      - DB_CTE_HST_cc_reequilibrage
-      - DB_CTE_HST_charges_a_venir
-      - DB_CTE_HST_equilibrage
-      - DB_CTE_HST_difference
-      - DB_CTE_HST_total_reel
-      - DB_CTE_HST_imprevus_percu
-      - formula.attendu
-      - DB_CTE_HST_reste_conso
-      - DB_CTE_HST_total_soldes
-      - formula.patrimoine
-      - formula.controle_total
-      - DB_CTE_DCT_note
-    sort:
-      - property: file.name
-        direction: DESC
+- type: table
+  name: Mois
+  filters:
+    or:
+    - '!DB_CTE_DCT_av_budget.isEmpty()'
+    - '!DB_CTE_DCT_lst_imprevus.isEmpty()'
+    - '!DB_CTE_DCT_lst_percus.isEmpty()'
+  order:
+  - file.name
+  - formula.attendu
+  - formula.dispo_cc
+  - formula.non_explique
+  - formula.variables
+  - formula.resultat
+  - DB_CTE_DCT_affectation
+  - DB_CTE_DCT_raz_variables
+  - formula.a_reporter_cc
+  - formula.a_reporter_variables
+  - formula.percus
+  - formula.imprevus
+  sort:
+  - property: file.name
+    direction: DESC
+- type: table
+  name: Patrimoine
+  order:
+  - file.name
+  - formula.disponible
+  - formula.bloque
+  - formula.patrimoine
+  sort:
+  - property: file.name
+    direction: DESC
+- type: table
+  name: Soldes
+  order:
+  - file.name
+  - DB_CTE_SLD_bpoc_cc
+  - DB_CTE_SLD_bpoc_cj
+  - DB_CTE_SLD_bpoc_ldd
+  - DB_CTE_SLD_bpoc_parts
+  - DB_CTE_SLD_ftno_cc
+  - DB_CTE_SLD_ftno_la
+  - DB_CTE_SLD_sum_cc
+  - DB_CTE_SLD_sum_chg_ann
+  - DB_CTE_SLD_sum_frs_ann
+  - DB_CTE_SLD_sum_epargne
+  - DB_CTE_SLD_sum_budgets
+  - DB_CTE_SLD_bunq_cc
+  - DB_CTE_SLD_ntx_pee
+  - DB_CTE_SLD_ntx_per
+  sort:
+  - property: file.name
+    direction: DESC
+- type: table
+  name: Historique
+  order:
+  - file.name
+  - DB_CTE_HST_cc_reequilibrage
+  - DB_CTE_HST_charges_a_venir
+  - DB_CTE_HST_equilibrage
+  - DB_CTE_HST_difference
+  - DB_CTE_HST_total_reel
+  - DB_CTE_HST_imprevus_percu
+  - formula.attendu
+  - DB_CTE_HST_reste_conso
+  - DB_CTE_HST_total_soldes
+  - formula.patrimoine
+  - formula.controle_total
+  - DB_CTE_DCT_note
+  sort:
+  - property: file.name
+    direction: DESC

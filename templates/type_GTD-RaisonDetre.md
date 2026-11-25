@@ -1,6 +1,5 @@
 ---
-type: BDD
-gtd_type: raison_detre
+type: GTD-RaisonDetre
 topic:
 ---
 

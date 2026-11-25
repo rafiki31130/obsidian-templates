@@ -1,5 +1,5 @@
 ---
-type: BDD
+type: RCT-Recette
 tags: null
 DB_CUI_REC_portions: null
 DB_CUI_REC_actif_min: null

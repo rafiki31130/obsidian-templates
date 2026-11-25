@@ -3,11 +3,11 @@ filters:
     - file.ext == "md"
     - '!file.inFolder("r_templates")'
     - '!file.inFolder(".trash")'
-    - (gtd_type == "etape" || gtd_type == "projet_monolithe")
+    - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
 properties:
   file.name:
     displayName: Nom
-  gtd_type:
+  type:
     displayName: Objet GTD
   gtd_statut_etape:
     displayName: Statut étape
@@ -28,7 +28,7 @@ views:
       direction: ASC
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_etape
       - gtd_projet
       - gtd_echeance
@@ -40,7 +40,7 @@ views:
     name: Tous
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_etape
       - gtd_projet
       - gtd_echeance
@@ -55,7 +55,7 @@ views:
         - gtd_statut_etape == "4_bloquee"
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_etape
       - gtd_projet
       - gtd_echeance
@@ -67,10 +67,10 @@ views:
     name: Sans projet
     filters:
       and:
-        - gtd_type == "etape" && gtd_projet.isEmpty()
+        - type == "GTD-Etape" && gtd_projet.isEmpty()
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_etape
       - gtd_projet
       - gtd_echeance
@@ -85,7 +85,7 @@ views:
         - list(gtd_projet).contains(this.file.asLink())
     order:
       - file.name
-      - gtd_type
+      - type
       - gtd_statut_etape
       - gtd_projet
       - gtd_echeance

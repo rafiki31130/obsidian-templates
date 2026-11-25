@@ -3,7 +3,7 @@ filters:
   - file.ext == "md"
   - '!file.inFolder("r_templates")'
   - '!file.inFolder(".trash")'
-  - (gtd_type == "raison_detre")
+  - (type == "GTD-RaisonDetre")
 properties:
   file.name:
     displayName: Nom

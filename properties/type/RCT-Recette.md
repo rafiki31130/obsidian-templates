@@ -1,5 +1,5 @@
 ---
-type: Recette
+type: RCT-Recette
 ---
 
 ## Définition
@@ -12,9 +12,9 @@ Rangée dans `bases/Recettes/`, nommage `Recettes @ <Nom>`. Ingrédients, étape
 
 ## Propriétés
 
-Template d'application : `templates/type_Recette.md`.
+Template d'application : `templates/type_RCT-Recette.md`.
 
-- `type: Recette`
+- `type: RCT-Recette`
 - `tags:` `cuisine`, `recette`
 - propriétés `DB_CUI_REC_*` : voir *Convention de fiche* ci-dessous (`DB_CUI_REC_note` tient lieu de `rating` ; `DB_CUI_REC_statut` vaut `à-tester` à la création)
 
@@ -33,7 +33,7 @@ Corps : Tableau (HTML) · Notes d'exécution · Journal.
 
 ## Convention de fiche
 
-Une fiche = une recette, `type: Recette`, propriétés préfixées `DB_CUI_REC_` (toutes présentes dans le template).
+Une fiche = une recette, `type: RCT-Recette`, propriétés préfixées `DB_CUI_REC_` (toutes présentes dans le template).
 
 | Propriété                | Valeurs                                       |
 | ------------------------ | --------------------------------------------- |

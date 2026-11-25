@@ -1,6 +1,5 @@
 ---
-type: BDD
-gtd_type: projet
+type: GTD-Projet
 gtd_domaine: null
 gtd_objectif: null
 gtd_statut_projet: 1_en_attente

@@ -1,5 +1,5 @@
 ---
-type: BDD
+type: CPT-Budgets
 DB_CTE_BDG_type: null
 DB_CTE_BDG_parent: null
 DB_CTE_BDG_montant: null

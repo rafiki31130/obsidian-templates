@@ -3,7 +3,7 @@ filters:
   - file.ext == "md"
   - '!file.inFolder("r_templates")'
   - '!file.inFolder(".trash")'
-  - (gtd_type == "domaine")
+  - (type == "GTD-Domaine")
 properties:
   file.name:
     displayName: Nom
