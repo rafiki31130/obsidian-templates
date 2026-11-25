@@ -4,6 +4,11 @@
 // réapplique son type déclaré (text, multitext, number, checkbox, tags,
 // aliases, date, datetime) en reformatant la valeur YAML.
 //
+// Renomme aussi une valeur de propriété dans tout le vault : la valeur
+// choisie est remplacée lorsqu'elle est la valeur entière de la propriété ou
+// un élément de liste (correspondance exacte, sensible à la casse). Dans une
+// liste, un doublon créé par le remplacement est retiré.
+//
 // Utilise `app.fileManager.processFrontMatter()` → parsing/sérialisation YAML
 // gérés par Obsidian (pas de regex YAML fragiles).
 //
@@ -49,18 +54,125 @@ if (!prop) return;
 const ACTION_RENAME    = "rename";
 const ACTION_RETYPE    = "retype";
 const ACTION_BOTH      = "both";
+const ACTION_VALUE     = "value";
 
 const action = await tp.system.suggester(
   [
     `Renommer "${prop}"`,
     `Réappliquer le type${declaredTypes[prop] ? ` (${declaredTypes[prop]})` : " (à choisir)"}`,
-    `Renommer + réappliquer le type`
+    `Renommer + réappliquer le type`,
+    `Renommer une valeur de "${prop}"`
   ],
-  [ACTION_RENAME, ACTION_RETYPE, ACTION_BOTH],
+  [ACTION_RENAME, ACTION_RETYPE, ACTION_BOTH, ACTION_VALUE],
   false,
   "Action ?"
 );
 if (!action) return;
+
+// ─── 4 bis. Renommer une valeur ───────────────────────────────────────────────
+if (action === ACTION_VALUE) {
+  // Seules les valeurs simples (texte, nombre, booléen) sont proposées ;
+  // les objets YAML imbriqués ne sont pas modifiés.
+  const isScalar = v => v != null && typeof v !== "object" && String(v) !== "";
+  const itemsOf = v => (Array.isArray(v) ? v : [v]).filter(isScalar);
+
+  // Inventaire des valeurs : nombre de notes où chaque valeur apparaît
+  const valueCounts = new Map();
+  for (const f of app.vault.getMarkdownFiles()) {
+    const fm = app.metadataCache.getFileCache(f)?.frontmatter;
+    if (!fm || !(prop in fm)) continue;
+    for (const s of new Set(itemsOf(fm[prop]).map(String))) {
+      valueCounts.set(s, (valueCounts.get(s) ?? 0) + 1);
+    }
+  }
+  const values = [...valueCounts.keys()].sort((a, b) => a.localeCompare(b));
+  if (values.length === 0) {
+    new Notice(`Aucune valeur trouvée pour "${prop}".`);
+    return;
+  }
+
+  const oldValue = await tp.system.suggester(
+    values.map(v => `${v}  (${valueCounts.get(v)})`),
+    values,
+    false,
+    `Quelle valeur de "${prop}" renommer ?`
+  );
+  if (oldValue == null) return;
+
+  const raw = await tp.system.prompt(`Remplacer "${oldValue}" par…`, oldValue);
+  if (raw == null) return;
+  const newValue = String(raw).trim();
+  if (!newValue) {
+    new Notice("Valeur vide — abandon.");
+    return;
+  }
+  if (newValue === oldValue) {
+    new Notice("Valeur inchangée — abandon.");
+    return;
+  }
+
+  const fusion = valueCounts.has(newValue) ? ` (fusion avec la valeur existante)` : "";
+  const ok = await tp.system.suggester(
+    [`Oui : "${prop}" : "${oldValue}" → "${newValue}" dans ${valueCounts.get(oldValue)} note(s)${fusion}`, "Annuler"],
+    [true, false],
+    false,
+    "Confirmer ?"
+  );
+  if (!ok) return;
+
+  // Conserve le type YAML d'origine lorsque la nouvelle valeur le permet
+  function castLike(original) {
+    if (typeof original === "number") {
+      const n = Number(newValue.replace(",", "."));
+      if (Number.isFinite(n)) return n;
+    }
+    if (typeof original === "boolean") {
+      if (newValue.toLowerCase() === "true") return true;
+      if (newValue.toLowerCase() === "false") return false;
+    }
+    return newValue;
+  }
+  const matches = v => isScalar(v) && String(v) === oldValue;
+
+  let changedFiles = 0;
+  const valueErrors = [];
+  for (const f of app.vault.getMarkdownFiles()) {
+    const fm = app.metadataCache.getFileCache(f)?.frontmatter;
+    if (!fm || !(prop in fm) || !itemsOf(fm[prop]).some(matches)) continue;
+    try {
+      await app.fileManager.processFrontMatter(f, (front) => {
+        const current = front[prop];
+        if (Array.isArray(current)) {
+          if (!current.some(matches)) return;
+          const seen = new Set();
+          front[prop] = current
+            .map(v => (matches(v) ? castLike(v) : v))
+            .filter(v => {
+              const key = JSON.stringify(v);
+              if (seen.has(key)) return false;
+              seen.add(key);
+              return true;
+            });
+          changedFiles++;
+        } else if (matches(current)) {
+          front[prop] = castLike(current);
+          changedFiles++;
+        }
+      });
+    } catch (e) {
+      valueErrors.push(`${f.path}: ${e.message}`);
+    }
+  }
+
+  const valueSummary = `"${prop}" : "${oldValue}" → "${newValue}" : ${changedFiles} note(s) modifiée(s)`;
+  if (valueErrors.length > 0) {
+    console.error("Script_RenameProperty — erreurs :", valueErrors);
+    new Notice(`${valueSummary}\n${valueErrors.length} erreur(s) — voir console.`, 8000);
+  } else {
+    new Notice(valueSummary, 5000);
+  }
+  return;
+}
 
 // ─── 5. Saisir le nouveau nom (si rename) ─────────────────────────────────────
 let newName = prop;
