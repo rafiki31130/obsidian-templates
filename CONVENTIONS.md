@@ -420,13 +420,13 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 
 ## Pages de pilotage GTD
 
-Les pages sont regroupées dans `r_templates/resources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[Portefeuille]] contient le kanban des projets (revue mensuelle), [[Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
+Les pages sont regroupées dans `r_templates/resources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
 
 Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
 
 Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à trois étapes en cours (plafond trois). Les dépassements sont signalés ; aucune limite ni transition de statut n’est appliquée automatiquement.
 
-[[Contrôles GTD]] et ses quatre pages détaillées utilisent la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
+[[GTD - Contrôles]] et ses quatre pages détaillées utilisent la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
 
 
 ## Fiches de propriétés des bases
@@ -478,7 +478,7 @@ La commande d’insertion `Script_SelectionVersGTD` exécute le modèle GTD Proj
 
 Les statuts initiaux restent ceux des modèles. Les projets sont des notes de dossier sous `pages/1. Projets/` ; les étapes rejoignent le dossier projet s’il existe, sinon `bases/GTD.Etapes/`. Un projet sans domaine ni objectif reste signalé par les contrôles. Ne pas inventer de prédécesseur.
 
-La sélection est traitée comme du texte, jamais comme un modèle exécutable. Remplacer la source seulement après création réussie et si son contenu est inchangé. Annulation, doublon ou erreur ne doivent pas supprimer le texte. Conserver les marqueurs de tâche et dates sur une ligne source ; un bloc multiligne est transféré dans la fiche. Mode d’emploi : [[Créer depuis la sélection]].
+La sélection est traitée comme du texte, jamais comme un modèle exécutable. Remplacer la source seulement après création réussie et si son contenu est inchangé. Annulation, doublon ou erreur ne doivent pas supprimer le texte. Conserver les marqueurs de tâche et dates sur une ligne source ; un bloc multiligne est transféré dans la fiche. Mode d’emploi : [[GTD - Créer depuis la sélection]].
 
 ## Validation des étapes
 

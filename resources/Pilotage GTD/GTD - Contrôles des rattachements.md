@@ -1,5 +1,5 @@
 
-[[Contrôles GTD]] · [[Portefeuille]] · [[Sprint]]
+[[GTD - Contrôles]] · [[GTD - Portefeuille]] · [[GTD - Sprint]]
 
 Vérifier les liens inexistants ou de mauvais type et les statuts manquants ou inconnus. Le rattachement GTD unique concerne les notes ordinaires ; un projet peut avoir à la fois un domaine et un objectif.
 

@@ -1,5 +1,5 @@
 
-[[Contrôles GTD]] · [[Portefeuille]] · [[Sprint]]
+[[GTD - Contrôles]] · [[GTD - Portefeuille]] · [[GTD - Sprint]]
 
 Vérifier qu’un projet possède un domaine ou un objectif, qu’un projet non monolithe a une étape et que les clôtures sont cohérentes. Un lien topic vers une ressource reste autorisé.
 

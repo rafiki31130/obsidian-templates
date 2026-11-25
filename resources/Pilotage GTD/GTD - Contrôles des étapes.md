@@ -1,5 +1,5 @@
 
-[[Contrôles GTD]] · [[Portefeuille]] · [[Sprint]]
+[[GTD - Contrôles]] · [[GTD - Portefeuille]] · [[GTD - Sprint]]
 
 Vérifier les projets parents. Une étape partagée peut être en cours dès qu’au moins un de ses projets est actif. Les monolithes utilisent leur propre statut projet.
 
