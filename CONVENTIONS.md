@@ -472,3 +472,11 @@ Le statut d’étape `6.delegue` signifie délégué à une autre personne, de m
 
 La vue `Étapes du projet` de `GTD.Etapes.base` est un kanban par statut d’étape, avec le même filtre de rattachement au projet courant. L’ancienne vue reste disponible sous `Étapes du projet — tableau`. Les dépendances restent visibles sans masquer automatiquement les cartes bloquées.
 
+## Création GTD depuis une sélection
+
+La commande d’insertion `Script_SelectionVersGTD` exécute le modèle GTD Projet ou Étape puis transforme la sélection en lien. Détection selon la page courante : projet → étape enfant ; étape rattachée ou page dans un dossier projet → étape du même contexte ; domaine ou objectif → projet rattaché. Sans contexte fiable, proposer Projet ou Étape, puis le parent si nécessaire. Un monolithe ne devient pas parent d’étapes.
+
+Les statuts initiaux restent ceux des modèles. Les projets sont des notes de dossier sous `pages/1. Projets/` ; les étapes rejoignent le dossier projet s’il existe, sinon `bases/GTD.Etapes/`. Un projet sans domaine ni objectif reste signalé par les contrôles. Ne pas inventer de prédécesseur.
+
+La sélection est traitée comme du texte, jamais comme un modèle exécutable. Remplacer la source seulement après création réussie et si son contenu est inchangé. Annulation, doublon ou erreur ne doivent pas supprimer le texte. Conserver les marqueurs de tâche et dates sur une ligne source ; un bloc multiligne est transféré dans la fiche. Mode d’emploi : [[Créer depuis la sélection]].
+
