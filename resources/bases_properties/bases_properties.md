@@ -1,21 +1,14 @@
 
-## Propriétés des bases
+## Schémas de propriétés
 
-| Base | Fiches de propriétés |
-|---|---|
-| [[r_templates/resources/bases_properties/GTD.RaisonsDetre/GTD.RaisonsDetre|GTD.RaisonsDetre]] | 3 |
-| [[r_templates/resources/bases_properties/GTD.Visions/GTD.Visions|GTD.Visions]] | 5 |
-| [[r_templates/resources/bases_properties/GTD.Objectifs/GTD.Objectifs|GTD.Objectifs]] | 7 |
-| [[r_templates/resources/bases_properties/GTD.Domaines/GTD.Domaines|GTD.Domaines]] | 4 |
-| [[r_templates/resources/bases_properties/GTD.Projets/GTD.Projets|GTD.Projets]] | 8 |
-| [[r_templates/resources/bases_properties/GTD.Etapes/GTD.Etapes|GTD.Etapes]] | 10 |
-| [[r_templates/resources/bases_properties/GTD.ProjetsMonolithes/GTD.ProjetsMonolithes|GTD.ProjetsMonolithes]] | 8 |
-| [[r_templates/resources/bases_properties/Recettes/Recettes|Recettes]] | 13 |
-| [[r_templates/resources/bases_properties/Comptes.Budgets/Comptes.Budgets|Comptes.Budgets]] | 14 |
-| [[r_templates/resources/bases_properties/Comptes.Charges/Comptes.Charges|Comptes.Charges]] | 14 |
-| [[r_templates/resources/bases_properties/Comptes.Decomptes/Comptes.Decomptes|Comptes.Decomptes]] | 63 |
-| [[r_templates/resources/bases_properties/Sources/Sources|Sources]] | 18 |
+| Schéma | Propriétés |
+|---|---:|
+| [[r_templates/resources/bases_properties/Commun/Commun|Commun]] | 4 |
+| [[r_templates/resources/bases_properties/GTD/GTD|GTD]] | 12 |
+| [[r_templates/resources/bases_properties/CPT/CPT|CPT]] | 84 |
+| [[r_templates/resources/bases_properties/RCT/RCT|RCT]] | 11 |
+| [[r_templates/resources/bases_properties/SRC/SRC|SRC]] | 14 |
 
-Un sous-dossier par base, puis un sous-dossier par propriété. La note du même nom documente le champ ; les autres notes portent une valeur dans leur frontmatter, comme les fiches `properties` existantes.
+Les champs sont définis une seule fois au niveau du schéma, pas recopiés pour chaque base. Les champs génériques sont dans Commun. Des sous-dossiers par base ne sont créés qu’en présence d’une réelle extension de schéma spécifique.
 
-Les définitions générales de types restent dans `r_templates/properties/type/`. Ce catalogue précise leur emploi par base, ainsi que les statuts, autres champs métier et formules.
+Les dossiers de propriété sont réservés aux propriétés ayant des pages enfants de valeurs fixes. Les autres fiches sont directement au niveau du schéma. Les valeurs privées (comptes, catégories, moyens de paiement, personnes et autres choix propres à l’utilisateur) ne doivent jamais donner lieu à des pages de valeurs ni à des listes observées dans ce catalogue.

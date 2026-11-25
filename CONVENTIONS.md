@@ -160,7 +160,7 @@ Décision du 25/11/2026 — projet [[Nouvelle structure Projets]]. Cette section
 
 ### Identifiant unique
 
-Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lettres majuscules**, tiret, sous-type en PascalCase sans accent. Il identifie à la fois la famille de BDD et l’objet. Exemples : `GTD-Projet`, `GTD-Etape`, `RCT-Recette`, `CPT-Budgets`, `SRC-Livre`.
+Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lettres majuscules**, tiret, sous-type en PascalCase sans accent. Il identifie à la fois la famille de BDD et l’objet. Exemples : `GTD-Projet`, `GTD-Etape`, `RCT-Recette`, `CPT-PosteBudgetaire`, `SRC-Livre`.
 
 `type: BDD` n’est plus utilisé pour les objets migrés. `gtd_type` et `DB_SRC_type` sont supprimés des fiches, des modèles et des requêtes actives. Le type est une valeur unique ; un domaine `GTD-Domaine` peut aussi jouer le rôle de topic sans ajouter `type: Topic`.
 
@@ -174,7 +174,9 @@ Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lett
 | `GTD-Etape` | etape |
 | `GTD-ProjetMonolithe` | projet monolithe |
 | `RCT-Recette` | recette |
-| `CPT-Budgets` | Comptes.Budgets |
+| `CPT-BudgetAnnuel` | budget annuel |
+| `CPT-PosteBudgetaire` | poste du budget mensuel |
+| `CPT-FraisMensuels` | frais mensuels |
 | `CPT-Charges` | Comptes.Charges |
 | `CPT-Decomptes` | Comptes.Decomptes |
 | `SRC-Livre` | livre |
@@ -203,7 +205,7 @@ Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lett
 | `SRC-OeuvreArt` | oeuvre-art |
 | `SRC-Autre` | autre |
 
-Les propriétés métier sont conservées : liens `gtd_domaine`, `gtd_objectif`, `gtd_projet`, statuts `gtd_statut_*`, dates, auteurs, etc. En particulier `DB_CTE_BDG_type` reste une catégorie budgétaire (Poste, BA, Frais M) utilisée par les calculs et les vues ; elle ne fait pas doublon avec le type de BDD.
+Les propriétés métier sont conservées : liens `gtd_domaine`, `gtd_objectif`, `gtd_projet`, statuts `gtd_statut_*`, dates, auteurs, etc. Les catégories budgétaires sont désormais intégrées au champ `type` : `CPT-BudgetAnnuel`, `CPT-PosteBudgetaire` et `CPT-FraisMensuels`. L’ancien champ `DB_CTE_BDG_type` est retiré des fiches, modèles et requêtes ; aucune seconde classification de BDD n’est maintenue.
 
 ### Modèles et bases
 
@@ -229,7 +231,7 @@ La compatibilité des outils MCP avec ce schéma reste à adapter ; leur ancien 
 
 **Principe** : tout type de page est créé à partir d'un template (via le bouton de sélection de type disponible dans toute page classique, ou directement via Templater). Les templates sont la source de vérité pour le frontmatter — ne pas créer de frontmatter manuellement.
 
-Les **valeurs autorisées** par propriété sont documentées dans `properties/`. Ne pas dupliquer ces valeurs ici : consulter les fichiers sous `properties/` pour connaître les valeurs valides par champ.
+Les **valeurs autorisées** des propriétés historiques sont documentées dans `properties/`. Pour les familles de BDD codifiées, les définitions et valeurs fixes sont centralisées par schéma dans `r_templates/resources/bases_properties/`. Ne pas dupliquer ces valeurs ici : consulter les fichiers sous `properties/` pour connaître les valeurs valides par champ.
 
 ### Note projet historique (`type: Projet`)
 
@@ -429,11 +431,13 @@ Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à troi
 
 ## Fiches de propriétés des bases
 
-Le catalogue est [[r_templates/resources/bases_properties/bases_properties|Propriétés des bases]]. Organisation : `r_templates/resources/bases_properties/<NomBase>/<propriété>/`. Chaque base et chaque propriété possèdent une note de dossier du même nom.
+Le catalogue est [[r_templates/resources/bases_properties/bases_properties|Schémas de propriétés]]. Organisation par **schéma général** : `Commun`, `GTD`, `CPT`, `RCT`, `SRC`. Une propriété est définie une seule fois dans son schéma ; les bases et modèles qui l’utilisent s’y réfèrent. Les champs génériques sont définis dans `Commun`. Les fiches de types des familles codifiées sont centralisées dans le catalogue du schéma, sans copie parallèle dans `properties/type/` ; les types historiques hors BDD restent dans leur registre existant.
 
-La note de propriété décrit son rôle, son type attendu, la valeur de création et, pour une formule, l’expression actuelle. Une fiche de valeur `<valeur>.md` contient la propriété et sa valeur en frontmatter, puis sa définition, comme dans `r_templates/properties/`. Les valeurs comportant des caractères interdits dans un nom Windows utilisent un nom de fichier adapté ; la valeur exacte reste dans le frontmatter.
+Une propriété sans pages enfants est une fiche directe `<Schéma>/<propriété>.md`. Un dossier `<Schéma>/<propriété>/` avec une note du même nom n’existe que lorsqu’il contient des pages enfants de valeurs fixes prévues par le schéma (types d’objets, statuts, supports de source). Aucun dossier supplémentaire n’est créé pour une simple fiche feuille.
 
-Les types et statuts prévus par le schéma sont distingués des exemples simplement observés. Les libellés de paiement et de catégories existants ne sont ni corrigés ni rendus obligatoires par cette documentation. Les types natifs Obsidian restent un réglage global du vault : le catalogue les documente sans modifier ce réglage. Les propriétés visibles dans une vue mais absentes du modèle de création sont signalées comme telles.
+Un sous-dossier propre à une base ne doit être créé qu’en présence d’une véritable extension spécifique non couverte par le schéma général. Une variante de formule d’affichage se documente dans la fiche commune de cette formule et ne justifie pas plusieurs définitions de la même propriété.
 
-Les fiches des douze bases structurées couvrent leurs modèles, colonnes et formules. Les vues transversales historiques (Relations, Deadlines, Splunk et l’ancien tableau Projets) restent dans leur contrat existant ; elles n’introduisent pas un second schéma pour les familles GTD, CPT, RCT ou SRC.
+**Confidentialité : ne jamais créer de pages de valeurs propres à l’utilisateur.** Cela couvre notamment les comptes, catégories personnelles, moyens de paiement, personnes, libellés et autres valeurs relevées dans les données. Ne pas les collecter pour produire des exemples, listes observées ou suggestions dans les ressources. Les définitions structurelles des champs sont conservées ; leurs valeurs privées restent uniquement dans les données et réglages concernés.
+
+Les pages de valeurs autorisées reproduisent le modèle existant : propriété et valeur fixe dans le frontmatter, puis définition. Les formules et propriétés de fichier sont en lecture seule. Le typage natif Obsidian reste un réglage global du vault ; la documentation ne le modifie pas.
 

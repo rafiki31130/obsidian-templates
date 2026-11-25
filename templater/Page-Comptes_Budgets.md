@@ -1,6 +1,5 @@
 ---
-type: CPT-Budgets
-DB_CTE_BDG_type: null
+type: CPT-PosteBudgetaire
 DB_CTE_BDG_parent: null
 DB_CTE_BDG_montant: null
 DB_CTE_BDG_periodicite: null

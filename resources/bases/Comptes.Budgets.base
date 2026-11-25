@@ -3,7 +3,7 @@ filters:
   - file.ext == "md"
   - '!file.inFolder("r_templates")'
   - '!file.inFolder(".trash")'
-  - type == "CPT-Budgets"
+  - (type == "CPT-BudgetAnnuel" || type == "CPT-PosteBudgetaire" || type == "CPT-FraisMensuels")
 formulas:
   nom: file.name.replace("Comptes @ Budget @ ", "").replace("Comptes @ BA @ ", "").replace("Comptes
     @ Frais M @ ", "")
@@ -33,7 +33,7 @@ views:
   name: Budgets Mensuel
   filters:
     and:
-    - DB_CTE_BDG_type == "Poste"
+    - type == "CPT-PosteBudgetaire"
   order:
   - formula.nom
   - DB_CTE_BDG_categorie
@@ -51,7 +51,7 @@ views:
   name: Budgets Annuels
   filters:
     and:
-    - DB_CTE_BDG_type == "BA"
+    - type == "CPT-BudgetAnnuel"
   order:
   - formula.nom
   - DB_CTE_BDG_montant
@@ -69,7 +69,7 @@ views:
   name: Frais Mensuels
   filters:
     and:
-    - DB_CTE_BDG_type == "Frais M"
+    - type == "CPT-FraisMensuels"
   order:
   - formula.nom
   - DB_CTE_BDG_montant
