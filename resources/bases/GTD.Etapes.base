@@ -6,7 +6,7 @@ filters:
     - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
 formulas:
   projet_actif: if(type == "GTD-ProjetMonolithe", (gtd_statut_projet == "2.actif" || gtd_statut_projet == "4.delegation_agent"), list(gtd_projet).filter(file(value) && file(value).properties.type == "GTD-Projet" && (file(value).properties.gtd_statut_projet == "2.actif" || file(value).properties.gtd_statut_projet == "4.delegation_agent") && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length > 0)
-  nombre_predecesseurs_bloquants: list(gtd_predecesseurs).filter(value && (!file(value) || (file(value).properties.type != "GTD-Etape" && file(value).properties.type != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.faite")).length
+  nombre_predecesseurs_bloquants: list(gtd_predecesseurs).filter(value && (!file(value) || (file(value).properties.type != "GTD-Etape" && file(value).properties.type != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.terminee")).length
 properties:
   file.name:
     displayName: Nom
@@ -46,7 +46,7 @@ views:
       - 5.delegation_agent
       - 6.delegue
       - 7.validation
-      - 8.faite
+      - 8.terminee
       - 9.abandonnee
       - none
     order:
@@ -61,7 +61,7 @@ views:
     name: Sprint — tableau
     filters:
       and:
-        - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
+        - gtd_statut_etape != "8.terminee" && gtd_statut_etape != "9.abandonnee"
     groupBy:
       property: gtd_statut_etape
       direction: ASC
@@ -138,7 +138,7 @@ views:
       - 5.delegation_agent
       - 6.delegue
       - 7.validation
-      - 8.faite
+      - 8.terminee
       - 9.abandonnee
       - 
     order:
@@ -171,7 +171,7 @@ views:
     filters:
       and:
         - formula.nombre_predecesseurs_bloquants > 0
-        - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
+        - gtd_statut_etape != "8.terminee" && gtd_statut_etape != "9.abandonnee"
         - '!file.inFolder("pages/4. Archives")'
         - '!file.hasTag("archived")'
     order:

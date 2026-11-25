@@ -80,7 +80,7 @@ views:
   filters:
     and:
     - formula.nombre_predecesseurs_bloquants > 0
-    - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
+    - gtd_statut_etape != "8.terminee" && gtd_statut_etape != "9.abandonnee"
     - '!file.inFolder("pages/4. Archives")'
     - '!file.hasTag("archived")'
   order:
@@ -94,4 +94,4 @@ views:
 formulas:
   nombre_predecesseurs_bloquants: list(gtd_predecesseurs).filter(value && (!file(value)
     || (file(value).properties.type != "GTD-Etape" && file(value).properties.type
-    != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.faite")).length
+    != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.terminee")).length

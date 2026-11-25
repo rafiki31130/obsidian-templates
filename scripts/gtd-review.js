@@ -17,7 +17,7 @@ function buildGtdReview(pages, resolvePath) {
     const isStep = p => p.type === 'GTD-Etape';
     const isActiveProject = p => isProject(p) && !archived(p) && ['2.actif','4.delegation_agent'].includes(p.gtd_statut_projet);
     const isOpen = p => !['8.termine', '9.abandonne'].includes(p.gtd_statut_projet);
-    const stepOpen = p => !['8.faite', '9.abandonnee'].includes(p.gtd_statut_etape);
+    const stepOpen = p => !['8.terminee', '9.abandonnee'].includes(p.gtd_statut_etape);
     const projects = all.filter(isProject);
     const steps = all.filter(isStep);
     const liveProjects = projects.filter(p => !archived(p));
@@ -34,7 +34,7 @@ function buildGtdReview(pages, resolvePath) {
             const pending = children.get(path(p)).filter(stepOpen);
             if (pending.length) add('projet_termine_etapes_ouvertes','projets','Projets terminés avec étapes ouvertes',p,pending.map(s => s.file.name).join(' · '));
         }
-        if (p.type === 'GTD-ProjetMonolithe' && p.gtd_statut_etape === '8.faite' && p.gtd_statut_projet !== '8.termine') add('monolithe_cloture','projets','Monolithes à clôturer au portefeuille',p,'L’étape est faite ; revoir le statut projet.');
+        if (p.type === 'GTD-ProjetMonolithe' && p.gtd_statut_etape === '8.terminee' && p.gtd_statut_projet !== '8.termine') add('monolithe_cloture','projets','Monolithes à clôturer au portefeuille',p,'L’étape est faite ; revoir le statut projet.');
         for (const field of ['gtd_domaine', 'gtd_objectif']) for (const link of links(p, field)) {
             if (link.page && /(^|\/)3\. Ressources\//.test(path(link.page)) && !['GTD-Domaine','GTD-Objectif'].includes(link.page.type)) add('projet_ressource','projets','Projets rattachés à une ressource',p,field + ' → ' + link.page.file.name + '. Un lien topic vers une ressource reste autorisé.');
         }
@@ -56,7 +56,7 @@ function buildGtdReview(pages, resolvePath) {
         }
         graph.set(path(s),predecessors.map(path));
         if (archived(s) || !stepOpen(s)) continue;
-        const pending = predecessors.filter(p => p.gtd_statut_etape !== '8.faite');
+        const pending = predecessors.filter(p => p.gtd_statut_etape !== '8.terminee');
         const unresolved = edges.some(e => !e.page || !['GTD-Etape','GTD-ProjetMonolithe'].includes(e.page.type) || path(e.page) === path(s));
         // Une dépendance ouverte n'est pas une anomalie : elle reste visible dans les fiches et les bases.
         if ((pending.length || unresolved) && ['2.prete','3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape)) add('etape_prete_avant_predecesseurs','etapes','Étapes prêtes ou engagées avant leurs prédécesseurs',s,'Terminer les prédécesseurs ou revoir les dépendances et le statut. Un abandon ne lève pas automatiquement la dépendance.');
@@ -94,7 +94,7 @@ function buildGtdReview(pages, resolvePath) {
         if (archived(domain) && active.length) add('domaine_archive_actif','horizons','Domaines archivés avec projets actifs',domain,active.map(p => p.file.name).join(' · '));
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
-    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','7.validation','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
+    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','7.validation','8.terminee','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
     for (const p of all.filter(p => !archived(p))) {
         const gtd = String(p.type || '').startsWith('GTD-');
         const filled = Object.keys(fields).filter(k => clean(p[k]).length);
