@@ -426,3 +426,14 @@ Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à troi
 
 [[Contrôles GTD]] et ses quatre pages détaillées utilisent la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
 
+
+## Fiches de propriétés des bases
+
+Le catalogue est [[r_templates/resources/bases_properties/bases_properties|Propriétés des bases]]. Organisation : `r_templates/resources/bases_properties/<NomBase>/<propriété>/`. Chaque base et chaque propriété possèdent une note de dossier du même nom.
+
+La note de propriété décrit son rôle, son type attendu, la valeur de création et, pour une formule, l’expression actuelle. Une fiche de valeur `<valeur>.md` contient la propriété et sa valeur en frontmatter, puis sa définition, comme dans `r_templates/properties/`. Les valeurs comportant des caractères interdits dans un nom Windows utilisent un nom de fichier adapté ; la valeur exacte reste dans le frontmatter.
+
+Les types et statuts prévus par le schéma sont distingués des exemples simplement observés. Les libellés de paiement et de catégories existants ne sont ni corrigés ni rendus obligatoires par cette documentation. Les types natifs Obsidian restent un réglage global du vault : le catalogue les documente sans modifier ce réglage. Les propriétés visibles dans une vue mais absentes du modèle de création sont signalées comme telles.
+
+Les fiches des douze bases structurées couvrent leurs modèles, colonnes et formules. Les vues transversales historiques (Relations, Deadlines, Splunk et l’ancien tableau Projets) restent dans leur contrat existant ; elles n’introduisent pas un second schéma pour les familles GTD, CPT, RCT ou SRC.
+
