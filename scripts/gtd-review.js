@@ -58,7 +58,7 @@ function buildGtdReview(pages, resolvePath) {
         if (archived(s) || !stepOpen(s)) continue;
         const pending = predecessors.filter(p => p.gtd_statut_etape !== '8.faite');
         const unresolved = edges.some(e => !e.page || !['GTD-Etape','GTD-ProjetMonolithe'].includes(e.page.type) || path(e.page) === path(s));
-        if (pending.length) add('predecesseurs_non_termines','etapes','Étapes avec prédécesseurs à terminer',s,pending.map(p => p.file.name + ' (' + (p.gtd_statut_etape || 'sans statut') + ')').join(' · '));
+        // Une dépendance ouverte n'est pas une anomalie : elle reste visible dans les fiches et les bases.
         if ((pending.length || unresolved) && ['2.prete','3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape)) add('etape_prete_avant_predecesseurs','etapes','Étapes prêtes ou engagées avant leurs prédécesseurs',s,'Terminer les prédécesseurs ou revoir les dépendances et le statut. Un abandon ne lève pas automatiquement la dépendance.');
     }
     // Strongly connected components detect every member of a cycle, including overlapping cycles.

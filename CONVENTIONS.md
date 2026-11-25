@@ -466,7 +466,7 @@ Le dossier de pilotage est `r_templates/resources/GTD - Pilotage/`. Une seule li
 
 `gtd_predecesseurs` est une liste de liens, configurée comme Liste dans Obsidian et ajoutée aux modèles d’étape et de monolithe. Les fiches existantes reçoivent une liste vide si le champ est absent ; aucun lien n’est inventé. Les cibles autorisées sont des `GTD-Etape` ou `GTD-ProjetMonolithe`, y compris dans d’autres projets. Ce sont des dépendances, pas des parents hiérarchiques.
 
-Une dépendance est satisfaite quand le prédécesseur est `8.faite`. Les abandons, liens invalides, auto-dépendances et cycles sont à revoir. Les contrôles signalent les prédécesseurs non faits et les étapes déclarées prêtes ou engagées trop tôt. Ils ne modifient jamais automatiquement les statuts. La propriété est définie une seule fois dans le schéma GTD, sans pages de valeurs privées.
+Une dépendance est satisfaite quand le prédécesseur est `8.faite`. Les abandons, liens invalides, auto-dépendances et cycles sont à revoir. Les contrôles ne signalent pas une dépendance ouverte en elle-même, seulement les étapes déclarées prêtes ou engagées trop tôt. Ils ne modifient jamais automatiquement les statuts. La propriété est définie une seule fois dans le schéma GTD, sans pages de valeurs privées.
 
 Le statut d’étape `6.delegue` signifie délégué à une autre personne, de manière implicite. `5.delegation_agent` reste réservé aux agents. Les deux délégations comptent dans la charge en cours et nécessitent un projet parent actif ou délégué. Aucun statut de délégation humaine n’est ajouté aux projets ; les statuts historiques sont conservés.
 
@@ -484,4 +484,4 @@ La sélection est traitée comme du texte, jamais comme un modèle exécutable. 
 
 `7.validation` signifie résultat produit, en attente de validation avant `8.faite`. Cette valeur appartient au schéma partagé `gtd_statut_etape`, y compris pour le volet étape des monolithes ; aucun statut projet n’est ajouté. Elle est placée entre `6.delegue` et `8.faite` dans le Sprint et le kanban des étapes du projet.
 
-Une étape en validation reste ouverte, compte dans le plafond de travail en cours et nécessite au moins un projet parent actif ou délégué. Les prédécesseurs non faits restent signalés ; seule une étape `8.faite` lève les dépendances. Les modèles gardent leurs statuts initiaux et aucune fiche existante ne change automatiquement de statut.
+Une étape en validation reste ouverte, compte dans le plafond de travail en cours et nécessite au moins un projet parent actif ou délégué. Seule une étape `8.faite` lève les dépendances. Les modèles gardent leurs statuts initiaux et aucune fiche existante ne change automatiquement de statut.

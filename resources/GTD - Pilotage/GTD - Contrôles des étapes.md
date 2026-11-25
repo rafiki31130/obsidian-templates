@@ -15,6 +15,6 @@ await dv.view("r_templates/scripts/gtd-review", { section: "etapes" });
 
 ## Dépendances
 
-Les contrôles signalent les prédécesseurs non faits, les liens invalides, les auto-dépendances et les cycles. Une étape déclarée prête, en cours, déléguée ou en validation avec des prédécesseurs non terminés est à revoir.
+Les contrôles signalent les liens de prédécesseurs invalides, les auto-dépendances et les cycles ; un prédécesseur simplement non fait n'est pas signalé. Une étape déclarée prête, en cours, déléguée ou en validation avec des prédécesseurs non terminés est à revoir.
 
 ![[GTD.Etapes.base#Dépendances]]
