@@ -1,22 +1,23 @@
 ---
+type: BDD
 tags:
-  - source
-aliases:
-DB_SRC_type:
-DB_SRC_createurs:
-DB_SRC_date:
-DB_SRC_editeur:
-DB_SRC_contenant:
-DB_SRC_identifiant:
-DB_SRC_url:
-DB_SRC_langue:
-DB_SRC_support:
-DB_SRC_etendue:
+- source
+aliases: null
+DB_SRC_type: null
+DB_SRC_createurs: null
+DB_SRC_date: null
+DB_SRC_editeur: null
+DB_SRC_contenant: null
+DB_SRC_identifiant: null
+DB_SRC_url: null
+DB_SRC_langue: null
+DB_SRC_support: null
+DB_SRC_etendue: null
 DB_SRC_statut: à-consulter
-DB_SRC_debut:
-DB_SRC_fin:
-DB_SRC_note:
-topic:
+DB_SRC_debut: null
+DB_SRC_fin: null
+DB_SRC_note: null
+topic: null
 ---
 
 %%
@@ -44,10 +45,13 @@ Notes dérivées (pensées, concepts, synthèses) : y poser parent: "[[<cette fi
 
 ## Résumé
 
+
 ## Notes de lecture
+
 
 ## Notes dérivées
 
 ![[Relations.base]]
 
 ## Notes
+

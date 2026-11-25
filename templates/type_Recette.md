@@ -1,15 +1,15 @@
 ---
-type: Recette
-tags:
-DB_CUI_REC_portions:
-DB_CUI_REC_actif_min:
-DB_CUI_REC_total_min:
-DB_CUI_REC_technique:
+type: BDD
+tags: null
+DB_CUI_REC_portions: null
+DB_CUI_REC_actif_min: null
+DB_CUI_REC_total_min: null
+DB_CUI_REC_technique: null
 DB_CUI_REC_statut: à-tester
-DB_CUI_REC_note:
-DB_CUI_REC_saison:
-DB_CUI_REC_prerequis:
-DB_CUI_REC_source:
+DB_CUI_REC_note: null
+DB_CUI_REC_saison: null
+DB_CUI_REC_prerequis: null
+DB_CUI_REC_source: null
 ---
 
 ## Tableau
@@ -19,6 +19,7 @@ DB_CUI_REC_source:
 </table>
 
 ## Notes d'exécution
+
 
 ## Journal
 - 
