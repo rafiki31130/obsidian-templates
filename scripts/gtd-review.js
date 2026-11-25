@@ -118,7 +118,7 @@ function buildGtdReview(pages, resolvePath) {
 const review = buildGtdReview(dv.pages().array(), (target, source) => app.metadataCache.getFirstLinkpathDest(target, source)?.path || null);
 const section = input?.section || 'summary';
 const categories = {projets:'Projets',etapes:'Étapes',horizons:'Objectifs et domaines',rattachements:'Rattachements et statuts'};
-const links = {projets:'Contrôles des projets',etapes:'Contrôles des étapes',horizons:'Contrôles des objectifs et domaines',rattachements:'Contrôles des rattachements'};
+const links = {projets:'GTD - Contrôles des projets',etapes:'GTD - Contrôles des étapes',horizons:'GTD - Contrôles des objectifs et domaines',rattachements:'GTD - Contrôles des rattachements'};
 if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     const projects = section === 'contexte_projets';
     const items = [...(projects ? review.activeProjects : review.activeObjectives)].sort((a,b) => a.file.name.localeCompare(b.file.name, 'fr'));
