@@ -1,9 +1,8 @@
 ---
-type: BDD
+type: SRC-Autre
 tags:
 - source
 aliases: null
-DB_SRC_type: null
 DB_SRC_createurs: null
 DB_SRC_date: null
 DB_SRC_editeur: null
@@ -23,12 +22,12 @@ topic: null
 %%
 Une fiche = une source unique (pivot). Titre du fichier = titre de l'œuvre.
 
-DB_SRC_type (typologie inspirée de Zotero) :
-  écrit      : livre · chapitre · article · article-presse · these · rapport · norme · document
-  web        : site-web · billet · forum
-  audiovisuel: film · serie · documentaire · emission · video · podcast · audio
-  vivant     : formation · cours · conference · entretien
-  autre      : logiciel · oeuvre-art · autre
+type (famille SRC, typologie inspirée de Zotero) :
+  écrit      : SRC-Livre · SRC-Chapitre · SRC-Article · SRC-ArticlePresse · SRC-These · SRC-Rapport · SRC-Norme · SRC-Document
+  web        : SRC-SiteWeb · SRC-Billet · SRC-Forum
+  audiovisuel: SRC-Film · SRC-Serie · SRC-Documentaire · SRC-Emission · SRC-Video · SRC-Podcast · SRC-Audio
+  vivant     : SRC-Formation · SRC-Cours · SRC-Conference · SRC-Entretien
+  SRC-Autre      : SRC-Logiciel · SRC-OeuvreArt · SRC-Autre
 DB_SRC_createurs  : liens [[Personne]], quel que soit le rôle (auteur, formateur, réalisateur, intervenant, invité…)
 DB_SRC_date       : parution / diffusion / tenue de la session (YYYY-MM-DD, ou YYYY)
 DB_SRC_editeur    : éditeur, organisme de formation, studio, chaîne, plateforme

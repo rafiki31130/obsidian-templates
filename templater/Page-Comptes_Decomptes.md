@@ -1,5 +1,5 @@
 ---
-type: BDD
+type: CPT-Decomptes
 DB_CTE_SLD_bpoc_cc: null
 DB_CTE_SLD_bpoc_cj: null
 DB_CTE_SLD_bpoc_ldd: null

@@ -1,5 +1,5 @@
 ---
-type: BDD
+type: CPT-Charges
 DB_CTE_CHG_tarif: null
 DB_CTE_CHG_recurrence: null
 DB_CTE_CHG_partagee: null
