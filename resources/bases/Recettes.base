@@ -1,38 +1,38 @@
 filters:
   and:
-  - file.ext == "md"
-  - '!file.inFolder("r_templates")'
-  - '!file.inFolder(".trash")'
-  - type == "RCT-Recette"
+    - file.ext == "md"
+    - '!file.inFolder("r_templates")'
+    - '!file.inFolder(".trash")'
+    - type == "RCT-Recette"
 formulas:
   Heures: DB_CUI_REC_total_min / 60
 views:
-- type: table
-  name: Toutes
-  order:
-  - DB_CUI_REC_statut
-  - DB_CUI_REC_note
-  - DB_CUI_REC_technique
-  - DB_CUI_REC_actif_min
-  - formula.Heures
-  - file.name
-- type: table
-  name: À tester
-  filters:
-    and:
-    - DB_CUI_REC_statut == "à-tester"
-  order:
-  - file.name
-  - DB_CUI_REC_technique
-  - DB_CUI_REC_actif_min
-  - DB_CUI_REC_prerequis
-- type: table
-  name: Rapides
-  filters:
-    and:
-    - DB_CUI_REC_actif_min <= 30
-  order:
-  - file.name
-  - DB_CUI_REC_actif_min
-  - DB_CUI_REC_portions
-  - DB_CUI_REC_note
+  - type: table
+    name: Toutes
+    order:
+      - DB_CUI_REC_statut
+      - DB_CUI_REC_note
+      - DB_CUI_REC_technique
+      - DB_CUI_REC_actif_min
+      - formula.Heures
+      - file.name
+  - type: table
+    name: À tester
+    filters:
+      and:
+        - DB_CUI_REC_statut == "à-tester"
+    order:
+      - file.name
+      - DB_CUI_REC_technique
+      - DB_CUI_REC_actif_min
+      - DB_CUI_REC_prerequis
+  - type: table
+    name: Rapides
+    filters:
+      and:
+        - DB_CUI_REC_actif_min <= 30
+    order:
+      - file.name
+      - DB_CUI_REC_actif_min
+      - DB_CUI_REC_portions
+      - DB_CUI_REC_note

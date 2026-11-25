@@ -1,9 +1,9 @@
 filters:
   and:
-    - file.ext == "md"
-    - '!file.inFolder("r_templates")'
-    - '!file.inFolder(".trash")'
-    - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
 properties:
   file.name:
     displayName: Nom
@@ -17,79 +17,107 @@ properties:
     displayName: Échéance
   topic:
     displayName: Sujets
+  formula.projet_actif:
+    displayName: Projet actif
 views:
-  - type: table
-    name: Sprint
-    filters:
-      and:
-        - gtd_statut_etape != "8_faite" && gtd_statut_etape != "9_abandonnee"
-    groupBy:
-      property: gtd_statut_etape
-      direction: ASC
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Tous
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Bloquées
-    filters:
-      and:
-        - gtd_statut_etape == "4_bloquee"
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Sans projet
-    filters:
-      and:
-        - type == "GTD-Etape" && gtd_projet.isEmpty()
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Étapes du projet
-    filters:
-      and:
-        - list(gtd_projet).contains(this.file.asLink())
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
+- type: kanban
+  name: Sprint
+  filters:
+    and:
+    - formula.projet_actif
+    - '!file.inFolder("pages/4. Archives")'
+    - '!file.hasTag("archived")'
+  groupBy:
+    property: gtd_statut_etape
+    direction: ASC
+  order: &id001
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort: &id002
+  - property: file.name
+    direction: ASC
+  groupOrder:
+  - 1_a_preparer
+  - 2_prete
+  - 3_en_cours
+  - 4_bloquee
+  - 8_faite
+  - 9_abandonnee
+  - null
+- type: table
+  name: Sprint — tableau
+  filters:
+    and:
+    - gtd_statut_etape != "8_faite" && gtd_statut_etape != "9_abandonnee"
+  groupBy:
+    property: gtd_statut_etape
+    direction: ASC
+  order: *id001
+  sort: *id002
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Bloquées
+  filters:
+    and:
+    - gtd_statut_etape == "4_bloquee"
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Sans projet
+  filters:
+    and:
+    - type == "GTD-Etape" && gtd_projet.isEmpty()
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Étapes du projet
+  filters:
+    and:
+    - list(gtd_projet).contains(this.file.asLink())
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+formulas:
+  projet_actif: if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2_actif",
+    list(gtd_projet).filter(file(value) && (file(value).properties.type == "GTD-Projet"
+    || file(value).properties.type == "GTD-ProjetMonolithe") && file(value).properties.gtd_statut_projet
+    == "2_actif" && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length
+    > 0)

@@ -415,3 +415,14 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 | `templates/Page-Journal.md` | Template journal quotidien |
 | `properties/statut/` | Fichiers de définition des valeurs de statut |
 | `properties/type/` | Fiches de définition des valeurs de `type` (une par type) |
+
+## Pages de pilotage GTD
+
+Les pages sont regroupées dans `pages/3. Ressources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[Portefeuille]] contient le kanban des projets (revue mensuelle), [[Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
+
+Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
+
+Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à trois étapes en cours (plafond trois). Les dépassements sont signalés ; aucune limite ni transition de statut n’est appliquée automatiquement.
+
+[[Contrôles GTD]] et ses quatre pages détaillées utilisent la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
+

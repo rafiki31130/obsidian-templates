@@ -1,9 +1,9 @@
 filters:
   and:
-    - file.ext == "md"
-    - '!file.inFolder("r_templates")'
-    - '!file.inFolder(".trash")'
-    - (type == "GTD-Projet" || type == "GTD-ProjetMonolithe")
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (type == "GTD-Projet" || type == "GTD-ProjetMonolithe")
 properties:
   file.name:
     displayName: Nom
@@ -20,83 +20,101 @@ properties:
   topic:
     displayName: Sujets
 views:
-  - type: table
-    name: Portefeuille
-    filters:
-      and:
-        - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
-    groupBy:
-      property: gtd_statut_projet
-      direction: ASC
-    order:
-      - file.name
-      - type
-      - gtd_statut_projet
-      - gtd_domaine
-      - gtd_objectif
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Tous
-    order:
-      - file.name
-      - type
-      - gtd_statut_projet
-      - gtd_domaine
-      - gtd_objectif
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Sans domaine ni objectif
-    filters:
-      and:
-        - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
-    order:
-      - file.name
-      - type
-      - gtd_statut_projet
-      - gtd_domaine
-      - gtd_objectif
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Projets du domaine
-    filters:
-      and:
-        - list(gtd_domaine).contains(this.file.asLink())
-    order:
-      - file.name
-      - type
-      - gtd_statut_projet
-      - gtd_domaine
-      - gtd_objectif
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Projets de l'objectif
-    filters:
-      and:
-        - list(gtd_objectif).contains(this.file.asLink())
-    order:
-      - file.name
-      - type
-      - gtd_statut_projet
-      - gtd_domaine
-      - gtd_objectif
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
+- type: kanban
+  name: Portefeuille
+  filters:
+    and:
+    - '!file.inFolder("pages/4. Archives")'
+    - '!file.hasTag("archived")'
+  groupBy:
+    property: gtd_statut_projet
+    direction: ASC
+  order: &id001
+  - file.name
+  - type
+  - gtd_statut_projet
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort: &id002
+  - property: file.name
+    direction: ASC
+  groupOrder:
+  - 1_en_attente
+  - 2_actif
+  - 3_en_pause
+  - 8_termine
+  - 9_abandonne
+  - null
+- type: table
+  name: Portefeuille — tableau
+  filters:
+    and:
+    - gtd_statut_projet != "8_termine" && gtd_statut_projet != "9_abandonne"
+  groupBy:
+    property: gtd_statut_projet
+    direction: ASC
+  order: *id001
+  sort: *id002
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - type
+  - gtd_statut_projet
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Sans domaine ni objectif
+  filters:
+    and:
+    - gtd_domaine.isEmpty() && gtd_objectif.isEmpty()
+  order:
+  - file.name
+  - type
+  - gtd_statut_projet
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Projets du domaine
+  filters:
+    and:
+    - list(gtd_domaine).contains(this.file.asLink())
+  order:
+  - file.name
+  - type
+  - gtd_statut_projet
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Projets de l'objectif
+  filters:
+    and:
+    - list(gtd_objectif).contains(this.file.asLink())
+  order:
+  - file.name
+  - type
+  - gtd_statut_projet
+  - gtd_domaine
+  - gtd_objectif
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
