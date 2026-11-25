@@ -19,6 +19,10 @@ properties:
     displayName: Échéance
   topic:
     displayName: Sujets
+  gtd_predecesseurs:
+    displayName: Prédécesseurs
+  formula.nombre_predecesseurs_bloquants:
+    displayName: Prédécesseurs à terminer
 views:
 - type: table
   name: Portefeuille
@@ -36,6 +40,7 @@ views:
   - gtd_objectif
   - gtd_echeance
   - topic
+  - gtd_predecesseurs
   sort:
   - property: file.name
     direction: ASC
@@ -49,6 +54,7 @@ views:
   - gtd_objectif
   - gtd_echeance
   - topic
+  - gtd_predecesseurs
   sort:
   - property: file.name
     direction: ASC
@@ -65,6 +71,27 @@ views:
   - gtd_objectif
   - gtd_echeance
   - topic
+  - gtd_predecesseurs
   sort:
   - property: file.name
     direction: ASC
+- type: table
+  name: Dépendances
+  filters:
+    and:
+    - formula.nombre_predecesseurs_bloquants > 0
+    - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
+    - '!file.inFolder("pages/4. Archives")'
+    - '!file.hasTag("archived")'
+  order:
+  - file.name
+  - gtd_statut_etape
+  - gtd_predecesseurs
+  - formula.nombre_predecesseurs_bloquants
+  sort:
+  - property: file.name
+    direction: ASC
+formulas:
+  nombre_predecesseurs_bloquants: list(gtd_predecesseurs).filter(value && (!file(value)
+    || (file(value).properties.type != "GTD-Etape" && file(value).properties.type
+    != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.faite")).length

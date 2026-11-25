@@ -17,5 +17,6 @@ Utilisée par : `GTD.Etapes`, `GTD.Projets`, `GTD.ProjetsMonolithes`.
 - [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/3.en_cours|3.en_cours]]
 - [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/4.bloquee|4.bloquee]]
 - [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/5.delegation_agent|5.delegation_agent]]
+- [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/6.delegue|6.delegue]]
 - [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/8.faite|8.faite]]
 - [[r_templates/resources/bases_properties/GTD/gtd_statut_etape/9.abandonnee|9.abandonnee]]

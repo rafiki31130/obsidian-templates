@@ -4,7 +4,7 @@
 | Schéma | Propriétés |
 |---|---:|
 | [[r_templates/resources/bases_properties/Commun/Commun|Commun]] | 4 |
-| [[r_templates/resources/bases_properties/GTD/GTD|GTD]] | 12 |
+| [[r_templates/resources/bases_properties/GTD/GTD|GTD]] | 14 |
 | [[r_templates/resources/bases_properties/CPT/CPT|CPT]] | 84 |
 | [[r_templates/resources/bases_properties/RCT/RCT|RCT]] | 11 |
 | [[r_templates/resources/bases_properties/SRC/SRC|SRC]] | 14 |

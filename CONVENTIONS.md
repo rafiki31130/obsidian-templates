@@ -448,7 +448,7 @@ Les propriétés de statut modernes suivent `^\d+\.(?<description>[a-z_]+)$` : n
 
 Cette convention s’applique aux statuts GTD, Sources et Recettes, dans les données, modèles, fiches de valeurs, vues, kanbans et contrôles. Les champs historiques `statut` et `status` (ancien workflow/Operon) ainsi que `r_templates/properties/statut/` restent inchangés. Les champs métier privés qui ne sont pas des propriétés de statut, comme l’état d’une charge, ne sont pas recodés par cette migration.
 
-Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 5 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
+Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 6 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
 
 Les définitions et noms des fiches de valeurs suivent le même format, au niveau de leur schéma partagé. Aucun catalogue de valeurs privées n’est créé.
 
@@ -457,7 +457,18 @@ Les définitions et noms des fiches de valeurs suivent le même format, au nivea
 
 Projets : ajout de `0.cadrage_agent` et `4.delegation_agent`. Étapes : ajout de `0.cadrage_agent` et `5.delegation_agent`. Les valeurs sont définies une seule fois dans les propriétés du schéma GTD.
 
-Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours` et `5.delegation_agent` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
+Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent` et `6.delegue` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
 
 Le dossier de pilotage est `r_templates/resources/Pilotage GTD/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
+
+
+## Dépendances et délégation des étapes
+
+`gtd_predecesseurs` est une liste de liens, configurée comme Liste dans Obsidian et ajoutée aux modèles d’étape et de monolithe. Les fiches existantes reçoivent une liste vide si le champ est absent ; aucun lien n’est inventé. Les cibles autorisées sont des `GTD-Etape` ou `GTD-ProjetMonolithe`, y compris dans d’autres projets. Ce sont des dépendances, pas des parents hiérarchiques.
+
+Une dépendance est satisfaite quand le prédécesseur est `8.faite`. Les abandons, liens invalides, auto-dépendances et cycles sont à revoir. Les contrôles signalent les prédécesseurs non faits et les étapes déclarées prêtes ou engagées trop tôt. Ils ne modifient jamais automatiquement les statuts. La propriété est définie une seule fois dans le schéma GTD, sans pages de valeurs privées.
+
+Le statut d’étape `6.delegue` signifie délégué à une autre personne, de manière implicite. `5.delegation_agent` reste réservé aux agents. Les deux délégations comptent dans la charge en cours et nécessitent un projet parent actif ou délégué. Aucun statut de délégation humaine n’est ajouté aux projets ; les statuts historiques sont conservés.
+
+La vue `Étapes du projet` de `GTD.Etapes.base` est un kanban par statut d’étape, avec le même filtre de rattachement au projet courant. L’ancienne vue reste disponible sous `Étapes du projet — tableau`. Les dépendances restent visibles sans masquer automatiquement les cartes bloquées.
 

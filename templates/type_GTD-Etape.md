@@ -2,6 +2,7 @@
 type: GTD-Etape
 gtd_projet: null
 gtd_statut_etape: 1.a_preparer
+gtd_predecesseurs: []
 gtd_echeance: null
 topic: null
 ---

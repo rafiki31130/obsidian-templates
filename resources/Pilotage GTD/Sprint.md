@@ -27,7 +27,7 @@ await dv.view("r_templates/scripts/gtd-review", { section: "sprint" });
 - [ ] Quand un projet passe en pause, remettre ses étapes en cours à « prête », sauf si un autre projet parent reste actif.
 - [ ] Reprendre les prochaines actions dans le suivi quotidien.
 
-Une étape partagée apparaît une seule fois. « Faite » sur un monolithe ne clôture pas automatiquement son statut au portefeuille.
+Une étape partagée apparaît une seule fois. Les prédécesseurs sont visibles sur les cartes ; `6.delegue` distingue une délégation à une personne de `5.delegation_agent`. Les deux délégations comptent dans la charge en cours. « Faite » sur un monolithe ne clôture pas automatiquement son statut au portefeuille.
 
 ## Notes de revue
 

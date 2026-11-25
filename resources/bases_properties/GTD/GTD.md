@@ -11,6 +11,8 @@ Bases : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `GTD.Proje
 
 | Propriété | Type attendu |
 |---|---|
+| [[r_templates/resources/bases_properties/GTD/gtd_predecesseurs|gtd_predecesseurs]] | **Liste de liens** |
+| [[r_templates/resources/bases_properties/GTD/formula.nombre_predecesseurs_bloquants|formula.nombre_predecesseurs_bloquants]] | **Calculée (lecture seule)** |
 | [[r_templates/resources/bases_properties/GTD/formula.projet_actif|formula.projet_actif]] | **Calculée (lecture seule)** |
 | [[r_templates/resources/bases_properties/GTD/gtd_domaine|gtd_domaine]] | **Texte ou liste de liens** |
 | [[r_templates/resources/bases_properties/GTD/gtd_echeance|gtd_echeance]] | **Date** |

@@ -39,11 +39,50 @@ function buildGtdReview(pages, resolvePath) {
             if (link.page && /(^|\/)3\. Ressources\//.test(path(link.page)) && !['GTD-Domaine','GTD-Objectif'].includes(link.page.type)) add('projet_ressource','projets','Projets rattachés à une ressource',p,field + ' → ' + link.page.file.name + '. Un lien topic vers une ressource reste autorisé.');
         }
     }
+    // Dependencies are separate from structural parent links and never mutate statuses.
+    const stepLike = [...steps, ...projects.filter(p => p.type === 'GTD-ProjetMonolithe')];
+    const graph = new Map(stepLike.map(s => [path(s), []]));
+    for (const s of stepLike) {
+        const edges = links(s, 'gtd_predecesseurs');
+        const predecessors = [];
+        for (const edge of edges) {
+            if (!edge.page) {
+                if (!archived(s)) add('predecesseur_introuvable','etapes','Prédécesseurs introuvables',s,edge.raw);
+            } else if (!['GTD-Etape','GTD-ProjetMonolithe'].includes(edge.page.type)) {
+                if (!archived(s)) add('predecesseur_type_incorrect','etapes','Prédécesseurs de type incorrect',s,edge.page.file.name + ' : une étape ou un monolithe est attendu.');
+            } else if (path(edge.page) === path(s)) {
+                if (!archived(s)) add('predecesseur_soi','etapes','Étapes qui dépendent d’elles-mêmes',s,'Retirer le lien vers cette même fiche.');
+            } else if (!predecessors.includes(edge.page)) predecessors.push(edge.page);
+        }
+        graph.set(path(s),predecessors.map(path));
+        if (archived(s) || !stepOpen(s)) continue;
+        const pending = predecessors.filter(p => p.gtd_statut_etape !== '8.faite');
+        const unresolved = edges.some(e => !e.page || !['GTD-Etape','GTD-ProjetMonolithe'].includes(e.page.type) || path(e.page) === path(s));
+        if (pending.length) add('predecesseurs_non_termines','etapes','Étapes avec prédécesseurs à terminer',s,pending.map(p => p.file.name + ' (' + (p.gtd_statut_etape || 'sans statut') + ')').join(' · '));
+        if ((pending.length || unresolved) && ['2.prete','3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape)) add('etape_prete_avant_predecesseurs','etapes','Étapes prêtes ou engagées avant leurs prédécesseurs',s,'Terminer les prédécesseurs ou revoir les dépendances et le statut. Un abandon ne lève pas automatiquement la dépendance.');
+    }
+    // Strongly connected components detect every member of a cycle, including overlapping cycles.
+    const indices = new Map(), low = new Map(), stack = [], onStack = new Set(), cycles = new Set();
+    let nextIndex = 0;
+    const visit = id => {
+        indices.set(id,nextIndex); low.set(id,nextIndex++); stack.push(id); onStack.add(id);
+        for (const dependency of graph.get(id) || []) {
+            if (!indices.has(dependency)) { visit(dependency); low.set(id,Math.min(low.get(id),low.get(dependency))); }
+            else if (onStack.has(dependency)) low.set(id,Math.min(low.get(id),indices.get(dependency)));
+        }
+        if (low.get(id) === indices.get(id)) {
+            const component = []; let item;
+            do { item = stack.pop(); onStack.delete(item); component.push(item); } while (item !== id);
+            if (component.length > 1) component.forEach(p => cycles.add(p));
+        }
+    };
+    for (const id of graph.keys()) if (!indices.has(id)) visit(id);
+    for (const s of stepLike) if (!archived(s) && cycles.has(path(s))) add('cycle_predecesseurs','etapes','Cycles entre prédécesseurs',s,'Revoir les liens pour que les dépendances ne reviennent pas à une étape déjà rencontrée.');
     for (const s of liveSteps) {
         if (!targets(s,'gtd_projet').some(p => p.type === 'GTD-Projet')) add('etape_sans_projet','etapes','Étapes sans projet valide',s,'Renseigner un lien vers un projet existant. Un monolithe porte ses actions lui-même, sans étape enfant.');
     }
     for (const s of [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')]) {
-        if (['3.en_cours','5.delegation_agent'].includes(s.gtd_statut_etape) && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
+        if (['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape) && !activeParents(s).length) add('etape_sans_parent_actif','etapes','Étapes en cours sans projet actif',s,'Activer un projet parent ou remettre l’étape en préparation/prête. Un seul parent actif suffit pour une étape partagée.');
     }
     for (const goal of all.filter(p => p.type === 'GTD-Objectif' && !archived(p))) {
         if (goal.gtd_statut_objectif === '2.actif' && !projects.some(p => isActiveProject(p) && targets(p,'gtd_objectif').includes(goal))) add('objectif_sans_projet','horizons','Objectifs actifs sans projet actif',goal,'Lancer un projet contributif ou revoir le statut de l’objectif.');
@@ -55,7 +94,7 @@ function buildGtdReview(pages, resolvePath) {
         if (archived(domain) && active.length) add('domaine_archive_actif','horizons','Domaines archivés avec projets actifs',domain,active.map(p => p.file.name).join(' · '));
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
-    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
+    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','8.faite','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
     for (const p of all.filter(p => !archived(p))) {
         const gtd = String(p.type || '').startsWith('GTD-');
         const filled = Object.keys(fields).filter(k => clean(p[k]).length);
@@ -71,8 +110,8 @@ function buildGtdReview(pages, resolvePath) {
     const activeObjectives = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2.actif');
     const activeProjects = projects.filter(isActiveProject);
     const sprint = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => activeParents(s).length);
-    const running = sprint.filter(s => ['3.en_cours','5.delegation_agent'].includes(s.gtd_statut_etape));
-    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => ['3.en_cours','5.delegation_agent'].includes(s.gtd_statut_etape));
+    const running = sprint.filter(s => ['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape));
+    const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => ['3.en_cours','5.delegation_agent','6.delegue'].includes(s.gtd_statut_etape));
     return {issues,activeObjectives,activeProjects,sprint,running,runningAll,projectLimit:5,stepLimit:3};
 }
 
