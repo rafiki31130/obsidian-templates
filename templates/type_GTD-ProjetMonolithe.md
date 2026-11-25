@@ -9,19 +9,44 @@ gtd_echeance: null
 topic: null
 ---
 
+> [!info]- Rappel GTD : le projet monolithe
+> - **C'est** : un petit projet dont les actions tiennent dans une seule fiche, sans étape enfant.
+> - **Bon monolithe** : résultat et critère de fin clairs, quelques to-dos, rattaché à un domaine ou un objectif.
+> - **Le passer en projet à étapes** : dès qu'apparaissent des lots distincts, des dépendances ou plusieurs intervenants.
+> - **Ce n'est pas** : une action unique (tâche), une finition à cocher dans une checklist.
+
 ## Pourquoi
 
 
-## Critère de fin
+## Critères de fin
 
 
-## Blocage
+### Hypothèses initiales
+
+- [ ] 
+
+## État actuel
 
 
-## To-dos
-- [ ] #
+## Notes
 
-```tasks
-not done
-(path includes {{query.file.path}}) OR (description includes {{query.file.filenameWithoutExtension}})
-```
+
+### Références
+
+- 
+
+## Plan
+
+- [ ] 
+
+## Journal
+
+![[Relations.base]]
+
+
+## Décisions
+
+
+## Livrables
+
+- 
