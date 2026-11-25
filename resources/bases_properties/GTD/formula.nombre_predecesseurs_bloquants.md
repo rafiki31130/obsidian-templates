@@ -10,7 +10,7 @@ Nombre de prédécesseurs non faits ou invalides, calculé dans les bases des é
 ## Formule actuelle
 
 ```text
-list(gtd_predecesseurs).filter(value && (!file(value) || (file(value).properties.type != "GTD-Etape" && file(value).properties.type != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.faite")).length
+list(gtd_predecesseurs).filter(value && (!file(value) || (file(value).properties.type != "GTD-Etape" && file(value).properties.type != "GTD-ProjetMonolithe") || file(value).properties.gtd_statut_etape != "8.terminee")).length
 ```
 
-Les liens absents ou de mauvais type comptent comme blocages ; seul `8.faite` lève une dépendance. Les auto-dépendances et cycles sont contrôlés séparément.
+Les liens absents ou de mauvais type comptent comme blocages ; seul `8.terminee` lève une dépendance. Les auto-dépendances et cycles sont contrôlés séparément.

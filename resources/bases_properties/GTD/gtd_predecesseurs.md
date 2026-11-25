@@ -10,7 +10,7 @@
 
 ## Règles
 
-Un prédécesseur doit être `8.faite` pour lever la dépendance. Un prédécesseur abandonné, introuvable ou de mauvais type demande une revue ; un abandon n’autorise pas automatiquement le démarrage. Une étape ne peut pas se référencer elle-même et les cycles sont signalés.
+Un prédécesseur doit être `8.terminee` pour lever la dépendance. Un prédécesseur abandonné, introuvable ou de mauvais type demande une revue ; un abandon n’autorise pas automatiquement le démarrage. Une étape ne peut pas se référencer elle-même et les cycles sont signalés.
 
 Cette liste exprime des dépendances, pas un rattachement hiérarchique. Elle ne compte donc pas dans la règle du rattachement GTD unique. Les contrôles sont en lecture seule : aucun statut n’est changé automatiquement et aucune dépendance n’est inventée.
 

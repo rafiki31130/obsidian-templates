@@ -11,7 +11,7 @@ topic: null
 > - **C'est** : un lot d'un projet qui produit un résultat intermédiaire vérifiable.
 > - **Bonne étape** : nommée par son résultat, critère de fin clair, to-dos concrets qui commencent par un verbe, prédécesseurs seulement s'ils bloquent réellement.
 > - **Ce n'est pas** : une simple action (to-do), un thème de notes, le projet entier.
-> - **Statuts** : `7.validation` = produit, en attente de ta validation ; seul `8.faite` lève une dépendance.
+> - **Statuts** : `7.validation` = produit, en attente de ta validation ; seul `8.terminee` lève une dépendance.
 
 
 ## Blocage

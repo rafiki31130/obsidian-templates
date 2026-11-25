@@ -28,7 +28,7 @@ test("une étape prête ou engagée avant ses prédécesseurs reste signalée", 
 });
 
 test("un prédécesseur fait lève la dépendance", () => {
-  assert.deepEqual(ids(vault("3.en_cours", "8.faite"), "Prise en charge"), []);
+  assert.deepEqual(ids(vault("3.en_cours", "8.terminee"), "Prise en charge"), []);
 });
 
 test("un prédécesseur introuvable reste signalé", () => {

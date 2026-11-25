@@ -33,7 +33,7 @@ const etapes = byType("GTD-Etape").where(e => links(e.gtd_projet).some(x => enga
 const travail = etapes.concat(projets.where(p => p.type === "GTD-ProjetMonolithe"));
 const parent = p => p.type === "GTD-ProjetMonolithe" ? "monolithe" : show(p.gtd_projet);
 const bloquants = p => {
-  const l = links(p.gtd_predecesseurs).filter(x => x.gtd_statut_etape !== "8.faite").map(x => x.file.link);
+  const l = links(p.gtd_predecesseurs).filter(x => x.gtd_statut_etape !== "8.terminee").map(x => x.file.link);
   return l.length ? l : "—";
 };
 const enCours = travail.where(p => CHARGE_E.includes(p.gtd_statut_etape)).sort(p => p.gtd_statut_etape + p.file.name);
@@ -56,8 +56,8 @@ if (projets.length) await dv.table(["Projet", "Statut", "Domaine", "Objectif", "
     if (p.type === "GTD-ProjetMonolithe") avancement = "monolithe · " + (p.gtd_statut_etape ?? "—");
     else {
       const e = etapesDe(p);
-      const ouvertes = e.where(x => !["8.faite", "9.abandonnee"].includes(x.gtd_statut_etape)).length;
-      avancement = `${e.where(x => x.gtd_statut_etape === "8.faite").length} faite(s) · ${ouvertes} ouverte(s) / ${e.length}`;
+      const ouvertes = e.where(x => !["8.terminee", "9.abandonnee"].includes(x.gtd_statut_etape)).length;
+      avancement = `${e.where(x => x.gtd_statut_etape === "8.terminee").length} terminée(s) · ${ouvertes} ouverte(s) / ${e.length}`;
     }
     return [p.file.link, p.gtd_statut_projet, show(p.gtd_domaine), show(p.gtd_objectif), date(p.gtd_echeance), avancement];
   }));
