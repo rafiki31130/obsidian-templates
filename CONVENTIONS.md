@@ -420,7 +420,7 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 
 ## Pages de pilotage GTD
 
-Les pages sont regroupées dans `pages/3. Ressources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[Portefeuille]] contient le kanban des projets (revue mensuelle), [[Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
+Les pages sont regroupées dans `r_templates/resources/Pilotage GTD/` ; la note `Pilotage GTD.md` sert de note de dossier. [[Portefeuille]] contient le kanban des projets (revue mensuelle), [[Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
 
 Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
 
@@ -448,7 +448,16 @@ Les propriétés de statut modernes suivent `^\d+\.(?<description>[a-z_]+)$` : n
 
 Cette convention s’applique aux statuts GTD, Sources et Recettes, dans les données, modèles, fiches de valeurs, vues, kanbans et contrôles. Les champs historiques `statut` et `status` (ancien workflow/Operon) ainsi que `r_templates/properties/statut/` restent inchangés. Les champs métier privés qui ne sont pas des propriétés de statut, comme l’état d’une charge, ne sont pas recodés par cette migration.
 
-Les numéros 1 à 4 indiquent des états vivants, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
+Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 5 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
 
 Les définitions et noms des fiches de valeurs suivent le même format, au niveau de leur schéma partagé. Aucun catalogue de valeurs privées n’est créé.
+
+
+## Cadrage et délégation aux agents
+
+Projets : ajout de `0.cadrage_agent` et `4.delegation_agent`. Étapes : ajout de `0.cadrage_agent` et `5.delegation_agent`. Les valeurs sont définies une seule fois dans les propriétés du schéma GTD.
+
+Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours` et `5.delegation_agent` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
+
+Le dossier de pilotage est `r_templates/resources/Pilotage GTD/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
 

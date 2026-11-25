@@ -1,11 +1,16 @@
 filters:
   and:
-    - file.ext == "md"
-    - '!file.inFolder("r_templates")'
-    - '!file.inFolder(".trash")'
-    - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
+  - file.ext == "md"
+  - '!file.inFolder("r_templates")'
+  - '!file.inFolder(".trash")'
+  - (type == "GTD-Etape" || type == "GTD-ProjetMonolithe")
 formulas:
-  projet_actif: if(type == "GTD-ProjetMonolithe", gtd_statut_projet == "2.actif", list(gtd_projet).filter(file(value) && file(value).properties.type == "GTD-Projet" && file(value).properties.gtd_statut_projet == "2.actif" && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length > 0)
+  projet_actif: if(type == "GTD-ProjetMonolithe", (gtd_statut_projet == "2.actif"
+    || gtd_statut_projet == "4.delegation_agent"), list(gtd_projet).filter(file(value)
+    && file(value).properties.type == "GTD-Projet" && (file(value).properties.gtd_statut_projet
+    == "2.actif" || file(value).properties.gtd_statut_projet == "4.delegation_agent")
+    && !file(value).inFolder("pages/4. Archives") && !file(value).hasTag("archived")).length
+    > 0)
 properties:
   file.name:
     displayName: Nom
@@ -22,106 +27,108 @@ properties:
   formula.projet_actif:
     displayName: Projet actif
 views:
-  - type: kanban
-    name: Sprint
-    filters:
-      and:
-        - formula.projet_actif
-        - '!file.inFolder("pages/4. Archives")'
-        - '!file.hasTag("archived")'
-    groupBy:
-      property: gtd_statut_etape
-      direction: ASC
-    groupOrder:
-      - 1.a_preparer
-      - 2.prete
-      - 3.en_cours
-      - 4.bloquee
-      - 8.faite
-      - 9.abandonnee
-      - none
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Sprint — tableau
-    filters:
-      and:
-        - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
-    groupBy:
-      property: gtd_statut_etape
-      direction: ASC
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Tous
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Bloquées
-    filters:
-      and:
-        - gtd_statut_etape == "4.bloquee"
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Sans projet
-    filters:
-      and:
-        - type == "GTD-Etape" && gtd_projet.isEmpty()
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
-  - type: table
-    name: Étapes du projet
-    filters:
-      and:
-        - list(gtd_projet).contains(this.file.asLink())
-    order:
-      - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
-      - gtd_echeance
-      - topic
-    sort:
-      - property: file.name
-        direction: ASC
+- type: kanban
+  name: Sprint
+  filters:
+    and:
+    - formula.projet_actif
+    - '!file.inFolder("pages/4. Archives")'
+    - '!file.hasTag("archived")'
+  groupBy:
+    property: gtd_statut_etape
+    direction: ASC
+  groupOrder:
+  - 0.cadrage_agent
+  - 1.a_preparer
+  - 2.prete
+  - 3.en_cours
+  - 4.bloquee
+  - 5.delegation_agent
+  - 8.faite
+  - 9.abandonnee
+  - none
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Sprint — tableau
+  filters:
+    and:
+    - gtd_statut_etape != "8.faite" && gtd_statut_etape != "9.abandonnee"
+  groupBy:
+    property: gtd_statut_etape
+    direction: ASC
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Tous
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Bloquées
+  filters:
+    and:
+    - gtd_statut_etape == "4.bloquee"
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Sans projet
+  filters:
+    and:
+    - type == "GTD-Etape" && gtd_projet.isEmpty()
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC
+- type: table
+  name: Étapes du projet
+  filters:
+    and:
+    - list(gtd_projet).contains(this.file.asLink())
+  order:
+  - file.name
+  - type
+  - gtd_statut_etape
+  - gtd_projet
+  - gtd_echeance
+  - topic
+  sort:
+  - property: file.name
+    direction: ASC

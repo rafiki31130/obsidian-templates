@@ -41,9 +41,11 @@ views:
   - property: file.name
     direction: ASC
   groupOrder:
+  - 0.cadrage_agent
   - 1.en_attente
   - 2.actif
   - 3.en_pause
+  - 4.delegation_agent
   - 8.termine
   - 9.abandonne
   - null
