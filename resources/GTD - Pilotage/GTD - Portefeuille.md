@@ -1,7 +1,7 @@
 
 Revue mensuelle des engagements. Choisir ce qui mérite d’être actif avant d’entrer dans le détail des étapes.
 
-[[GTD - Sprint]] · [[GTD - Contrôles des projets]] · [[GTD - Contrôles des objectifs et domaines]] · [[Pilotage GTD]]
+[[GTD - Sprint]] · [[GTD - Contrôles des projets]] · [[GTD - Contrôles des objectifs et domaines]] · [[GTD - Pilotage]]
 
 ```dataviewjs
 await dv.view("r_templates/scripts/gtd-review", { section: "contexte_objectifs" });

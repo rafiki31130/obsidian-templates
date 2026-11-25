@@ -1,7 +1,7 @@
 
 Revue hebdomadaire du travail concret. Ce tableau contient les étapes liées à au moins un projet actif ou délégué et les monolithes actifs ou délégués.
 
-[[GTD - Portefeuille]] · [[GTD - Contrôles des étapes]] · [[GTD - Contrôles des rattachements]] · [[Pilotage GTD]]
+[[GTD - Portefeuille]] · [[GTD - Contrôles des étapes]] · [[GTD - Contrôles des rattachements]] · [[GTD - Pilotage]]
 
 ```dataviewjs
 await dv.view("r_templates/scripts/gtd-review", { section: "contexte_projets" });

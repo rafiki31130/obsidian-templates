@@ -1,5 +1,5 @@
 
-[[GTD - Portefeuille]] · [[GTD - Sprint]] · [[Pilotage GTD]]
+[[GTD - Portefeuille]] · [[GTD - Sprint]] · [[GTD - Pilotage]]
 
 ## Vue d’ensemble
 
