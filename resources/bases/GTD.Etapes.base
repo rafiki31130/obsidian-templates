@@ -146,11 +146,7 @@ views:
       - 
     order:
       - file.name
-      - type
-      - gtd_statut_etape
-      - gtd_projet
       - gtd_echeance
-      - topic
       - gtd_predecesseurs
     sort:
       - property: file.name
