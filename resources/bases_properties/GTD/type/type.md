@@ -8,7 +8,7 @@ Identifie le sous-type de fiche dans le schéma GTD. Une seule valeur est porté
 - Schéma : [[r_templates/resources/bases_properties/GTD/GTD|GTD]].
 - Type natif actuellement enregistré : Texte.
 
-Utilisée par : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `GTD.ProjetsMonolithes`, `GTD.RaisonsDetre`, `GTD.Visions`.
+Utilisée par : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `GTD.ProjetsMonolithes`, `GTD.RaisonsDetre`, `GTD.Routines`, `GTD.Visions`.
 
 ## Valeurs prévues par le schéma
 
@@ -18,4 +18,5 @@ Utilisée par : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `G
 - [[r_templates/resources/bases_properties/GTD/type/GTD-Projet|GTD-Projet]]
 - [[r_templates/resources/bases_properties/GTD/type/GTD-ProjetMonolithe|GTD-ProjetMonolithe]]
 - [[r_templates/resources/bases_properties/GTD/type/GTD-RaisonDetre|GTD-RaisonDetre]]
+- [[r_templates/resources/bases_properties/GTD/type/GTD-Routine|GTD-Routine]]
 - [[r_templates/resources/bases_properties/GTD/type/GTD-Vision|GTD-Vision]]

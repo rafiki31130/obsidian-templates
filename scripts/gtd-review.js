@@ -15,11 +15,14 @@ function buildGtdReview(pages, resolvePath) {
     const targets = (p, field) => links(p, field).map(l => l.page).filter(Boolean);
     const isProject = p => ['GTD-Projet', 'GTD-ProjetMonolithe'].includes(p.type);
     const isStep = p => p.type === 'GTD-Etape';
+    const isRoutine = p => p.type === 'GTD-Routine';
+    const routineOpen = r => ['1.en_essai', '2.active'].includes(r.gtd_statut_routine);
     const isActiveProject = p => isProject(p) && !archived(p) && ['2.actif','4.delegation_agent'].includes(p.gtd_statut_projet);
     const isOpen = p => !['8.termine', '9.abandonne'].includes(p.gtd_statut_projet);
     const stepOpen = p => !['8.terminee', '9.abandonnee'].includes(p.gtd_statut_etape);
     const projects = all.filter(isProject);
     const steps = all.filter(isStep);
+    const routines = all.filter(p => isRoutine(p) && !archived(p));
     const liveProjects = projects.filter(p => !archived(p));
     const liveSteps = steps.filter(p => !archived(p));
     const children = new Map(projects.map(p => [path(p), []]));
@@ -90,21 +93,30 @@ function buildGtdReview(pages, resolvePath) {
     for (const domain of all.filter(p => p.type === 'GTD-Domaine')) {
         const active = projects.filter(p => isActiveProject(p) && targets(p,'gtd_domaine').includes(domain));
         const goals = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2.actif' && targets(p,'gtd_domaine').includes(domain));
-        if (!archived(domain) && !active.length && !goals.length) add('domaine_sans_engagement','horizons','Domaines sans objectif ni projet actif',domain,'Vérifier pendant la revue si la responsabilité est suffisamment entretenue.');
-        if (archived(domain) && active.length) add('domaine_archive_actif','horizons','Domaines archivés avec projets actifs',domain,active.map(p => p.file.name).join(' · '));
+        const kept = routines.filter(r => routineOpen(r) && targets(r,'gtd_domaine').includes(domain));
+        if (!archived(domain) && !active.length && !goals.length && !kept.length) add('domaine_sans_engagement','horizons','Domaines sans objectif, projet ni routine actifs',domain,'Vérifier pendant la revue si la responsabilité est suffisamment entretenue.');
+        if (archived(domain) && (active.length || kept.length)) add('domaine_archive_actif','horizons','Domaines archivés avec projets ou routines actifs',domain,[...active, ...kept].map(p => p.file.name).join(' · '));
+    }
+    // Routines : tenue d'un domaine, revue chaque mois au Portefeuille ; aucune date ni verdict en propriété.
+    for (const r of routines) {
+        if (!targets(r,'gtd_domaine').some(d => d.type === 'GTD-Domaine')) add('routine_sans_domaine','horizons','Routines sans domaine valide',r,'Renseigner le domaine dont la routine tient le niveau.');
+        if (!['quotidienne','hebdomadaire','mensuelle'].includes(r.gtd_frequence)) add('routine_frequence_inconnue','horizons','Routines à fréquence manquante ou inconnue',r,'gtd_frequence : ' + (r.gtd_frequence || 'vide'));
+        if (routineOpen(r) && !array(r.file.tasks).some(t => !t.completed && t.status !== '-' && String(t.text).includes('🔁'))) add('routine_sans_recurrence','horizons','Routines sans tâche récurrente ouverte',r,'Ajouter ou rouvrir la tâche #Todo 🔁 de la fiche, ou revoir le statut.');
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
-    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','7.validation','8.terminee','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne']};
+    // Sur une routine, gtd_projet référence le projet ou le monolithe qui l'installe.
+    const allowedTypes = (p, field) => isRoutine(p) && field === 'gtd_projet' ? ['GTD-Projet','GTD-ProjetMonolithe'] : array(fields[field]);
+    const statusValues = {gtd_statut_projet:['0.cadrage_agent','1.en_attente','2.actif','3.en_pause','4.delegation_agent','8.termine','9.abandonne'],gtd_statut_etape:['0.cadrage_agent','1.a_preparer','2.prete','3.en_cours','4.bloquee','5.delegation_agent','6.delegue','7.validation','8.terminee','9.abandonnee'],gtd_statut_objectif:['1.propose','2.actif','3.en_pause','8.atteint','9.abandonne'],gtd_statut_routine:['1.en_essai','2.active','3.en_pause','9.abandonnee']};
     for (const p of all.filter(p => !archived(p))) {
         const gtd = String(p.type || '').startsWith('GTD-');
         const filled = Object.keys(fields).filter(k => clean(p[k]).length);
         if (!gtd && filled.length > 1) add('note_multirattachement','rattachements','Notes ordinaires avec plusieurs rattachements GTD',p,filled.join(' · '));
         for (const field of filled) for (const link of links(p,field)) {
             if (!link.page) add('lien_introuvable','rattachements','Liens GTD introuvables',p,field + ' → ' + link.raw);
-            else if (!array(fields[field]).includes(link.page.type)) add('lien_type_incorrect','rattachements','Liens GTD de type incorrect',p,field + ' → ' + link.page.file.name + ' (' + (link.page.type || 'sans type') + ')');
+            else if (!allowedTypes(p, field).includes(link.page.type)) add('lien_type_incorrect','rattachements','Liens GTD de type incorrect',p,field + ' → ' + link.page.file.name + ' (' + (link.page.type || 'sans type') + ')');
         }
         if (!gtd) continue;
-        const required = isProject(p) ? ['gtd_statut_projet', ...(p.type === 'GTD-ProjetMonolithe' ? ['gtd_statut_etape'] : [])] : isStep(p) ? ['gtd_statut_etape'] : p.type === 'GTD-Objectif' ? ['gtd_statut_objectif'] : [];
+        const required = isProject(p) ? ['gtd_statut_projet', ...(p.type === 'GTD-ProjetMonolithe' ? ['gtd_statut_etape'] : [])] : isStep(p) ? ['gtd_statut_etape'] : p.type === 'GTD-Objectif' ? ['gtd_statut_objectif'] : isRoutine(p) ? ['gtd_statut_routine'] : [];
         for (const field of required) if (!statusValues[field].includes(p[field])) add('statut_invalide','rattachements','Statuts manquants ou inconnus',p,field + ' : ' + (p[field] || 'vide'));
     }
     const activeObjectives = all.filter(p => p.type === 'GTD-Objectif' && !archived(p) && p.gtd_statut_objectif === '2.actif');
@@ -117,7 +129,7 @@ function buildGtdReview(pages, resolvePath) {
 
 const review = buildGtdReview(dv.pages().array(), (target, source) => app.metadataCache.getFirstLinkpathDest(target, source)?.path || null);
 const section = input?.section || 'summary';
-const categories = {projets:'Projets',etapes:'Étapes',horizons:'Objectifs et domaines',rattachements:'Rattachements et statuts'};
+const categories = {projets:'Projets',etapes:'Étapes',horizons:'Objectifs, domaines et routines',rattachements:'Rattachements et statuts'};
 const links = {projets:'GTD - Contrôles des projets',etapes:'GTD - Contrôles des étapes',horizons:'GTD - Contrôles des objectifs et domaines',rattachements:'GTD - Contrôles des rattachements'};
 if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     const projects = section === 'contexte_projets';
@@ -130,7 +142,7 @@ if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     const max = portfolio ? review.projectLimit : review.stepLimit;
     dv.paragraph((count > max ? '⚠️ ' : '') + '**' + count + (portfolio ? ' projet(s) actif(s)' : ' étape(s) en cours') + '** — plafond de ' + max + '. Repère : ' + (portfolio ? '3 à 5 projets actifs.' : '2 à 3 étapes en cours.') + (portfolio ? ' Délégations incluses.' : ' Délégations et validation incluses.'));
     if (!portfolio) dv.paragraph(review.sprint.length + ' étape(s) ou monolithe(s) liés à un projet actif. Une étape partagée compte une seule fois.');
-    const relevant = review.issues.filter(i => portfolio ? i.category === 'projets' : i.category === 'etapes');
+    const relevant = review.issues.filter(i => portfolio ? (i.category === 'projets' || i.id.startsWith('routine_')) : i.category === 'etapes');
     if (relevant.length) dv.table(['À revoir','Fiche'], relevant.map(i => [i.title,i.page.file.link]));
     else dv.paragraph('Aucune anomalie détectée pour ce tableau.');
 } else if (section === 'summary') {
