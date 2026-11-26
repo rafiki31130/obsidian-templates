@@ -1,6 +1,8 @@
 
 Projet ou projets parents de l’étape, de type GTD-Projet. La liste permet une étape partagée ; un seul parent actif suffit pour le sprint. Un projet monolithe porte ses actions lui-même, sans étape enfant.
 
+Sur une routine (`GTD-Routine`), facultatif : projet ou monolithe qui l’installe ou la fait évoluer. Une routine n’est pas une étape et ne compte pas dans la charge du sprint.
+
 ## Type et rôle
 
 - Propriété : `gtd_projet`.
@@ -8,7 +10,7 @@ Projet ou projets parents de l’étape, de type GTD-Projet. La liste permet une
 - Schéma : [[r_templates/resources/bases_properties/GTD/GTD|GTD]].
 - Type natif actuellement enregistré : Liste.
 
-Utilisée par : `GTD.Etapes`.
+Utilisée par : `GTD.Etapes`, `GTD.Routines`.
 
 ## Saisie
 

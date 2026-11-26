@@ -17,6 +17,10 @@ await dv.view("r_templates/scripts/gtd-review", { section: "contexte_objectifs" 
 await dv.view("r_templates/scripts/gtd-review", { section: "portefeuille" });
 ```
 
+## Routines
+
+![[GTD.Routines.base#Revue mensuelle]]
+
 ## Revue mensuelle
 
 - [ ] Relire les domaines et objectifs concernés.
@@ -26,6 +30,7 @@ await dv.view("r_templates/scripts/gtd-review", { section: "portefeuille" });
 - [ ] Examiner [[GTD - Contrôles des projets]] et [[GTD - Contrôles des objectifs et domaines]].
 - [ ] Clôturer au portefeuille les monolithes déjà faits au sprint.
 - [ ] Pour un imprévu qui devient actif, choisir l’engagement à mettre en pause si la capacité est pleine.
+- [ ] Revoir chaque routine en essai, active ou en pause : taux de réalisation, décision (garder, ajuster, abandonner) consignée au journal des revues de sa fiche, statut mis à jour.
 
 ## Notes de revue
 

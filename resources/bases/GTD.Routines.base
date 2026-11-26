@@ -1,0 +1,64 @@
+filters:
+  and:
+    - file.ext == "md"
+    - '!file.inFolder("r_templates")'
+    - '!file.inFolder(".trash")'
+    - (type == "GTD-Routine")
+properties:
+  file.name:
+    displayName: Nom
+  gtd_statut_routine:
+    displayName: Statut routine
+  gtd_domaine:
+    displayName: Domaine
+  gtd_frequence:
+    displayName: Fréquence
+  gtd_projet:
+    displayName: Projet
+views:
+  - type: table
+    name: Toutes
+    groupBy:
+      property: gtd_statut_routine
+      direction: ASC
+    order:
+      - file.name
+      - gtd_statut_routine
+      - gtd_domaine
+      - gtd_frequence
+      - gtd_projet
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Routines du domaine
+    filters:
+      and:
+        - list(gtd_domaine).contains(this.file.asLink())
+        - gtd_statut_routine != "9.abandonnee"
+    order:
+      - file.name
+      - gtd_statut_routine
+      - gtd_frequence
+      - gtd_projet
+    sort:
+      - property: file.name
+        direction: ASC
+  - type: table
+    name: Revue mensuelle
+    filters:
+      and:
+        - gtd_statut_routine != "9.abandonnee"
+        - '!file.inFolder("pages/4. Archives")'
+        - '!file.hasTag("archived")'
+    groupBy:
+      property: gtd_domaine
+      direction: ASC
+    order:
+      - file.name
+      - gtd_statut_routine
+      - gtd_frequence
+      - gtd_projet
+    sort:
+      - property: file.name
+        direction: ASC

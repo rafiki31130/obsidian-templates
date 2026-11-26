@@ -17,7 +17,7 @@ topic:
 
 ## Routines
 
-- 
+![[GTD.Routines.base#Routines du domaine]]
 
 ## Objectifs
 ![[GTD.Objectifs.base#Objectifs du domaine]]

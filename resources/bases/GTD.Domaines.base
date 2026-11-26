@@ -1,9 +1,9 @@
 filters:
   and:
-  - file.ext == "md"
-  - '!file.inFolder("r_templates")'
-  - '!file.inFolder(".trash")'
-  - (type == "GTD-Domaine")
+    - file.ext == "md"
+    - '!file.inFolder("r_templates")'
+    - '!file.inFolder(".trash")'
+    - (type == "GTD-Domaine")
 properties:
   file.name:
     displayName: Nom
@@ -12,24 +12,26 @@ properties:
   topic:
     displayName: Sujets
 views:
-- type: table
-  name: Tous
-  order:
-  - file.name
-  - gtd_vision
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
-- type: table
-  name: Domaines de la vision
-  filters:
-    and:
-    - list(gtd_vision).contains(this.file.asLink())
-  order:
-  - file.name
-  - gtd_vision
-  - topic
-  sort:
-  - property: file.name
-    direction: ASC
+  - type: table
+    name: Tous
+    order:
+      - file.name
+      - gtd_vision
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      note.gtd_vision: 132
+  - type: table
+    name: Domaines de la vision
+    filters:
+      and:
+        - list(gtd_vision).contains(this.file.asLink())
+    order:
+      - file.name
+      - gtd_vision
+      - topic
+    sort:
+      - property: file.name
+        direction: ASC
