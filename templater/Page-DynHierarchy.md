@@ -69,7 +69,8 @@ const pageTail = bodyOut + (hasNotes ? "" : "## Notes\n\n") + (cursorPlaced ? ""
 %>
 `button-applytype` `button-archive` `button-addjournal`
 
-%%
+<%* /* Vues désactivées : ce commentaire Templater n'est pas inséré dans la page.
+   Pour les réactiver, sortir le bloc ci-dessous de ce commentaire.
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
 dv.view("r_templates/scripts/related-projects")
@@ -79,8 +80,7 @@ dv.view("r_templates/scripts/related-projects")
 > ``` dataviewjs
 dv.view("r_templates/scripts/child-pages")
 >```
-%%
-
+*/ -%>
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs
 dv.view("r_templates/scripts/related-tasks")
