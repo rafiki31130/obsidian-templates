@@ -9,7 +9,7 @@ filters:
     - file.path.startsWith("pages")
     - '!file.tags.containsAny("archived")'
 formulas:
-  days_left: next_due-today()
+  days_left: (next_due-today()).days
 views:
   - type: table
     name: Upcomming
