@@ -143,29 +143,36 @@ views:
       - 
     order:
       - file.name
-      - gtd_echeance
       - gtd_predecesseurs
+      - gtd_echeance
     sort:
       - property: file.name
         direction: ASC
     columnWidth: 280
     imageAspectRatio: 0.5
   - type: table
-    name: Étapes du projet — tableau
+    name: Étapes du projet - tableau
     filters:
       and:
         - list(gtd_projet).contains(this.file.asLink())
+    groupBy:
+      property: gtd_statut_etape
+      direction: ASC
     order:
-      - file.name
       - type
       - gtd_statut_etape
-      - gtd_projet
+      - file.name
+      - gtd_predecesseurs
       - gtd_echeance
       - topic
-      - gtd_predecesseurs
     sort:
       - property: gtd_statut_etape
         direction: ASC
+    columnSize:
+      note.type: 106
+      file.name: 459
+      note.gtd_predecesseurs: 448
+      note.gtd_echeance: 244
   - type: table
     name: Dépendances
     filters:

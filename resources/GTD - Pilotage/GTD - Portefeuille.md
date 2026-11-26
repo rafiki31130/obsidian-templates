@@ -7,9 +7,9 @@ Revue mensuelle des engagements. Choisir ce qui mérite d’être actif avant d�
 await dv.view("r_templates/scripts/gtd-review", { section: "contexte_objectifs" });
 ```
 
-## Kanban des projets
+## Projets
 
-![[GTD.Projets.base#Portefeuille]]
+![[GTD.Projets.base#Portefeuille - liste]]
 
 ## Charge et points à revoir
 

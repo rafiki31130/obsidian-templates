@@ -48,7 +48,7 @@ views:
       - property: file.name
         direction: ASC
   - type: table
-    name: Portefeuille — tableau
+    name: Portefeuille - tableau
     filters:
       and:
         - gtd_statut_projet != "8.termine" && gtd_statut_projet != "9.abandonne"
@@ -127,3 +127,22 @@ views:
     sort:
       - property: file.name
         direction: ASC
+  - type: list
+    name: Portefeuille - liste
+    filters:
+      and:
+        - '!file.inFolder("pages/4. Archives")'
+        - '!file.hasTag("archived")'
+    groupBy:
+      property: gtd_objectif
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - gtd_domaine
+      - gtd_objectif
+      - gtd_echeance
+    sort:
+      - property: file.name
+        direction: ASC
+    indentProperties: false
