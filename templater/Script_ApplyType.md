@@ -33,6 +33,7 @@ content = content
 // Séparation frontmatter / corps du template
 const fmMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
 const body = fmMatch ? content.slice(fmMatch[0].length) : content;
+const target = tp.config.target_file ?? app.workspace.getActiveFile();
 
 // Fusion des propriétés dans le frontmatter de la page courante.
 // Un `---` inséré au curseur ne serait pas un frontmatter : on passe par processFrontMatter.
@@ -41,7 +42,6 @@ const body = fmMatch ? content.slice(fmMatch[0].length) : content;
 //  - clé présente et remplie → conservée (listes : union des valeurs)
 if (fmMatch) {
   const tplProps = tp.obsidian.parseYaml(fmMatch[1]) ?? {};
-  const target = tp.config.target_file ?? app.workspace.getActiveFile();
   const isEmpty = v => v == null || v === "" || (Array.isArray(v) && v.length === 0);
   await app.fileManager.processFrontMatter(target, fm => {
     for (const [k, v] of Object.entries(tplProps)) {
@@ -54,7 +54,16 @@ if (fmMatch) {
   });
 }
 
-// Corps : inséré au curseur, sauf s'il est déjà présent dans la page
-const current = await app.vault.read(tp.config.target_file ?? app.workspace.getActiveFile());
-if (body.trim() !== "" && !current.includes(body.trim())) tR += body;
+// Corps : ajouté en fin de page, dans le fichier, après le frontmatter fusionné.
+// Ne pas l'insérer au curseur (tR) : dans une page neuve le curseur est en position 0,
+// et le corps se retrouvait AVANT le frontmatter que processFrontMatter vient d'écrire.
+// Rien n'est ajouté si le corps est déjà présent dans la page.
+const bodyText = body.replace(/^(?:[ \t]*\r?\n)+/, "").replace(/\s+$/, "");
+if (bodyText !== "") {
+  await app.vault.process(target, data => {
+    if (data.includes(bodyText)) return data;
+    const sep = data.trim() === "" ? "" : (data.endsWith("\n\n") ? "" : data.endsWith("\n") ? "\n" : "\n\n");
+    return data + sep + bodyText + "\n";
+  });
+}
 %>
