@@ -182,3 +182,5 @@ views:
     sort:
       - property: file.name
         direction: ASC
+    columnSize:
+      file.name: 474
