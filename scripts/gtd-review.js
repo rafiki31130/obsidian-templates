@@ -97,10 +97,9 @@ function buildGtdReview(pages, resolvePath) {
         if (!archived(domain) && !active.length && !goals.length && !kept.length) add('domaine_sans_engagement','horizons','Domaines sans objectif, projet ni routine actifs',domain,'Vérifier pendant la revue si la responsabilité est suffisamment entretenue.');
         if (archived(domain) && (active.length || kept.length)) add('domaine_archive_actif','horizons','Domaines archivés avec projets ou routines actifs',domain,[...active, ...kept].map(p => p.file.name).join(' · '));
     }
-    // Routines : tenue d'un domaine, revue chaque mois au Portefeuille ; aucune date ni verdict en propriété.
+    // Routines : tenue d'un domaine, revue chaque mois au Portefeuille. La fréquence est portée par la tâche récurrente 🔁.
     for (const r of routines) {
         if (!targets(r,'gtd_domaine').some(d => d.type === 'GTD-Domaine')) add('routine_sans_domaine','horizons','Routines sans domaine valide',r,'Renseigner le domaine dont la routine tient le niveau.');
-        if (!['quotidienne','hebdomadaire','mensuelle'].includes(r.gtd_frequence)) add('routine_frequence_inconnue','horizons','Routines à fréquence manquante ou inconnue',r,'gtd_frequence : ' + (r.gtd_frequence || 'vide'));
         if (routineOpen(r) && !array(r.file.tasks).some(t => !t.completed && t.status !== '-' && String(t.text).includes('🔁'))) add('routine_sans_recurrence','horizons','Routines sans tâche récurrente ouverte',r,'Ajouter ou rouvrir la tâche #Todo 🔁 de la fiche, ou revoir le statut.');
     }
     const fields = {gtd_raison_detre:'GTD-RaisonDetre',gtd_vision:'GTD-Vision',gtd_objectif:'GTD-Objectif',gtd_domaine:'GTD-Domaine',gtd_projet:'GTD-Projet',gtd_etape:['GTD-Etape','GTD-ProjetMonolithe']};
@@ -124,32 +123,38 @@ function buildGtdReview(pages, resolvePath) {
     const sprint = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => activeParents(s).length);
     const running = sprint.filter(s => ['3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape));
     const runningAll = [...liveSteps, ...liveProjects.filter(p => p.type === 'GTD-ProjetMonolithe')].filter(s => ['3.en_cours','5.delegation_agent','6.delegue','7.validation'].includes(s.gtd_statut_etape));
-    return {issues,activeObjectives,activeProjects,sprint,running,runningAll,projectLimit:5,stepLimit:3};
+    // Charge unique : projets et monolithes engagés + étapes en charge. Un monolithe compte une seule fois, comme projet.
+    const runningSteps = runningAll.filter(isStep);
+    const charge = activeProjects.length + runningSteps.length;
+    return {issues,activeObjectives,activeProjects,sprint,running,runningAll,runningSteps,charge};
 }
 
+// Seuil d'alerte : propriété `seuil_charge_gtd` de la note GTD - Pilotage (10 par défaut). Voir GTD - Régler le seuil d'alerte.
+const settings = dv.page('GTD - Pilotage');
+const chargeLimit = Number(settings?.seuil_charge_gtd) > 0 ? Number(settings.seuil_charge_gtd) : 10;
 const review = buildGtdReview(dv.pages().array(), (target, source) => app.metadataCache.getFirstLinkpathDest(target, source)?.path || null);
 const section = input?.section || 'summary';
 const categories = {projets:'Projets',etapes:'Étapes',horizons:'Objectifs, domaines et routines',rattachements:'Rattachements et statuts'};
-const links = {projets:'GTD - Contrôles des projets',etapes:'GTD - Contrôles des étapes',horizons:'GTD - Contrôles des objectifs et domaines',rattachements:'GTD - Contrôles des rattachements'};
+const chargeLine = () => (review.charge > chargeLimit ? '⚠️ ' : '') + '**Charge : ' + review.charge + ' / ' + chargeLimit + '**, soit ' + review.activeProjects.length + ' projet(s) ou monolithe(s) engagé(s) et ' + review.runningSteps.length + ' étape(s) en cours, déléguée(s) ou en validation.';
 if (section === 'contexte_projets' || section === 'contexte_objectifs') {
     const projects = section === 'contexte_projets';
     const items = [...(projects ? review.activeProjects : review.activeObjectives)].sort((a,b) => a.file.name.localeCompare(b.file.name, 'fr'));
     const compactLinks = items.map(p => String(p.file.link));
     dv.paragraph('**' + (projects ? 'Projets en cours' : 'Objectifs en cours') + '** : ' + (compactLinks.length ? compactLinks.join(' · ') : 'aucun'));
+} else if (section === 'charge') {
+    dv.paragraph(chargeLine());
 } else if (section === 'portefeuille' || section === 'sprint') {
     const portfolio = section === 'portefeuille';
-    const count = portfolio ? review.activeProjects.length : review.runningAll.length;
-    const max = portfolio ? review.projectLimit : review.stepLimit;
-    dv.paragraph((count > max ? '⚠️ ' : '') + '**' + count + (portfolio ? ' projet(s) actif(s)' : ' étape(s) en cours') + '** — plafond de ' + max + '. Repère : ' + (portfolio ? '3 à 5 projets actifs.' : '2 à 3 étapes en cours.') + (portfolio ? ' Délégations incluses.' : ' Délégations et validation incluses.'));
+    dv.paragraph(chargeLine());
     if (!portfolio) dv.paragraph(review.sprint.length + ' étape(s) ou monolithe(s) liés à un projet actif. Une étape partagée compte une seule fois.');
     const relevant = review.issues.filter(i => portfolio ? (i.category === 'projets' || i.id.startsWith('routine_')) : i.category === 'etapes');
     if (relevant.length) dv.table(['À revoir','Fiche'], relevant.map(i => [i.title,i.page.file.link]));
     else dv.paragraph('Aucune anomalie détectée pour ce tableau.');
 } else if (section === 'summary') {
     dv.paragraph('**' + review.issues.length + ' signalement(s)** à examiner. Les contrôles sont en lecture seule.');
-    // Lien par nom de page, résolu par Obsidian : il survit au déplacement ou au renommage du dossier de pilotage.
-    dv.table(['Contrôles','Signalements'],Object.entries(categories).map(([key,title]) => [dv.fileLink(links[key],false,title),review.issues.filter(i => i.category === key).length]));
-    if (review.activeProjects.length > review.projectLimit || review.runningAll.length > review.stepLimit) dv.paragraph('⚠️ Capacité dépassée : ' + review.activeProjects.length + ' projets actifs / 5 ; ' + review.runningAll.length + ' étapes en cours / 3.');
+    // Lien par nom de page et titre de section, résolu par Obsidian : il survit au déplacement du dossier de pilotage.
+    dv.table(['Contrôles','Signalements'],Object.entries(categories).map(([key,title]) => [dv.fileLink('GTD - Contrôles#' + title,false,title),review.issues.filter(i => i.category === key).length]));
+    dv.paragraph(chargeLine());
 } else {
     const rows = review.issues.filter(i => i.category === section);
     if (!rows.length) dv.paragraph('Aucune anomalie détectée pour ces contrôles.');

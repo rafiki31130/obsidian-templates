@@ -6,6 +6,8 @@ Vue d'ensemble de ce qui est engagé, en une page : objectifs actifs, projets en
 const EXCL = /^(r_templates|r_wiki|r_knowledge_base_pro|\.trash|journals)\/|(^|\/)4\. Archives\//;
 const ENGAGED_P = ["2.actif", "4.delegation_agent"];
 const CHARGE_E = ["3.en_cours", "5.delegation_agent", "6.delegue", "7.validation"];
+// Seuil d'alerte unique : propriété `seuil_charge_gtd` de GTD - Pilotage (10 par défaut).
+const SEUIL = Number(dv.page("GTD - Pilotage")?.seuil_charge_gtd) > 0 ? Number(dv.page("GTD - Pilotage").seuil_charge_gtd) : 10;
 const arr = v => v == null ? [] : Array.isArray(v) ? v : (v.array ? v.array() : [v]);
 const archived = p => arr(p.tags).some(t => String(t).replace(/^#/, "") === "archived");
 const ok = p => p && !EXCL.test(p.file.path) && !archived(p);
@@ -40,7 +42,10 @@ const enCours = travail.where(p => CHARGE_E.includes(p.gtd_statut_etape)).sort(p
 const bloquees = travail.where(p => p.gtd_statut_etape === "4.bloquee").sort(p => p.file.name);
 const pretes = travail.where(p => p.gtd_statut_etape === "2.prete").sort(p => p.file.name);
 
-dv.paragraph(`**Projets engagés : ${projets.length} / 5** · **Étapes en charge : ${enCours.length} / 3** · Bloquées : ${bloquees.length} · Prêtes : ${pretes.length}`);
+// Charge : projets et monolithes engagés + étapes en charge (un monolithe compte une fois, comme projet).
+const etapesEnCharge = enCours.where(p => p.type === "GTD-Etape").length;
+const charge = projets.length + etapesEnCharge;
+dv.paragraph(`${charge > SEUIL ? "⚠️ " : ""}**Charge : ${charge} / ${SEUIL}** (${projets.length} projet(s) engagé(s) + ${etapesEnCharge} étape(s) en charge) · Bloquées : ${bloquees.length} · Prêtes : ${pretes.length}`);
 
 dv.header(2, "Objectifs actifs");
 const objectifs = byType("GTD-Objectif").where(o => o.gtd_statut_objectif === "2.actif").sort(o => o.file.name);

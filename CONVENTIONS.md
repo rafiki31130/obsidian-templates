@@ -221,7 +221,7 @@ Chaque dossier de données possède une note Markdown du même nom, qui intègre
 - Domaines et objectifs sont des liens fonctionnels, sans hiérarchie parent-enfant obligatoire.
 - Un projet ou projet monolithe doit avoir au moins un domaine **ou** un objectif ; les deux sont autorisés. La revue signale l’absence des deux.
 - Une étape peut être partagée entre plusieurs projets ; le lien `gtd_projet` accepte une liste.
-- Une routine (`GTD-Routine`) tient le niveau d’un domaine : `gtd_domaine` obligatoire, `gtd_statut_routine` et `gtd_frequence` (`quotidienne`, `hebdomadaire`, `mensuelle`). Le projet ou monolithe qui l’installe se référence dans `gtd_projet` ; une routine n’est pas une étape et ne compte ni au Sprint ni dans les plafonds. Elle porte sa tâche récurrente `#Todo 🔁` dans sa fiche (exception au journal du jour). Sa revue a lieu chaque mois au Portefeuille, sans propriété de date ni de verdict : la décision se consigne dans le journal des revues de la fiche.
+- Une routine (`GTD-Routine`) tient le niveau d’un domaine : `gtd_domaine` obligatoire, `gtd_objectif` facultatif, `gtd_statut_routine`. Elle ne porte ni fréquence, ni échéance, ni prédécesseurs, ni statut de projet ou d’étape : sa fréquence est celle de sa tâche récurrente. Le projet ou monolithe qui l’installe se référence dans `gtd_projet` ; une routine n’est pas une étape et ne compte ni au Sprint ni dans la charge. Elle porte sa tâche récurrente `#Todo 🔁` dans sa fiche (exception au journal du jour). Sa revue a lieu chaque mois au Portefeuille, sans propriété de date ni de verdict : la décision se consigne dans le journal des revues de la fiche.
 - La règle du rattachement GTD unique vise les notes ordinaires, pas les liens propres aux objets GTD.
 - Les critères de fin restent en texte et les dates ne changent pas. Les statuts modernes suivent le format numéro.description_snake_case défini ci-dessous.
 - Le type natif Obsidian de la propriété `type` est Texte, configuré une seule fois pour le vault.
@@ -422,15 +422,15 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 
 ## Pages de pilotage GTD
 
-Les pages sont regroupées dans `r_templates/resources/GTD - Pilotage/` ; la note `GTD - Pilotage.md` sert de note de dossier. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
+Les pages sont regroupées dans `r_templates/resources/GTD - Pilotage/` ; la note `GTD - Pilotage.md` sert de note de dossier et de point d’entrée. Chaque page a un rôle unique : [[GTD - OnePager]] pour lire, [[GTD - Sprint]] et [[GTD - Portefeuille]] pour décider, [[GTD - Contrôles]] pour le détail des signalements. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
 
-Le Portefeuille intègre aussi la vue `Revue mensuelle` de `GTD.Routines.base` (routines non abandonnées, groupées par domaine). Les contrôles des routines (domaine, fréquence, tâche récurrente ouverte) figurent dans [[GTD - Contrôles des objectifs et domaines]] ; une routine en essai ou active compte comme engagement de son domaine.
+Le Portefeuille intègre aussi la vue `Revue mensuelle` de `GTD.Routines.base` (routines non abandonnées, groupées par domaine). Les contrôles des routines (domaine, tâche récurrente ouverte) figurent dans [[GTD - Contrôles#Objectifs, domaines et routines]] ; une routine en essai ou active compte comme engagement de son domaine.
 
 Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
 
-Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à trois étapes en cours (plafond trois). Les dépassements sont signalés ; aucune limite ni transition de statut n’est appliquée automatiquement.
+Charge : un seul nombre, projets et monolithes engagés plus étapes en charge ; un monolithe compte une fois, comme projet. Seuil d’alerte unique, 10 par défaut, réglé par la propriété `seuil_charge_gtd` de `GTD - Pilotage.md` (mode d’emploi : [[GTD - Régler le seuil d'alerte]]). Les dépassements sont signalés ; aucune limite ni transition de statut n’est appliquée automatiquement.
 
-[[GTD - Contrôles]] et ses quatre pages détaillées utilisent la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
+[[GTD - Contrôles]] regroupe sur une seule page les quatre familles de signalements (projets, étapes, objectifs, domaines et routines, rattachements et statuts) et utilise la vue Dataview en lecture seule `r_templates/scripts/gtd-review.js`. Le typage repose sur `type`, les rattachements sur les liens GTD explicites, et les objets archivés sont exclus du travail actif. Le contrôle des liens utilise la résolution de liens d’Obsidian, y compris les étapes partagées. Les modèles et journaux ne sont pas considérés comme des données à contrôler.
 
 
 ## Fiches de propriétés des bases
@@ -461,7 +461,7 @@ Les définitions et noms des fiches de valeurs suivent le même format, au nivea
 
 Projets : ajout de `0.cadrage_agent` et `4.delegation_agent`. Étapes : ajout de `0.cadrage_agent` et `5.delegation_agent`. Les valeurs sont définies une seule fois dans les propriétés du schéma GTD.
 
-Les projets `2.actif` et `4.delegation_agent` comptent dans le plafond de projets actifs et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent`, `6.delegue` et `7.validation` comptent dans le plafond d’étapes en cours. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans ces plafonds. Aucun statut de fiche existante n’est changé automatiquement.
+Les projets `2.actif` et `4.delegation_agent` comptent dans la charge et dans les liens parents actifs du Sprint. Les étapes `3.en_cours`, `5.delegation_agent`, `6.delegue` et `7.validation` comptent dans la charge. Un seul parent engagé suffit pour une étape partagée. Les états de cadrage 0 ne comptent pas dans la charge. Aucun statut de fiche existante n’est changé automatiquement.
 
 Le dossier de pilotage est `r_templates/resources/GTD - Pilotage/`. Une seule ligne de liens dynamiques rappelle les projets engagés au-dessus du kanban Sprint et les objectifs actifs au-dessus du kanban Portefeuille. Ces rappels excluent les objets archivés et ne recopient aucune valeur utilisateur dans des fiches de propriétés.
 
@@ -488,4 +488,4 @@ La sélection est traitée comme du texte, jamais comme un modèle exécutable. 
 
 `7.validation` signifie résultat produit, en attente de validation avant `8.terminee`. Cette valeur appartient au schéma partagé `gtd_statut_etape`, y compris pour le volet étape des monolithes ; aucun statut projet n’est ajouté. Elle est placée entre `6.delegue` et `8.terminee` dans le Sprint et le kanban des étapes du projet.
 
-Une étape en validation reste ouverte, compte dans le plafond de travail en cours et nécessite au moins un projet parent actif ou délégué. Seule une étape `8.terminee` lève les dépendances. Les modèles gardent leurs statuts initiaux et aucune fiche existante ne change automatiquement de statut.
+Une étape en validation reste ouverte, compte dans la charge et nécessite au moins un projet parent actif ou délégué. Seule une étape `8.terminee` lève les dépendances. Les modèles gardent leurs statuts initiaux et aucune fiche existante ne change automatiquement de statut.

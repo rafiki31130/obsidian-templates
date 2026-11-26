@@ -7,14 +7,14 @@ filters:
 properties:
   file.name:
     displayName: Nom
-  gtd_statut_routine:
-    displayName: Statut routine
   gtd_domaine:
     displayName: Domaine
-  gtd_frequence:
-    displayName: Fréquence
+  gtd_objectif:
+    displayName: Objectif
   gtd_projet:
     displayName: Projet
+  gtd_statut_routine:
+    displayName: Statut routine
 views:
   - type: table
     name: Toutes
@@ -23,10 +23,10 @@ views:
       direction: ASC
     order:
       - file.name
-      - gtd_statut_routine
       - gtd_domaine
-      - gtd_frequence
+      - gtd_objectif
       - gtd_projet
+      - gtd_statut_routine
     sort:
       - property: file.name
         direction: ASC
@@ -38,9 +38,9 @@ views:
         - gtd_statut_routine != "9.abandonnee"
     order:
       - file.name
-      - gtd_statut_routine
-      - gtd_frequence
+      - gtd_objectif
       - gtd_projet
+      - gtd_statut_routine
     sort:
       - property: file.name
         direction: ASC
@@ -56,9 +56,9 @@ views:
       direction: ASC
     order:
       - file.name
-      - gtd_statut_routine
-      - gtd_frequence
+      - gtd_objectif
       - gtd_projet
+      - gtd_statut_routine
     sort:
       - property: file.name
         direction: ASC

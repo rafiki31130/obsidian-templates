@@ -1,5 +1,5 @@
 
-Lien vers un objectif auquel contribue le projet. Un domaine seul suffit aussi au contrôle de rattachement.
+Lien vers un objectif auquel contribue le projet. Un domaine seul suffit aussi au contrôle de rattachement. Sur une routine, facultatif : objectif que la routine sert.
 
 ## Type et rôle
 
@@ -7,7 +7,7 @@ Lien vers un objectif auquel contribue le projet. Un domaine seul suffit aussi a
 - Type attendu : **Texte ou liste de liens**.
 - Schéma : [[r_templates/resources/bases_properties/GTD/GTD|GTD]].
 
-Utilisée par : `GTD.Etapes`, `GTD.Projets`, `GTD.ProjetsMonolithes`.
+Utilisée par : `GTD.Etapes`, `GTD.Projets`, `GTD.ProjetsMonolithes`, `GTD.Routines`.
 
 ## Saisie
 

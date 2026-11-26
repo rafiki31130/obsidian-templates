@@ -16,7 +16,6 @@ Bases : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `GTD.Proje
 | [[r_templates/resources/bases_properties/GTD/formula.projet_actif|formula.projet_actif]] | **Calculée (lecture seule)** |
 | [[r_templates/resources/bases_properties/GTD/gtd_domaine|gtd_domaine]] | **Texte ou liste de liens** |
 | [[r_templates/resources/bases_properties/GTD/gtd_echeance|gtd_echeance]] | **Date** |
-| [[r_templates/resources/bases_properties/GTD/gtd_frequence|gtd_frequence]] | **Texte** |
 | [[r_templates/resources/bases_properties/GTD/gtd_horizon|gtd_horizon]] | **Nombre** |
 | [[r_templates/resources/bases_properties/GTD/gtd_objectif|gtd_objectif]] | **Texte ou liste de liens** |
 | [[r_templates/resources/bases_properties/GTD/gtd_projet|gtd_projet]] | **Liste** |
@@ -28,4 +27,4 @@ Bases : `GTD.Domaines`, `GTD.Etapes`, `GTD.Objectifs`, `GTD.Projets`, `GTD.Proje
 | [[r_templates/resources/bases_properties/GTD/gtd_vision|gtd_vision]] | **Texte ou liste de liens** |
 | [[r_templates/resources/bases_properties/GTD/type/type|type]] | **Texte** |
 
-Une propriété sans pages enfants est une fiche directe. Un dossier et une note de dossier ne sont conservés que lorsqu’il existe des fiches enfants de valeurs fixes du schéma. Aucune valeur personnelle n’est cataloguée.
+Une propriété sans pages enfants est une fiche directe. Un dossier et une note de dossier ne sont conservés que lorsqu’il existe des fiches enfants de valeurs fixes du schéma. Aucune valeur personnelle n’est cataloguée. La fréquence d'une routine n'est pas une propriété : elle est portée par sa tâche récurrente 🔁.
