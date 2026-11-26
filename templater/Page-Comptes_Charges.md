@@ -1,13 +1,13 @@
 ---
 type: CPT-Charges
-DB_CTE_CHG_tarif: null
-DB_CTE_CHG_recurrence: null
-DB_CTE_CHG_partagee: null
-DB_CTE_CHG_compte: null
-DB_CTE_CHG_moyen: null
-DB_CTE_CHG_categorie: null
-DB_CTE_CHG_labels: null
-DB_CTE_CHG_echeance: null
-DB_CTE_CHG_etat: null
+DB_CTE_CHG_tarif:
+DB_CTE_CHG_recurrence:
+DB_CTE_CHG_partagee:
+DB_CTE_CHG_compte:
+DB_CTE_CHG_moyen:
+DB_CTE_CHG_categorie:
+DB_CTE_CHG_labels:
+DB_CTE_CHG_echeance:
+DB_CTE_CHG_etat:
 ---
 

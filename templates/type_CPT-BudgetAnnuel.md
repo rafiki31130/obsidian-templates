@@ -1,10 +1,10 @@
 ---
 type: CPT-BudgetAnnuel
-DB_CTE_BDG_parent: null
-DB_CTE_BDG_montant: null
-DB_CTE_BDG_periodicite: null
-DB_CTE_BDG_tag: null
-DB_CTE_BDG_solde: null
-DB_CTE_BDG_solde_date: null
+DB_CTE_BDG_parent:
+DB_CTE_BDG_montant:
+DB_CTE_BDG_periodicite:
+DB_CTE_BDG_tag:
+DB_CTE_BDG_solde:
+DB_CTE_BDG_solde_date:
 ---
 

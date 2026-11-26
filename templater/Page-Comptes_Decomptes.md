@@ -1,32 +1,32 @@
 ---
 type: CPT-Decomptes
-DB_CTE_SLD_bpoc_cc: null
-DB_CTE_SLD_bpoc_cj: null
-DB_CTE_SLD_bpoc_ldd: null
-DB_CTE_SLD_bpoc_parts: null
-DB_CTE_SLD_ftno_cc: null
-DB_CTE_SLD_ftno_la: null
-DB_CTE_SLD_sum_cc: null
-DB_CTE_SLD_sum_chg_ann: null
-DB_CTE_SLD_sum_frs_ann: null
-DB_CTE_SLD_sum_epargne: null
-DB_CTE_SLD_sum_budgets: null
-DB_CTE_SLD_bunq_cc: null
-DB_CTE_SLD_ntx_pee: null
-DB_CTE_SLD_ntx_per: null
+DB_CTE_SLD_bpoc_cc:
+DB_CTE_SLD_bpoc_cj:
+DB_CTE_SLD_bpoc_ldd:
+DB_CTE_SLD_bpoc_parts:
+DB_CTE_SLD_ftno_cc:
+DB_CTE_SLD_ftno_la:
+DB_CTE_SLD_sum_cc:
+DB_CTE_SLD_sum_chg_ann:
+DB_CTE_SLD_sum_frs_ann:
+DB_CTE_SLD_sum_epargne:
+DB_CTE_SLD_sum_budgets:
+DB_CTE_SLD_bunq_cc:
+DB_CTE_SLD_ntx_pee:
+DB_CTE_SLD_ntx_per:
 DB_CTE_DCT_av_budget: 1355
-DB_CTE_DCT_av_cartes: null
+DB_CTE_DCT_av_cartes:
 DB_CTE_DCT_av_virements: 0
 DB_CTE_DCT_reserve: 1000
-DB_CTE_DCT_report_cc: null
-DB_CTE_DCT_report_variables: null
-DB_CTE_DCT_tricount_solde: null
+DB_CTE_DCT_report_cc:
+DB_CTE_DCT_report_variables:
+DB_CTE_DCT_tricount_solde:
 DB_CTE_DCT_raz_variables: true
 DB_CTE_DCT_lst_percus: []
 DB_CTE_DCT_lst_imprevus: []
 DB_CTE_DCT_lst_a_verifier: []
-DB_CTE_DCT_affectation: null
-DB_CTE_DCT_note: null
+DB_CTE_DCT_affectation:
+DB_CTE_DCT_note:
 ---
 
 > [!info] Saisie — [[Comptes#How to]] · [[Comptes @ Dispositif]]

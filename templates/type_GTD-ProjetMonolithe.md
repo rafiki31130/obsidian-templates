@@ -1,12 +1,12 @@
 ---
 type: GTD-ProjetMonolithe
-gtd_domaine: null
-gtd_objectif: null
+gtd_domaine:
+gtd_objectif:
 gtd_statut_projet: 1.en_attente
 gtd_statut_etape: 1.a_preparer
 gtd_predecesseurs: []
-gtd_echeance: null
-topic: null
+gtd_echeance:
+topic:
 ---
 
 > [!info]- Rappel GTD : le projet monolithe

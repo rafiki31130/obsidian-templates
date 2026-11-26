@@ -1,10 +1,10 @@
 ---
 type: GTD-Etape
-gtd_projet: null
+gtd_projet:
 gtd_statut_etape: 1.a_preparer
 gtd_predecesseurs: []
-gtd_echeance: null
-topic: null
+gtd_echeance:
+topic:
 ---
 
 > [!info]- Rappel GTD : l'étape
