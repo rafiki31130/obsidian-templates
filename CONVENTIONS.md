@@ -2,7 +2,7 @@ Test sync Tell [[2026-05-31]]
 # Conventions du vault Obsidian
 
 > Document de référence. Toute écriture manuelle ou automatisée (MCP, scripts) doit respecter ces conventions.
-> Mis à jour : 2026-11-16.
+> Mis à jour : 2026-11-26.
 
 ---
 ## Structure du vault
@@ -173,6 +173,7 @@ Le champ texte `type` contient `<PREFIXE>-<SousType>` : préfixe de **trois lett
 | `GTD-Projet` | projet |
 | `GTD-Etape` | etape |
 | `GTD-ProjetMonolithe` | projet monolithe |
+| `GTD-Routine` | routine |
 | `RCT-Recette` | recette |
 | `CPT-BudgetAnnuel` | budget annuel |
 | `CPT-PosteBudgetaire` | poste du budget mensuel |
@@ -220,6 +221,7 @@ Chaque dossier de données possède une note Markdown du même nom, qui intègre
 - Domaines et objectifs sont des liens fonctionnels, sans hiérarchie parent-enfant obligatoire.
 - Un projet ou projet monolithe doit avoir au moins un domaine **ou** un objectif ; les deux sont autorisés. La revue signale l’absence des deux.
 - Une étape peut être partagée entre plusieurs projets ; le lien `gtd_projet` accepte une liste.
+- Une routine (`GTD-Routine`) tient le niveau d’un domaine : `gtd_domaine` obligatoire, `gtd_statut_routine` et `gtd_frequence` (`quotidienne`, `hebdomadaire`, `mensuelle`). Le projet ou monolithe qui l’installe se référence dans `gtd_projet` ; une routine n’est pas une étape et ne compte ni au Sprint ni dans les plafonds. Elle porte sa tâche récurrente `#Todo 🔁` dans sa fiche (exception au journal du jour). Sa revue a lieu chaque mois au Portefeuille, sans propriété de date ni de verdict : la décision se consigne dans le journal des revues de la fiche.
 - La règle du rattachement GTD unique vise les notes ordinaires, pas les liens propres aux objets GTD.
 - Les critères de fin restent en texte et les dates ne changent pas. Les statuts modernes suivent le format numéro.description_snake_case défini ci-dessous.
 - Le type natif Obsidian de la propriété `type` est Texte, configuré une seule fois pour le vault.
@@ -422,6 +424,8 @@ Depuis l'interface Obsidian, utiliser le bouton de sélection de type (disponibl
 
 Les pages sont regroupées dans `r_templates/resources/GTD - Pilotage/` ; la note `GTD - Pilotage.md` sert de note de dossier. [[GTD - Portefeuille]] contient le kanban des projets (revue mensuelle), [[GTD - Sprint]] le kanban des étapes et monolithes liés à un projet actif (revue hebdomadaire). Le regroupement est fait sur les propriétés de statut éditables afin que le déplacement d’une carte mette à jour la fiche.
 
+Le Portefeuille intègre aussi la vue `Revue mensuelle` de `GTD.Routines.base` (routines non abandonnées, groupées par domaine). Les contrôles des routines (domaine, fréquence, tâche récurrente ouverte) figurent dans [[GTD - Contrôles des objectifs et domaines]] ; une routine en essai ou active compte comme engagement de son domaine.
+
 Les bases restent centralisées dans `r_templates/resources/bases/`. Les vues de tableau antérieures restent disponibles avec le suffixe « — tableau ». Les projets monolithes participent aux deux kanbans ; une étape partagée figure une seule fois au sprint et reste éligible si au moins un parent est actif.
 
 Capacité : repère de trois à cinq projets actifs (plafond cinq), deux à trois étapes en cours (plafond trois). Les dépassements sont signalés ; aucune limite ni transition de statut n’est appliquée automatiquement.
@@ -448,7 +452,7 @@ Les propriétés de statut modernes suivent `^\d+\.(?<description>[a-z_]+)$` : n
 
 Cette convention s’applique aux statuts GTD, Sources et Recettes, dans les données, modèles, fiches de valeurs, vues, kanbans et contrôles. Les champs historiques `statut` et `status` (ancien workflow/Operon) ainsi que `r_templates/properties/statut/` restent inchangés. Les champs métier privés qui ne sont pas des propriétés de statut, comme l’état d’une charge, ne sont pas recodés par cette migration.
 
-Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 7 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. La distinction entre un essai en cours et un essai terminé est conservée.
+Le numéro 0 sert au cadrage agent en GTD ; les états ouverts peuvent utiliser 1 à 7 selon le workflow, 8 une réussite et 9 un abandon. Sources : `1.a_consulter`, `2.en_cours`, `3.reference`, `8.termine`, `9.abandonne`. Recettes : `1.a_tester`, `2.en_test`, `3.teste`, `8.valide`, `9.abandonne`. Routines : `1.en_essai`, `2.active`, `3.en_pause`, `9.abandonnee`. La distinction entre un essai en cours et un essai terminé est conservée.
 
 Les définitions et noms des fiches de valeurs suivent le même format, au niveau de leur schéma partagé. Aucun catalogue de valeurs privées n’est créé.
 
