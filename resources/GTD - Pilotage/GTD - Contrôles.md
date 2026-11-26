@@ -1,7 +1,7 @@
 
 [[GTD - Pilotage]] · [[GTD - Portefeuille]] · [[GTD - Sprint]]
 
-Tous les signalements de cohérence, par famille. Ce sont des points à examiner en revue : les contrôles ne modifient aucune fiche et ne changent aucun statut. Les modèles et journaux sont exclus ; les objets archivés ne sont pas proposés comme travail actif, mais les incohérences d'archivage d'un domaine restent signalées.
+Tous les signalements de cohérence, par famille. Ce sont des points à examiner en revue : les contrôles ne modifient aucune fiche et ne changent aucun statut. Les modèles et journaux sont exclus ; les objets archivés ne sont pas proposés comme travail actif, mais les incohérences d'archivage d'un domaine restent signalées. Les projets et monolithes en attente (`1.en_attente`) ou en pause (`3.en_pause`) ne sont pas signalés : ils seront revus à leur réactivation. Leurs étapes restent contrôlées.
 
 ## Projets
 

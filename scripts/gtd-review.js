@@ -126,7 +126,9 @@ function buildGtdReview(pages, resolvePath) {
     // Charge unique : projets et monolithes engagés + étapes en charge. Un monolithe compte une seule fois, comme projet.
     const runningSteps = runningAll.filter(isStep);
     const charge = activeProjects.length + runningSteps.length;
-    return {issues,activeObjectives,activeProjects,sprint,running,runningAll,runningSteps,charge};
+    // Pas d'alerte sur un projet ou monolithe en attente ou en pause : il sera revu à sa réactivation.
+    const dormant = p => isProject(p) && ['1.en_attente','3.en_pause'].includes(p.gtd_statut_projet);
+    return {issues: issues.filter(i => !dormant(i.page)),activeObjectives,activeProjects,sprint,running,runningAll,runningSteps,charge};
 }
 
 // Seuil d'alerte : propriété `seuil_charge_gtd` de la note GTD - Pilotage (10 par défaut). Voir GTD - Régler le seuil d'alerte.
