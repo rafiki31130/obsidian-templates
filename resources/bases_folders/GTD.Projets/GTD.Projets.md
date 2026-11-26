@@ -1,2 +1,2 @@
 
-![[GTD.Projets.base]]
+![[GTD.Projets.base#Portefeuille — tableau]]
