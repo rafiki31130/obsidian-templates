@@ -69,6 +69,7 @@ const pageTail = bodyOut + (hasNotes ? "" : "## Notes\n\n") + (cursorPlaced ? ""
 %>
 `button-applytype` `button-archive` `button-addjournal`
 
+%%
 > [!abstract]+ [[🛠️Projets.base|Projets liés]] (js)
 > ``` dataviewjs
 dv.view("r_templates/scripts/related-projects")
@@ -78,6 +79,7 @@ dv.view("r_templates/scripts/related-projects")
 > ``` dataviewjs
 dv.view("r_templates/scripts/child-pages")
 >```
+%%
 
 > [!success]+ Tâches liées (js)
 > ``` dataviewjs

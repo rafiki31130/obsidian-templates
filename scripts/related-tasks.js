@@ -2,16 +2,15 @@
  * related-tasks.js
  *
  * Affiche les tâches non terminées liées à la page courante, depuis trois sources :
- *   1. Tâches locales à la page courante — UNIQUEMENT celles taguées `#Todo`
- *      (les autres tâches locales sont déjà visibles dans le corps de la note ;
- *      le tag `#Todo` signale "à remonter dans cette vue").
- *   2. Pages enfants (via champ `parent` ou convention de nommage "Parent @ Enfant") :
- *      toutes leurs tâches non terminées.
+ *   1. Tâches locales à la page courante.
+ *   2. Pages enfants (via champ `parent` ou convention de nommage "Parent @ Enfant").
  *   3. Tâches dans n'importe quelle page contenant un lien vers la page courante ou ses enfants.
+ * Dans les trois cas, seules les tâches taguées `#Todo` remontent : les simples cases
+ * à cocher (checklists de notes) restent dans le corps de leur note.
  * Groupées par page pertinente (h3), puis par page référençante (h4) pour les références.
  */
 
-// ─── Configuration ────────────────────────────────────────────────────────────
+// ─── Configuration ──────────────────────────────────────────────────────────────────────────
 
 // Statuts à exclure : statuts inactifs (Terminé/Abandonné) + En pause
 // (les tâches d'un projet en pause ne doivent pas remonter dans les vues actives).
@@ -21,18 +20,17 @@ const STATUTS_EXCLUS = ["5. En pause", "8. Terminé", "9. Abandonné"];
 // Ex: pour exclure le tag "#archived", écrire "archived".
 const TAGS_EXCLUS = ["archived"];
 
-// Tag requis sur les tâches LOCALES de la page courante pour qu'elles remontent
-// dans cette vue (les autres tâches locales sont déjà visibles dans le corps).
+// Tag requis sur une tâche, quelle que soit sa page, pour qu'elle remonte dans cette vue.
 // Sensible à la casse — doit matcher exactement le tag écrit dans les tâches.
-const TAG_TODO_LOCAL = "Todo";
+const TAG_TODO = "Todo";
 
-// ─── Contexte courant ─────────────────────────────────────────────────────────
+// ─── Contexte courant ─────────────────────────────────────────────────────────────────────────
 
 const current = dv.current();
 const curName = current.file.name;
 const curN = curName.replace(/\s*@\s*/g, "@");
 
-// ─── Fonctions utilitaires ────────────────────────────────────────────────────
+// ─── Fonctions utilitaires ────────────────────────────────────────────────────────────────────
 
 function normalizeAt(s) {
   return String(s).replace(/\s*@\s*/g, "@");
@@ -59,6 +57,19 @@ function hasTag(p, tag) {
   return false;
 }
 
+function taskHasTag(task, tag) {
+  if (!task.tags) return false;
+  for (const t of task.tags) {
+    if (String(t).replace(/^#/, "") === tag) return true;
+  }
+  return false;
+}
+
+// Tâche à afficher : ouverte et taguée #Todo.
+function isOpenTodo(task) {
+  return !task.completed && taskHasTag(task, TAG_TODO);
+}
+
 function estExclue(p) {
   if (STATUTS_EXCLUS.includes(p.statut)) return true;
   if (TAGS_EXCLUS.some(t => hasTag(p, t))) return true;
@@ -83,7 +94,7 @@ function afficherGroups(groups) {
   }
 }
 
-// ─── Pages enfants ────────────────────────────────────────────────────────────
+// ─── Pages enfants ───────────────────────────────────────────────────────────────────────────
 
 const filtered = dv.pages("").where(p => {
   if (estExclue(p)) return false;
@@ -110,19 +121,8 @@ const filteredPaths = new Set(filtered.map(p => p.file.path));
 
 const unified = new Map();
 
-// Page courante : on ne remonte QUE les tâches taguées `#Todo` (les autres
-// tâches locales sont déjà rendues nativement dans le corps de la note).
-function taskHasTag(task, tag) {
-  if (!task.tags) return false;
-  for (const t of task.tags) {
-    if (String(t).replace(/^#/, "") === tag) return true;
-  }
-  return false;
-}
-
-const currentTodos = [...current.file.tasks].filter(
-  t => !t.completed && taskHasTag(t, TAG_TODO_LOCAL)
-);
+// Page courante
+const currentTodos = [...current.file.tasks].filter(isOpenTodo);
 if (currentTodos.length > 0) {
   unified.set(curName, {
     ownTasks: currentTodos,
@@ -134,32 +134,27 @@ if (currentTodos.length > 0) {
 // Pages enfants
 for (const p of filtered) {
   unified.set(p.file.name, {
-    ownTasks: [...p.file.tasks].filter(t => !t.completed),
+    ownTasks: [...p.file.tasks].filter(isOpenTodo),
     ownListsByLine: Object.fromEntries([...p.file.lists].map(l => [l.line, l])),
     refs: new Map()
   });
 }
 
-// ─── Références externes ──────────────────────────────────────────────────────
+// ─── Références externes ──────────────────────────────────────────────────────────────────
+
+const linksRelevant = t =>
+  t.outlinks && [...t.outlinks].some(link => relevantNames.has(getLinkName(link)));
 
 const referencing = dv.pages("").where(p => {
   if (estExclue(p)) return false;
   if (p.file.path === current.file.path) return false;
   if (filteredPaths.has(p.file.path)) return false;
-  return [...p.file.tasks].some(t =>
-    !t.completed &&
-    t.outlinks &&
-    [...t.outlinks].some(link => relevantNames.has(getLinkName(link)))
-  );
+  return [...p.file.tasks].some(t => isOpenTodo(t) && linksRelevant(t));
 });
 
 for (const p of referencing) {
   const listsByLine = Object.fromEntries([...p.file.lists].map(l => [l.line, l]));
-  const relevantTasks = [...p.file.tasks].filter(t =>
-    !t.completed &&
-    t.outlinks &&
-    [...t.outlinks].some(link => relevantNames.has(getLinkName(link)))
-  );
+  const relevantTasks = [...p.file.tasks].filter(t => isOpenTodo(t) && linksRelevant(t));
 
   for (const task of relevantTasks) {
     const refName = [...task.outlinks]
@@ -175,7 +170,7 @@ for (const p of referencing) {
   }
 }
 
-// ─── Affichage ────────────────────────────────────────────────────────────────
+// ─── Affichage ──────────────────────────────────────────────────────────────────────────
 
 for (const [refName, { ownTasks, ownListsByLine, refs }] of unified) {
   if (ownTasks.length === 0 && refs.size === 0) continue;
